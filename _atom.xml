@@ -4,12 +4,34 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.github.com/atom.xml" rel="self"/>
   <link href="http://scturtle.github.com/"/>
-  <updated>2012-07-15T18:15:00</updated>
+  <updated>2012-07-15T19:25:00</updated>
   <id>http://scturtle.github.com</id>
   <author>
     <name><![CDATA[scturtle]]></name>
   </author>
   <generator uri="https://github.com/scturtle/turtleblog">turtleblog</generator>
+  <entry>
+    <title type="html"><![CDATA[Turtleblog]]></title>
+    <link href="http://scturtle.github.com/2012/7/15/turtleblog/"/>
+    <updated>2012-07-15T19:00:00</updated>
+    <id>http://scturtle.github.com/2012/7/15/turtleblog/</id>
+    <content type="html"><![CDATA[
+<p>Wordpress 已经 out 了，现在流行什么？静态博客。 <br />
+Turtleblog 便是一个自用的静态博客生成器。基本上是模仿 <a href="http://lucumr.pocoo.org">Armin Ronacher</a> 博客的样式。</p>
+<ul>
+<li>单 python 脚本，200 行。再加一个基于 bottle 的十几行的用于本地测试的服务器脚本。</li>
+<li>实现基于 markdown 的博客，支持图片，代码，Tex 公式。</li>
+<li>实现文章标签和 RSS 输出。</li>
+<li>使用 Python-markdown 和 Pygments 进行基本渲染。</li>
+<li>使用 Jinja2 模板引擎。</li>
+<li>使用 Disqus 作为评论服务。</li>
+<li>使用 Json 文件保存配置。</li>
+<li>可以方便的搭建在 Github Pages 上。</li>
+</ul>
+<p>demo：<a href="http://scturtle.github.com">scturtle.github.com</a>
+（RSS暂时停止，确定没有什么 Bug 了再开）</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[测试]]></title>
     <link href="http://scturtle.github.com/2012/7/15/test/"/>
