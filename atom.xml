@@ -4,7 +4,7 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.github.com/atom.xml" rel="self"/>
   <link href="http://scturtle.github.com/"/>
-  <updated>2012-07-16T20:11:00</updated>
+  <updated>2012-07-24T10:05:00</updated>
   <id>http://scturtle.github.com</id>
   <author>
     <name><![CDATA[scturtle]]></name>
@@ -19,25 +19,25 @@
 <p>这个东西主要是自用和抛砖引玉而已。<a href="https://github.com/mitsuhiko/rstblog/">rstblog</a>、<a href="https://github.com/BrewerHimself/Logr">logr</a>、<a href="http://ringce.com/hyde">hyde</a> 这些项目更值得推荐。</p>
 <p>运行于 python 2.7 环境，依赖于 python-markdown、pygments、jinja2、bottle 这几个项目，可 <code>pip install</code> 安装。</p>
 <p><code>git clone</code> 一下 turtleblog 的<a href="https://github.com/scturtle/turtleblog.git">源码</a>。修改配置文件 config.json：</p>
-<div class="codehilite"><pre>    <span class="p">{</span>
-        &quot;<span class="n">site</span> <span class="n">name</span>&quot;<span class="p">:</span> &quot;<span class="n">ScTurtle</span><span class="o">&#39;</span><span class="n">s</span> <span class="n">Pool</span>&quot;<span class="p">,</span> <span class="o">//</span>博客名会显示在左上角
-        &quot;<span class="n">site</span> <span class="n">url</span>&quot;<span class="p">:</span> &quot;<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">scturtle</span><span class="p">.</span><span class="n">github</span><span class="p">.</span><span class="n">com</span>&quot;<span class="p">,</span> <span class="o">//</span>博客网址
-        &quot;<span class="n">author</span>&quot;<span class="p">:</span> &quot;<span class="n">scturtle</span>&quot;<span class="p">,</span>
-        &quot;<span class="n">number</span> <span class="n">of</span> <span class="n">blogs</span> <span class="n">per</span> <span class="n">page</span>&quot;<span class="p">:</span> 10<span class="p">,</span>
-        &quot;<span class="n">markdown</span> <span class="n">config</span>&quot;<span class="p">:</span>&quot;<span class="n">extra</span> <span class="n">codehilite</span>&quot;<span class="p">,</span><span class="o">//</span>配置 <span class="n">markdown</span> 扩展
-        &quot;<span class="n">disqus</span> <span class="n">shortname</span>&quot;<span class="p">:</span>&quot;<span class="n">scturtlespool</span>&quot;
-    <span class="p">}</span>
+<div class="codehilite"><pre><span class="p">{</span>
+    &quot;<span class="n">site</span> <span class="n">name</span>&quot;<span class="p">:</span> &quot;<span class="n">ScTurtle</span><span class="o">&#39;</span><span class="n">s</span> <span class="n">Pool</span>&quot;<span class="p">,</span> <span class="o">//</span>博客名会显示在左上角
+    &quot;<span class="n">site</span> <span class="n">url</span>&quot;<span class="p">:</span> &quot;<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">scturtle</span><span class="p">.</span><span class="n">github</span><span class="p">.</span><span class="n">com</span>&quot;<span class="p">,</span> <span class="o">//</span>博客网址
+    &quot;<span class="n">author</span>&quot;<span class="p">:</span> &quot;<span class="n">scturtle</span>&quot;<span class="p">,</span>
+    &quot;<span class="n">number</span> <span class="n">of</span> <span class="n">blogs</span> <span class="n">per</span> <span class="n">page</span>&quot;<span class="p">:</span> 10<span class="p">,</span>
+    &quot;<span class="n">markdown</span> <span class="n">config</span>&quot;<span class="p">:</span>&quot;<span class="n">extra</span> <span class="n">codehilite</span>&quot;<span class="p">,</span><span class="o">//</span>配置 <span class="n">markdown</span> 扩展
+    &quot;<span class="n">disqus</span> <span class="n">shortname</span>&quot;<span class="p">:</span>&quot;<span class="n">scturtlespool</span>&quot;
+<span class="p">}</span>
 </pre></div>
 
 
 <p>"disqus shortname" 这一项请先注册 disqus 的服务，然后在其提供的安装代码中寻找。</p>
 <p>每一篇文章是 blog 目录下的一个文件夹（可以任意递归），例如建立 <em>2012/7/15/test/</em> 文件夹，那么这篇文章的 url 就是这个。文件夹下需要有 blog.md、config.json 两个文件。还可以有 img 文件夹专放图片。blog.md 中写主要文章内容，config.json 中配置：</p>
-<div class="codehilite"><pre>    <span class="p">{</span>
-        &quot;<span class="n">title</span>&quot;<span class="p">:</span>&quot;文章标题&quot;<span class="p">,</span>
-        &quot;<span class="n">tags</span>&quot;<span class="p">:</span>&quot;标签，以空格分隔&quot;<span class="p">,</span>
-        &quot;<span class="n">date</span>&quot;<span class="p">:</span>&quot;2012<span class="o">-</span>7<span class="o">-</span>15 10<span class="p">:</span>00&quot;<span class="p">,</span>
-        &quot;<span class="n">enable</span> <span class="n">mathjax</span>&quot;<span class="p">:</span><span class="n">true</span> <span class="o">//</span>是否启用 <span class="n">mathjax</span>，如果文中有 <span class="n">Tex</span> 公式
-    <span class="p">}</span>
+<div class="codehilite"><pre><span class="p">{</span>
+    &quot;<span class="n">title</span>&quot;<span class="p">:</span>&quot;文章标题&quot;<span class="p">,</span>
+    &quot;<span class="n">tags</span>&quot;<span class="p">:</span>&quot;标签，以空格分隔&quot;<span class="p">,</span>
+    &quot;<span class="n">date</span>&quot;<span class="p">:</span>&quot;2012<span class="o">-</span>7<span class="o">-</span>15 10<span class="p">:</span>00&quot;<span class="p">,</span>
+    &quot;<span class="n">enable</span> <span class="n">mathjax</span>&quot;<span class="p">:</span><span class="n">true</span> <span class="o">//</span>是否启用 <span class="n">mathjax</span>，如果文中有 <span class="n">Tex</span> 公式
+<span class="p">}</span>
 </pre></div>
 
 
