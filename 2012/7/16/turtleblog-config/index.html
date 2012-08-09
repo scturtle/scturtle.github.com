@@ -24,7 +24,10 @@
 
 
 <h1 class=title>Turtleblog 的配置</h1>
-<p class=date>July 16, 2012</p>
+<p class=info>
+July 16, 2012
+<a href='/tags/turtleblog/'>#turtleblog</a>
+</p>
 <p>这个东西主要是自用和抛砖引玉而已。<a href="https://github.com/mitsuhiko/rstblog/">rstblog</a>、<a href="https://github.com/BrewerHimself/Logr">logr</a>、<a href="http://ringce.com/hyde">hyde</a> 这些项目更值得推荐。</p>
 <p>运行于 python 2.7 环境，依赖于 python-markdown、pygments、jinja2、bottle 这几个项目，可 <code>pip install</code> 安装。</p>
 <p><code>git clone</code> 一下 turtleblog 的<a href="https://github.com/scturtle/turtleblog.git">源码</a>。修改配置文件 config.json：</p>
@@ -70,11 +73,10 @@
     </div>
 
 <script type="text/javascript">
-  var disqus_shortname = 'scturtlespool';
   function load_disqus() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = 'http://scturtlespool.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     document.getElementById('show_disqus').style.display='none';
   };

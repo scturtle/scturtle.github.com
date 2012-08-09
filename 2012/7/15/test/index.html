@@ -24,7 +24,10 @@
 
 
 <h1 class=title>测试</h1>
-<p class=date>July 15, 2012</p>
+<p class=info>
+July 15, 2012
+<a href='/tags/other/'>#other</a>
+</p>
 <h1>测试</h1>
 <h2>测试</h2>
 <h3>测试</h3>
@@ -88,11 +91,10 @@
     </div>
 
 <script type="text/javascript">
-  var disqus_shortname = 'scturtlespool';
   function load_disqus() {
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.src = 'http://scturtlespool.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     document.getElementById('show_disqus').style.display='none';
   };

@@ -4,14 +4,11 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.github.com/atom.xml" rel="self"/>
   <link href="http://scturtle.github.com/"/>
-  <updated>2012-07-24T10:05:00</updated>
+  <updated>2012-08-09T17:34:00</updated>
   <id>http://scturtle.github.com</id>
-  <author>
-    <name><![CDATA[scturtle]]></name>
-  </author>
-  <generator uri="https://github.com/scturtle/turtleblog">turtleblog</generator>
   <entry>
     <title type="html"><![CDATA[Turtleblog 的配置]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
     <link href="http://scturtle.github.com/2012/7/16/turtleblog-config/"/>
     <updated>2012-07-16T20:00:00</updated>
     <id>http://scturtle.github.com/2012/7/16/turtleblog-config/</id>
@@ -50,6 +47,7 @@
   </entry>
   <entry>
     <title type="html"><![CDATA[Turtleblog — 一个 python 静态博客生成器]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
     <link href="http://scturtle.github.com/2012/7/15/turtleblog/"/>
     <updated>2012-07-15T19:00:00</updated>
     <id>http://scturtle.github.com/2012/7/15/turtleblog/</id>
@@ -72,6 +70,7 @@ Turtleblog 便是一个自用的静态博客生成器。基本上是模仿 <a hr
   </entry>
   <entry>
     <title type="html"><![CDATA[测试]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
     <link href="http://scturtle.github.com/2012/7/15/test/"/>
     <updated>2012-07-15T10:00:00</updated>
     <id>http://scturtle.github.com/2012/7/15/test/</id>
