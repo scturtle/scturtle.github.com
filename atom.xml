@@ -4,8 +4,21 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2012-08-12T10:04:00</updated>
+  <updated>2012-08-12T11:22:00</updated>
   <id>http://scturtle.me</id>
+  <entry>
+    <title type="html"><![CDATA[QuickSmileText - 托盘上的快捷颜文字]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2012/8/12/quicksmiletext/"/>
+    <updated>2012-08-12T10:00:00</updated>
+    <id>http://scturtle.me/2012/8/12/quicksmiletext/</id>
+    <content type="html"><![CDATA[
+<p>入了个 Macbook Air，准备全面投靠 Mac 平台，不学一点儿原生程序开发说不过去。平常在聊天时，想输入颜文字的时候往往手忙脚乱，打开网页复制，遂有此试手作，在托盘图标菜单上快速复制颜文字，成功后还有原生 Mountain Lion 的通知。</p>
+<p><img alt="pic" src="/2012/8/12/quicksmiletext/img/quicksmiletext.png" /></p>
+<p>目前也没有写个配置界面，配置文件 smileTexts.plist 在用户的文稿（Documents）文件夹下，自行修改吧╮(￣▽￣")╭。</p>
+<p>项目地址：<a href="https://github.com/scturtle/QuickSmileText">github.com/scturtle/QuickSmileText</a>。</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Turtleblog 的配置]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
