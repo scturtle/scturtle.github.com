@@ -2,16 +2,16 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[ScTurtle's Pool]]></title>
-  <link href="http://scturtle.github.com/atom.xml" rel="self"/>
-  <link href="http://scturtle.github.com/"/>
-  <updated>2012-08-10T17:38:00</updated>
-  <id>http://scturtle.github.com</id>
+  <link href="http://scturtle.me/atom.xml" rel="self"/>
+  <link href="http://scturtle.me/"/>
+  <updated>2012-08-12T10:04:00</updated>
+  <id>http://scturtle.me</id>
   <entry>
     <title type="html"><![CDATA[Turtleblog 的配置]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.github.com/2012/7/16/turtleblog-config/"/>
+    <link href="http://scturtle.me/2012/7/16/turtleblog-config/"/>
     <updated>2012-07-16T20:00:00</updated>
-    <id>http://scturtle.github.com/2012/7/16/turtleblog-config/</id>
+    <id>http://scturtle.me/2012/7/16/turtleblog-config/</id>
     <content type="html"><![CDATA[
 <p>这个东西主要是自用和抛砖引玉而已。<a href="https://github.com/mitsuhiko/rstblog/">rstblog</a>、<a href="https://github.com/BrewerHimself/Logr">logr</a>、<a href="http://ringce.com/hyde">hyde</a> 这些项目更值得推荐。</p>
 <p>运行于 python 2.7 环境，依赖于 python-markdown、pygments、jinja2、bottle 这几个项目，可 <code>pip install</code> 安装。</p>
@@ -48,9 +48,9 @@
   <entry>
     <title type="html"><![CDATA[Turtleblog — 一个 python 静态博客生成器]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.github.com/2012/7/15/turtleblog/"/>
+    <link href="http://scturtle.me/2012/7/15/turtleblog/"/>
     <updated>2012-07-15T19:00:00</updated>
-    <id>http://scturtle.github.com/2012/7/15/turtleblog/</id>
+    <id>http://scturtle.me/2012/7/15/turtleblog/</id>
     <content type="html"><![CDATA[
 <p>Wordpress 已经 out 了，现在流行什么？静态博客。 <br />
 Turtleblog 便是一个自用的静态博客生成器。基本上是模仿 <a href="http://lucumr.pocoo.org">Armin Ronacher</a> 博客的样式。</p>
@@ -71,9 +71,9 @@ Turtleblog 便是一个自用的静态博客生成器。基本上是模仿 <a hr
   <entry>
     <title type="html"><![CDATA[测试]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.github.com/2012/7/15/test/"/>
+    <link href="http://scturtle.me/2012/7/15/test/"/>
     <updated>2012-07-15T10:00:00</updated>
-    <id>http://scturtle.github.com/2012/7/15/test/</id>
+    <id>http://scturtle.me/2012/7/15/test/</id>
     <content type="html"><![CDATA[
 <h1>测试</h1>
 <h2>测试</h2>
