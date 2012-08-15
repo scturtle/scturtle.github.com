@@ -4,8 +4,33 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2012-08-12T11:22:00</updated>
+  <updated>2012-08-15T10:53:00</updated>
   <id>http://scturtle.me</id>
+  <entry>
+    <title type="html"><![CDATA[vim-instant-markdown-py - vim 的 markdown 插件]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2012/8/15/vim-instant-markdown-py/"/>
+    <updated>2012-08-15T11:00:00</updated>
+    <id>http://scturtle.me/2012/8/15/vim-instant-markdown-py/</id>
+    <content type="html"><![CDATA[
+<p>偶然看到了 <a href="https://github.com/suan/vim-instant-markdown">vim-instant-markdown</a> 这个 vim 插件，
+能一边在 vim 里编辑 markdown 一边在网页上实时渲染，碉堡了。
+可是插件的各种依赖实在让人无奈，通过 ruby 调用 python 的 pygments，
+又用 node.js 来处理 markdown 和 websocket，node.js 安装起来挺费劲，
+而且使用管道不支持 windows。于是山寨了一个 python 版出来。</p>
+<p>依赖：vim 需要有 python 支持，要有 python 库 bottle，markdown 和 pygment。</p>
+<p>安装：<code>vim-instant-markdown-py.vim</code> 放到 <code>~/.vim/plugin</code> 下，
+其他三个文件找个方便的地方放就好了。</p>
+<p>运行：运行 <code>mdd.py</code>，（如果没有自动的话）打开 <code>index.html</code>，
+显示 <code>connected</code> 就可以打开 vim 编辑 markdown 文件了。</p>
+<p>演示: <br />
+<div style="text-align:center;">
+<video src="/2012/8/15/vim-instant-markdown-py/img/markdown.webm" controls>
+</video>
+</div></p>
+<p>项目地址：<a href="http://github.com/scturtle/vim-instant-markdown-py">github.com/scturtle/vim-instant-markdown-py</a>。源码中借鉴来的地方有注明。</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[QuickSmileText - 托盘上的快捷颜文字]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>

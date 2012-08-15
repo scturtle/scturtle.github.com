@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title>vim-instant-markdown-py - vim 的 markdown 插件 | ScTurtle&#39;s Pool</title>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Vollkorn&subset=latin" type="text/css">
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/pygments.css" type="text/css">
+    <link href="/atom.xml" rel="alternate" title="ScTurtle&#39;s Pool" type="application/atom+xml">
+  </head>
+  <body>
+    <div class=container>
+      <div class=header>
+        <a href='/'>ScTurtle&#39;s Pool</a>
+      </div>
+      <div class=navigation>
+        <ul>
+          <li><a href='/'>blog</a>
+          <li><a href='/tags/'>tags</a>
+          <li><a href='/about/'>about</a>
+        </ul>
+      </div>
+      <div class=body>
+
+
+<h1 class=title>vim-instant-markdown-py - vim 的 markdown 插件</h1>
+<p class=info>
+August 15, 2012
+<a href='/tags/vim/'>#vim</a>
+<a href='/tags/python/'>#python</a>
+</p>
+<p>偶然看到了 <a href="https://github.com/suan/vim-instant-markdown">vim-instant-markdown</a> 这个 vim 插件，
+能一边在 vim 里编辑 markdown 一边在网页上实时渲染，碉堡了。
+可是插件的各种依赖实在让人无奈，通过 ruby 调用 python 的 pygments，
+又用 node.js 来处理 markdown 和 websocket，node.js 安装起来挺费劲，
+而且使用管道不支持 windows。于是山寨了一个 python 版出来。</p>
+<p>依赖：vim 需要有 python 支持，要有 python 库 bottle，markdown 和 pygment。</p>
+<p>安装：<code>vim-instant-markdown-py.vim</code> 放到 <code>~/.vim/plugin</code> 下，
+其他三个文件找个方便的地方放就好了。</p>
+<p>运行：运行 <code>mdd.py</code>，（如果没有自动的话）打开 <code>index.html</code>，
+显示 <code>connected</code> 就可以打开 vim 编辑 markdown 文件了。</p>
+<p>演示: <br />
+<div style="text-align:center;">
+<video src="img/markdown.webm" controls>
+</video>
+</div></p>
+<p>项目地址：<a href="http://github.com/scturtle/vim-instant-markdown-py">github.com/scturtle/vim-instant-markdown-py</a>。源码中借鉴来的地方有注明。</p>
+<div id="show_disqus"><a onclick="load_disqus();return false;" href="##">Show comments</a></div>
+<div id="disqus_thread"></div>
+
+
+      </div>
+      <div class=footer>
+        <p><a href='https://github.com/scturtle/turtleblog'>turtleblog</a> &copy; 2012 scturtle
+        <p> <a href="mailto:scturtle@gmail.com">mail</a>,
+        <a href="http://twitter.com/scturtle">twitter</a>,
+        <a href="http://github.com/scturtle">github</a>,
+        <a href='/atom.xml' rel=alternate title="Recent Blogs | ScTurtle&#39;s Pool">feed</a>
+      </div>
+    </div>
+
+<script type="text/javascript">
+  function load_disqus() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://scturtlespool.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    document.getElementById('show_disqus').style.display='none';
+  };
+</script>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33410961-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </body>
+</html>
