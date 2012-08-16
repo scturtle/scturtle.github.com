@@ -2,7 +2,7 @@
 /* general style */
 body    { font-family: 'Palatino';
           font-size: 16px; margin: 0; padding: 0; }
-a       { color: #432165; text-decoration: none; }
+a       { color: #550099; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 /* headlines */
@@ -36,7 +36,7 @@ pre, code   { border: 1px solid #ddd; border-radius: 5px; }
 pre         { font-size: 0.82em; line-height: 1.3em; 
               padding: 10px; background: #fafafa;
               overflow: auto;}
-code        { font-size: 16px; background: #fafafa; color: #432165; 
+code        { font-size: 16px; background: #fafafa; color: #550099; 
               padding: 0 5px; margin: 0 2px; }
 
 /* tables */
