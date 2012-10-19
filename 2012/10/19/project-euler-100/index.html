@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <title>Project Euler Problem 100 | ScTurtle&#39;s Pool</title>
+    <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Vollkorn&subset=latin" type="text/css"> -->
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/pygments.css" type="text/css">
+    <link href="/atom.xml" rel="alternate" title="ScTurtle&#39;s Pool" type="application/atom+xml">
+  </head>
+  <body>
+    <div class=container>
+      <div class=header>
+        <a href='/'>ScTurtle&#39;s Pool</a>
+      </div>
+      <div class=navigation>
+        <ul>
+          <li><a href='/'>blog</a>
+          <li><a href='/tags/'>tags</a>
+          <li><a href='/about/'>about</a>
+        </ul>
+      </div>
+      <div class=body>
+
+
+<h1 class=title>Project Euler Problem 100</h1>
+<p class=info>
+October 19, 2012
+<a href='/tags/math/'>#math</a>
+<a href='/tags/python/'>#python</a>
+</p>
+<p>最近不务正业地开始做这个，几乎都是用 python 暴搜的，刷的很 high，难得 ‘数学地’ 搞出一个来，不记一下就亏了。</p>
+<p>题意是说，如果一个箱子里有21个碟子，15个蓝色的，6个红色的，那么从中随机抽两个碟子恰好都是蓝色的概率是$\frac 12$，因为$\frac{15}{21}\times\frac{14}{20}=\frac 12$。
+对于包含超过$10^{12}$个碟子的箱子的情况中，满足此概率的包含最少碟子数的情况中，包含多少个蓝碟子？
+<a href="http://projecteuler.net/problem=100">(原题)</a> 
+<a href="http://pe.spiritzhang.com/index.php/2011-05-11-09-44-54/101-10050">(中文)</a></p>
+<p>首先假设该情况包含 b 个碟子，其中有 a 个蓝碟子，那么所求概率为 $\frac{a}{b}\times\frac{a-1}{b-1}=\frac 12$。解方程得到：
+$$a=\frac{1}{2}\left(1+\sqrt{1-2 b+2 b^2}\right)$$</p>
+<p>看来 $1-2b+2b^2$ 应是个平方数，设 $1-2b+2b^2=t^2$ 再解方程得：
+$$b=\frac12\left(1+\sqrt{-1+2t^2}\right)$$</p>
+<p>那么发现 $-1+2t^2$ 也应该是个平方数，设 $-1+2t^2=s^2$，这个式子很简洁很眼熟啊，调整一下顺序：
+$$s^2-2t^2=-1$$</p>
+<p>难道是传说中的佩尔方程！不对，佩尔方程右边是 1 ，<a href="http://en.wikipedia.org/wiki/Pell_equation">wikipedia</a> 指示说这是个负佩尔方程（negative pell's equation）。佩尔方程是有最小解，而且其他解都可由最小解递归推出，而负佩尔方程不一定有解。但如果其有解则可由对应的佩尔方程的解求出。假设负佩尔方程 $x^2-n\,y^2=-1$ 的解为 $(x_1,y_1)$，其对应的佩尔方程 $x^2-n\,y^2=1$ 的解为 $(a,b)$，则有：
+$$\left(x_1+y_1\sqrt{n}\right)^2=a+b\sqrt{n}$$
+可得：
+$$2x_1^2+1=a\\ 2\,x_1\,y_1=b$$
+那么先解对应佩尔方程的最小解，再得到负佩尔方程的最小解，然后由以下递推公式可得负佩尔方程所有解（佩尔方程对应递推公式右上角处为 $i$ ）：
+$$x_i+y_i\sqrt{n}=\left(x_1+y_1\sqrt{n}\right)^{2i-1}$$
+即：
+$$x_i=(2x_1^2+1)\,x_{i-1}+2nx_1y_1\,y_{i-1} \\
+y_i=2x_1y_1\,x_{i-1}+(2x_1^2+1)\,y_{i-1}$$</p>
+<p>好了，先求得对应佩尔方程的解（比如欧拉方法或者连分数方法），为 $(3,2)$，然后得到所需的负佩尔方程的解，为 $(1,1)$。先估计一个 t 的值，然后不断由递推公式推得所有解，一旦得到的解刚好大于估计值，几乎就可以确定得到答案了。</p>
+<p>对应代码为：</p>
+<div class="codehilite"><pre><span class="n">t</span> <span class="o">=</span> <span class="p">(((</span><span class="mi">10</span><span class="o">**</span><span class="mi">12</span><span class="o">*</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+<span class="k">while</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">t</span><span class="p">:</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">y</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+</pre></div>
+
+
+<p>幸运的是我们最后得到的 a 恰好是整数，也正是此题的解。</p>
+<div id="show_disqus"><a onclick="load_disqus();return false;" href="##">Show comments</a></div>
+<div id="disqus_thread"></div>
+
+
+      </div>
+      <div class=footer>
+        <p><a href='https://github.com/scturtle/turtleblog'>turtleblog</a> &copy; 2012 scturtle
+        <p> <a href="mailto:scturtle@gmail.com">mail</a>,
+        <a href="http://twitter.com/scturtle">twitter</a>,
+        <a href="http://github.com/scturtle">github</a>,
+        <a href='/atom.xml' rel=alternate title="Recent Blogs | ScTurtle&#39;s Pool">feed</a>
+      </div>
+    </div>
+
+<script type="text/javascript">
+  function load_disqus() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://scturtlespool.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    document.getElementById('show_disqus').style.display='none';
+  };
+</script>
+<script type="text/x-mathjax-config"> 
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ["\\(","\\)"]],
+    processEscapes: true
+  }
+}); </script>
+<script type="text/javascript" 
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33410961-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </body>
+</html>

@@ -4,8 +4,48 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2012-09-03T10:47:00</updated>
+  <updated>2012-10-20T00:36:00</updated>
   <id>http://scturtle.me</id>
+  <entry>
+    <title type="html"><![CDATA[Project Euler Problem 100]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2012/10/19/project-euler-100/"/>
+    <updated>2012-10-19T23:00:00</updated>
+    <id>http://scturtle.me/2012/10/19/project-euler-100/</id>
+    <content type="html"><![CDATA[
+<p>最近不务正业地开始做这个，几乎都是用 python 暴搜的，刷的很 high，难得 ‘数学地’ 搞出一个来，不记一下就亏了。</p>
+<p>题意是说，如果一个箱子里有21个碟子，15个蓝色的，6个红色的，那么从中随机抽两个碟子恰好都是蓝色的概率是$\frac 12$，因为$\frac{15}{21}\times\frac{14}{20}=\frac 12$。
+对于包含超过$10^{12}$个碟子的箱子的情况中，满足此概率的包含最少碟子数的情况中，包含多少个蓝碟子？
+<a href="http://projecteuler.net/problem=100">(原题)</a> 
+<a href="http://pe.spiritzhang.com/index.php/2011-05-11-09-44-54/101-10050">(中文)</a></p>
+<p>首先假设该情况包含 b 个碟子，其中有 a 个蓝碟子，那么所求概率为 $\frac{a}{b}\times\frac{a-1}{b-1}=\frac 12$。解方程得到：
+$$a=\frac{1}{2}\left(1+\sqrt{1-2 b+2 b^2}\right)$$</p>
+<p>看来 $1-2b+2b^2$ 应是个平方数，设 $1-2b+2b^2=t^2$ 再解方程得：
+$$b=\frac12\left(1+\sqrt{-1+2t^2}\right)$$</p>
+<p>那么发现 $-1+2t^2$ 也应该是个平方数，设 $-1+2t^2=s^2$，这个式子很简洁很眼熟啊，调整一下顺序：
+$$s^2-2t^2=-1$$</p>
+<p>难道是传说中的佩尔方程！不对，佩尔方程右边是 1 ，<a href="http://en.wikipedia.org/wiki/Pell_equation">wikipedia</a> 指示说这是个负佩尔方程（negative pell's equation）。佩尔方程是有最小解，而且其他解都可由最小解递归推出，而负佩尔方程不一定有解。但如果其有解则可由对应的佩尔方程的解求出。假设负佩尔方程 $x^2-n\,y^2=-1$ 的解为 $(x_1,y_1)$，其对应的佩尔方程 $x^2-n\,y^2=1$ 的解为 $(a,b)$，则有：
+$$\left(x_1+y_1\sqrt{n}\right)^2=a+b\sqrt{n}$$
+可得：
+$$2x_1^2+1=a\\ 2\,x_1\,y_1=b$$
+那么先解对应佩尔方程的最小解，再得到负佩尔方程的最小解，然后由以下递推公式可得负佩尔方程所有解（佩尔方程对应递推公式右上角处为 $i$ ）：
+$$x_i+y_i\sqrt{n}=\left(x_1+y_1\sqrt{n}\right)^{2i-1}$$
+即：
+$$x_i=(2x_1^2+1)\,x_{i-1}+2nx_1y_1\,y_{i-1} \\
+y_i=2x_1y_1\,x_{i-1}+(2x_1^2+1)\,y_{i-1}$$</p>
+<p>好了，先求得对应佩尔方程的解（比如欧拉方法或者连分数方法），为 $(3,2)$，然后得到所需的负佩尔方程的解，为 $(1,1)$。先估计一个 t 的值，然后不断由递推公式推得所有解，一旦得到的解刚好大于估计值，几乎就可以确定得到答案了。</p>
+<p>对应代码为：</p>
+<div class="codehilite"><pre><span class="n">t</span> <span class="o">=</span> <span class="p">(((</span><span class="mi">10</span><span class="o">**</span><span class="mi">12</span><span class="o">*</span><span class="mi">2</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span>
+<span class="k">while</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">t</span><span class="p">:</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">4</span><span class="o">*</span><span class="n">y</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">3</span><span class="o">*</span><span class="n">y</span>
+<span class="k">print</span> <span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+</pre></div>
+
+
+<p>幸运的是我们最后得到的 a 恰好是整数，也正是此题的解。</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[vim-instant-markdown-py - vim 的 markdown 插件]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
