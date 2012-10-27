@@ -44,13 +44,14 @@ ul ol, ol ul, ul ul, ol ol  { margin: 10px 0; padding: 0 0 0 40px; }
 li                          { padding: 0; }
 
 /* code */
-pre, code   { /*font:"courier new",courier,monospace;*/
-              border: 1px solid #ddd; border-radius: 5px; }
-pre         { font-size: 0.82em; line-height: 1.3em; 
-              padding: 10px; background: #fafafa;
-              overflow: auto;}
-code        { font-size: 16px; background: #fafafa;
-              padding: 0 5px; margin: 0 2px; }
+pre, code { font-family: Menlo,Monaco,"Andale Mono",
+            "lucida console", "Courier New",monospace;
+            border: 1px solid #ddd; border-radius: 5px; }
+pre       { font-size: 0.82em; line-height: 1.3em; 
+            padding: 10px; background: #fafafa;
+            overflow: auto;}
+code      { font-size: 15px; background: #fafafa;
+            padding: 2px 5px; margin: 0 2px; }
 
 /* tables */
 table           { border: 1px solid #ddd; border-collapse: collapse;
