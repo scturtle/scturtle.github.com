@@ -4,7 +4,7 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2012-12-02T19:46:00</updated>
+  <updated>2012-12-03T00:49:00</updated>
   <id>http://scturtle.me</id>
   <entry>
     <title type="html"><![CDATA[听听虾米]]></title>
@@ -14,13 +14,13 @@
     <id>http://scturtle.me/2012/12/2/tingtingxiami/</id>
     <content type="html"><![CDATA[
 <blockquote>
-<p>亲爱的用户，非常非常抱歉，由于版权方的要求，自2012年3月15日起，虾米无法为您所在的地区提供试听及下载服务。多谢您一直以来的支持，这些我们从来不会忘记，您的账号虾米将永久保留，请期待虾米回归那一天，我们在努力。 </p>
+<p>亲爱的用户，非常非常抱歉，由于版权方的要求，自2012年3月15日起，虾米无法为您所在的地区提供试听及下载服务。多谢您一直以来的支持，这些我们从来不会忘记，您的账号虾米将永久保留，请期待虾米回归那一天，我们在努力。 
+也就是偶尔想听听虾米，弄了两个东西，没地方放，搁这里吧。</p>
 </blockquote>
-<p>也就是偶尔想听听虾米，弄了两个东西，没地方放，搁这里吧。</p>
-<p>一个<a href="javascript:function%20xmplay(){var%20l=document.getElementsByClassName('song_act');%20for(var%20i=0;i&lt;l.length;i++){try{n=l[i].children[0].children[0].attributes['onclick'].nodeValue.match(/\d+/);%20l[i].innerHTML='&lt;embed%20width=&quot;257&quot;%20height=&quot;33&quot;%20src=&/2012/12/2/tingtingxiami/quot;http://www.xiami.com/widget/0_XXX/singlePlayer.swf&quot;%20type=&quot;application/x-shockwave-flash&quot;%20wmode=&quot;transparent&quot;&gt;'.replace('XXX',n);}catch(e){};}};xmplay();void(0);">书签</a>，干了这么件事：</p>
-<p><img alt="before" src="/2012/12/2/tingtingxiami/img/before.png" /></p>
+<p>一个<a href="javascript:function xmplay(){s='<embed width=&#92;'257&#92;' height=&#92;'33&#92;' src=&/2012/12/2/tingtingxiami/#92;'http://www.xiami.com/widget/0_XXX/singlePlayer.swf&#92;' type=&#92;'application/x-shockwave-flash&#92;' wmode=&#92;'transparent&#92;'>';var l=document.getElementsByClassName('song_act');for(var i=0;i<l.length;i++){try{n=l[i].children[0].children[0].attributes['onclick'].value.match(/&#92;d+/);l[i].innerHTML=s.replace('XXX',n);}catch(e){};}var l=document.getElementsByClassName('song_do');for(var i=0;i<l.length;i++){try{n=l[i].children[0].attributes['onclick'].value.match(/&#92;d+/);l[i].innerHTML=s.replace('XXX',n);l[i].style.width='257px';}catch(e){};}};xmplay();void(0);">书签</a>，干了这么件事：</p>
+<p><img alt="before" src="/2012/12/2/tingtingxiami/img/before.png"></p>
 <p>变成这样：</p>
-<p><img alt="after" src="/2012/12/2/tingtingxiami/img/after.png" /></p>
+<p><img alt="after" src="/2012/12/2/tingtingxiami/img/after.png"></p>
 <p>一个（巨难看难用的）下歌用的小webapp：<a href="http://xiamidl.herokuapp.com/">xiamidl</a>。</p>
 ]]> </content>
   </entry>
@@ -208,7 +208,7 @@ y_i=2x_1y_1\,x_{i-1}+(2x_1^2+1)\,y_{i-1}$$</p>
 其他三个文件找个方便的地方放就好了。</p>
 <p>运行：运行 <code>mdd.py</code>，（如果没有自动的话）打开 <code>index.html</code>，
 显示 <code>connected</code> 就可以打开 vim 编辑 markdown 文件了。</p>
-<p>演示: <br />
+<p>演示: <br>
 <div style="text-align:center;">
 <video src="/2012/8/15/vim-instant-markdown-py/img/markdown.webm" controls>
 </video>
@@ -224,7 +224,7 @@ y_i=2x_1y_1\,x_{i-1}+(2x_1^2+1)\,y_{i-1}$$</p>
     <id>http://scturtle.me/2012/8/12/quicksmiletext/</id>
     <content type="html"><![CDATA[
 <p>入了个 Macbook Air，准备全面投靠 Mac 平台，不学一点儿原生程序开发说不过去。平常在聊天时，想输入颜文字的时候往往手忙脚乱，打开网页复制，遂有此试手作，在托盘图标菜单上快速复制颜文字，成功后还有原生 Mountain Lion 的通知。</p>
-<p><img alt="pic" src="/2012/8/12/quicksmiletext/img/quicksmiletext.png" /></p>
+<p><img alt="pic" src="/2012/8/12/quicksmiletext/img/quicksmiletext.png"></p>
 <p>目前也没有写个配置界面，配置文件 smileTexts.plist 在用户的文稿（Documents）文件夹下，自行修改吧╮(￣▽￣")╭。</p>
 <p>项目地址：<a href="https://github.com/scturtle/QuickSmileText">github.com/scturtle/QuickSmileText</a>。</p>
 ]]> </content>
@@ -275,7 +275,7 @@ y_i=2x_1y_1\,x_{i-1}+(2x_1^2+1)\,y_{i-1}$$</p>
     <updated>2012-07-15T19:00:00</updated>
     <id>http://scturtle.me/2012/7/15/turtleblog/</id>
     <content type="html"><![CDATA[
-<p>Wordpress 已经 out 了，现在流行什么？静态博客。 <br />
+<p>Wordpress 已经 out 了，现在流行什么？静态博客。 <br>
 Turtleblog 便是一个自用的静态博客生成器。基本上是模仿 <a href="http://lucumr.pocoo.org">Armin Ronacher</a> 博客的样式。</p>
 <ul>
 <li>单 python 脚本，200 行。再加一个基于 bottle 的十几行的用于本地测试的服务器脚本。</li>
@@ -309,11 +309,11 @@ Turtleblog 便是一个自用的静态博客生成器。基本上是模仿 <a hr
 <p>测试<em>强调</em>，<strong>加重</strong>。</p>
 <p>测试超链接：<a href="www.google.com">google</a>。</p>
 <p>测试分界线:</p>
-<hr />
-<p>测试换行： <br />
+<hr>
+<p>测试换行： <br>
 测试行内代码 <code>test</code>。</p>
 <p>测试图片：</p>
-<p><img alt="pic" src="/2012/7/15/test/img/head.jpg" /></p>
+<p><img alt="pic" src="/2012/7/15/test/img/head.jpg"></p>
 <p><img class=align-center src='/2012/7/15/test/img/head.jpg' style='width:100px'/></p>
 <p>测试代码块：</p>
 <div class="codehilite"><pre><span class="n">A</span> <span class="o">=</span> <span class="s">r&#39;&#39;&#39;B = &quot;A = r\&#39;&#39;&#39;&quot; + A + &quot;</span>\<span class="s">&#39;&#39;&#39;</span><span class="se">\n</span><span class="s">&quot; + A</span>
