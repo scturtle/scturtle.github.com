@@ -4,8 +4,26 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2012-11-27T10:46:00</updated>
+  <updated>2012-12-02T19:46:00</updated>
   <id>http://scturtle.me</id>
+  <entry>
+    <title type="html"><![CDATA[听听虾米]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2012/12/2/tingtingxiami/"/>
+    <updated>2012-12-02T19:00:00</updated>
+    <id>http://scturtle.me/2012/12/2/tingtingxiami/</id>
+    <content type="html"><![CDATA[
+<blockquote>
+<p>亲爱的用户，非常非常抱歉，由于版权方的要求，自2012年3月15日起，虾米无法为您所在的地区提供试听及下载服务。多谢您一直以来的支持，这些我们从来不会忘记，您的账号虾米将永久保留，请期待虾米回归那一天，我们在努力。 </p>
+</blockquote>
+<p>也就是偶尔想听听虾米，弄了两个东西，没地方放，搁这里吧。</p>
+<p>一个<a href="javascript:function%20xmplay(){var%20l=document.getElementsByClassName('song_act');%20for(var%20i=0;i&lt;l.length;i++){try{n=l[i].children[0].children[0].attributes['onclick'].nodeValue.match(/\d+/);%20l[i].innerHTML='&lt;embed%20width=&quot;257&quot;%20height=&quot;33&quot;%20src=&/2012/12/2/tingtingxiami/quot;http://www.xiami.com/widget/0_XXX/singlePlayer.swf&quot;%20type=&quot;application/x-shockwave-flash&quot;%20wmode=&quot;transparent&quot;&gt;'.replace('XXX',n);}catch(e){};}};xmplay();void(0);">书签</a>，干了这么件事：</p>
+<p><img alt="before" src="/2012/12/2/tingtingxiami/img/before.png" /></p>
+<p>变成这样：</p>
+<p><img alt="after" src="/2012/12/2/tingtingxiami/img/after.png" /></p>
+<p>一个（巨难看难用的）下歌用的小webapp：<a href="http://xiamidl.herokuapp.com/">xiamidl</a>。</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[张君宝小朋友]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
