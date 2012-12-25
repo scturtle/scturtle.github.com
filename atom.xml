@@ -4,8 +4,27 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2012-12-15T12:17:00</updated>
+  <updated>2012-12-25T11:46:00</updated>
   <id>http://scturtle.me</id>
+  <entry>
+    <title type="html"><![CDATA[maildog]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2012/12/25/maildog/"/>
+    <updated>2012-12-25T11:00:00</updated>
+    <id>http://scturtle.me/2012/12/25/maildog/</id>
+    <content type="html"><![CDATA[
+<p><img alt="maildog" src="/2012/12/25/maildog/img/maildog.png"></p>
+<p>A mail checker working on the system tray.</p>
+<ul>
+<li>PyQt, cross-platform</li>
+<li>Less than 100 lines</li>
+<li>IMAP, but keep unread</li>
+<li>check every 30 seconds</li>
+</ul>
+<p>Codes <a href="https://gist.github.com/4369460">here</a>.</p>
+<p>You need a <code>mail.ico</code> and a <code>config.json</code> containing <code>server</code>, <code>user</code>, <code>pasw</code> to start it.</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[钟]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -309,29 +328,6 @@ y_i=2x_1y_1\,x_{i-1}+(2x_1^2+1)\,y_{i-1}$$</p>
 <p>修改 template 下的模板文件最好有一些 jinja2 的基础。一般只需要动一下 base.html 这个主要框架，比如加入独立页面的链接，修改页底的联系方式或加上 Google Analytics 的统计代码。</p>
 <p>最后运行一下 turtle.py 这个脚本就会在 html 文件夹下生成好静态的文件了。运行 server.py 这个脚本可以在本地预览。在 github 建立一个 yourname.github.com 项目然后将 html 文件夹的内容提交到 master 分支即可。</p>
 <p>写 markdown 时，我是用的自己的 markdown 编辑器 <a href="http://turtlenote-scturtle.rhcloud.com/">turtlenote</a>。</p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Turtleblog — 一个 python 静态博客生成器]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2012/7/15/turtleblog/"/>
-    <updated>2012-07-15T19:00:00</updated>
-    <id>http://scturtle.me/2012/7/15/turtleblog/</id>
-    <content type="html"><![CDATA[
-<p>Wordpress 已经 out 了，现在流行什么？静态博客。 <br>
-Turtleblog 便是一个自用的静态博客生成器。基本上是模仿 <a href="http://lucumr.pocoo.org">Armin Ronacher</a> 博客的样式。</p>
-<ul>
-<li>单 python 脚本，200 行。再加一个基于 bottle 的十几行的用于本地测试的服务器脚本。</li>
-<li>实现基于 markdown 的博客，支持图片，代码，Tex 公式。</li>
-<li>实现文章标签和 RSS 输出。</li>
-<li>使用 Python-markdown 和 Pygments 进行基本渲染。</li>
-<li>使用 Jinja2 模板引擎。</li>
-<li>使用 Disqus 作为评论服务。</li>
-<li>使用 Json 文件保存配置。</li>
-<li>可以方便的搭建在 Github Pages 上。</li>
-</ul>
-<p>demo：<a href="http://scturtle.github.com">scturtle.github.com</a>
-（RSS暂时停止，确定没有什么 Bug 了再开）</p>
 ]]> </content>
   </entry>
 </feed>
