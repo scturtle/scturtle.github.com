@@ -4,8 +4,52 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2012-12-25T11:46:00</updated>
+  <updated>2013-01-05T16:39:00</updated>
   <id>http://scturtle.me</id>
+  <entry>
+    <title type="html"><![CDATA[Draw a 3D heart in browser]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2013/1/5/heart/"/>
+    <updated>2013-01-05T16:00:00</updated>
+    <id>http://scturtle.me/2013/1/5/heart/</id>
+    <content type="html"><![CDATA[
+<p>Valentine's Day is approaching. Let's have some fun.</p>
+<p>First, we all know that <code>mathematica</code> can draw a beautiful
+3d heart with only one single command:</p>
+<div class="codehilite"><pre>ContourPlot3D[
+  320 (-x^2 z^3 - 9 y^2 z^3/80 + (x^2 + 9 y^2/4 + z^2 - 1)^3) == 0,
+  {x, -1.3, 1.3}, {y, -1.3, 1.3}, {z, -1.3, 1.3}, 
+  ContourStyle -&gt; Directive[Red]]
+</pre></div>
+
+
+<p><img alt="heart" src="/2013/1/5/heart/img/heart.png"></p>
+<p>Let's save it as a model file with this command:</p>
+<div class="codehilite"><pre>Export[&quot;heart.ply&quot;, %]
+</pre></div>
+
+
+<p>We need <code>blender</code> to convert it into another format. 
+Download it <a href="http://www.blender.org/download/get-blender">here</a> and 
+install <code>three.js</code> extension <a href="https://github.com/mrdoob/three.js/tree/master/utils/exporters/blender">here</a>.</p>
+<p>Open <code>blender</code> you will see a default cube. 
+On the left menu column you will see a <code>Delete</code>.  <br>
+<em>Yes! Go you!</em> <br>
+Then <code>File</code> -&gt; <code>Import</code> -&gt; <code>Stanford (.ply)</code>,
+and select our <code>heart.ply</code>. You will see it like this.</p>
+<p><img alt="heart2" src="/2013/1/5/heart/img/heart2.png"></p>
+<p>Next, <code>File</code> -&gt; <code>User Preferences</code> -&gt; <code>Addons</code>,
+find a addon named <code>three.js format</code> and enable it. 
+Then <code>File</code> -&gt; <code>Export</code> -&gt; <code>Three.js (.js)</code> and we will get a <code>heart.js</code>. 
+It can be imported by <code>three.js</code> and shown in browser. </p>
+<p>The final step contains a little more codes 
+(<a href="https://github.com/scturtle/heart">github</a>)
+and <a href="http://scturtle.me/heart/heart.html">here</a> is the final example.</p>
+<p><img alt="heart3" src="/2013/1/5/heart/img/heart3.png"></p>
+<p>This model is handy and you can do more romantic things with powerful <code>three.js</code>.  <br>
+But you have to make sure that she has a "real" browser supporting <code>webGL</code>.</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[maildog]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -289,45 +333,6 @@ y_i=2x_1y_1\,x_{i-1}+(2x_1^2+1)\,y_{i-1}$$</p>
 <p><img alt="pic" src="/2012/8/12/quicksmiletext/img/quicksmiletext.png"></p>
 <p>目前也没有写个配置界面，配置文件 smileTexts.plist 在用户的文稿（Documents）文件夹下，自行修改吧╮(￣▽￣")╭。</p>
 <p>项目地址：<a href="https://github.com/scturtle/QuickSmileText">github.com/scturtle/QuickSmileText</a>。</p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Turtleblog 的配置]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2012/7/16/turtleblog-config/"/>
-    <updated>2012-07-16T20:00:00</updated>
-    <id>http://scturtle.me/2012/7/16/turtleblog-config/</id>
-    <content type="html"><![CDATA[
-<p>这个东西主要是自用和抛砖引玉而已。<a href="https://github.com/mitsuhiko/rstblog/">rstblog</a>、<a href="https://github.com/BrewerHimself/Logr">logr</a>、<a href="http://ringce.com/hyde">hyde</a> 这些项目更值得推荐。</p>
-<p>运行于 python 2.7 环境，依赖于 python-markdown、pygments、jinja2、bottle 这几个项目，可 <code>pip install</code> 安装。</p>
-<p><code>git clone</code> 一下 turtleblog 的<a href="https://github.com/scturtle/turtleblog.git">源码</a>。修改配置文件 config.json：</p>
-<div class="codehilite"><pre>{
-    &quot;site name&quot;: &quot;ScTurtle&#39;s Pool&quot;, //博客名会显示在左上角
-    &quot;site url&quot;: &quot;http://scturtle.github.com&quot;, //博客网址
-    &quot;author&quot;: &quot;scturtle&quot;,
-    &quot;number of blogs per page&quot;: 10,
-    &quot;markdown config&quot;:&quot;extra codehilite&quot;,//配置 markdown 扩展
-    &quot;disqus shortname&quot;:&quot;scturtlespool&quot;
-}
-</pre></div>
-
-
-<p>"disqus shortname" 这一项请先注册 disqus 的服务，然后在其提供的安装代码中寻找。</p>
-<p>每一篇文章是 blog 目录下的一个文件夹（可以任意递归），例如建立 <em>2012/7/15/test/</em> 文件夹，那么这篇文章的 url 就是这个。文件夹下需要有 blog.md、config.json 两个文件。还可以有 img 文件夹专放图片。blog.md 中写主要文章内容，config.json 中配置：</p>
-<div class="codehilite"><pre>{
-    &quot;title&quot;:&quot;文章标题&quot;,
-    &quot;tags&quot;:&quot;标签，以空格分隔&quot;,
-    &quot;date&quot;:&quot;2012-7-15 10:00&quot;,
-    &quot;enable mathjax&quot;:true //是否启用 mathjax，如果文中有 Tex 公式
-}
-</pre></div>
-
-
-<p>如果需要 project、about 等独立页面，那么在 page 下建立一个包含 page.md、config.json 的文件夹，页面 url 为文件夹名称。config.json 中配置 "title"（显示在浏览器标签栏的名字）。</p>
-<p>static 下的样式表 pygments.css 配置代码高亮的配色，style.css 为整个站点的配置，可修改整站主题。</p>
-<p>修改 template 下的模板文件最好有一些 jinja2 的基础。一般只需要动一下 base.html 这个主要框架，比如加入独立页面的链接，修改页底的联系方式或加上 Google Analytics 的统计代码。</p>
-<p>最后运行一下 turtle.py 这个脚本就会在 html 文件夹下生成好静态的文件了。运行 server.py 这个脚本可以在本地预览。在 github 建立一个 yourname.github.com 项目然后将 html 文件夹的内容提交到 master 分支即可。</p>
-<p>写 markdown 时，我是用的自己的 markdown 编辑器 <a href="http://turtlenote-scturtle.rhcloud.com/">turtlenote</a>。</p>
 ]]> </content>
   </entry>
 </feed>

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset=utf-8>
-    <title>听听虾米 | ScTurtle&#39;s Pool</title>
+    <title>Draw a 3D heart in browser | ScTurtle&#39;s Pool</title>
     <!-- <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Vollkorn&subset=latin" type="text/css"> -->
     <link rel="shortcut icon" href="/static/favicon.png"/>
     <link rel="stylesheet" href="/static/style.css" type="text/css">
@@ -24,20 +24,46 @@
       <div class=body>
 
 
-<h1 class=title>听听虾米</h1>
+<h1 class=title>Draw a 3D heart in browser</h1>
 <p class=info>
-December 2, 2012
+January 5, 2013
 <a href='/tags/other/'>#other</a>
 </p>
-<blockquote>
-<p>亲爱的用户，非常非常抱歉，由于版权方的要求，自2012年3月15日起，虾米无法为您所在的地区提供试听及下载服务。多谢您一直以来的支持，这些我们从来不会忘记，您的账号虾米将永久保留，请期待虾米回归那一天，我们在努力。 </p>
-</blockquote>
-<p>也就是偶尔想听听虾米，弄了两个东西，没地方放，搁这里吧。</p>
-<p>一个<a href="javascript:function%20xmplay(){s='<embed%20width=&#92;'257&#92;'%20height=&#92;'33&#92;'%20src=&#92;'http://www.xiami.com/widget/0_XXX/singlePlayer.swf&#92;'%20type=&#92;'application/x-shockwave-flash&#92;'%20wmode=&#92;'transparent&#92;'>';var%20l=$('.song_play');for(var%20i=0;i<l.length;i++){n=l[i].attributes['onclick'].value.match(/&#92;d+/);var%20p=l[i].parentElement;p.innerHTML=s.replace('XXX',n);p.style.width='257px';}};xmplay();void(0);">书签</a>，干了这么件事：</p>
-<p><img alt="before" src="img/before.png"></p>
-<p>变成这样：</p>
-<p><img alt="after" src="img/after.png"></p>
-<p>一个（巨难看难用的）下歌用的小webapp：<a href="http://xiamidl.herokuapp.com/">xiamidl</a>。</p>
+<p>Valentine's Day is approaching. Let's have some fun.</p>
+<p>First, we all know that <code>mathematica</code> can draw a beautiful
+3d heart with only one single command:</p>
+<div class="codehilite"><pre>ContourPlot3D[
+  320 (-x^2 z^3 - 9 y^2 z^3/80 + (x^2 + 9 y^2/4 + z^2 - 1)^3) == 0,
+  {x, -1.3, 1.3}, {y, -1.3, 1.3}, {z, -1.3, 1.3}, 
+  ContourStyle -&gt; Directive[Red]]
+</pre></div>
+
+
+<p><img alt="heart" src="img/heart.png"></p>
+<p>Let's save it as a model file with this command:</p>
+<div class="codehilite"><pre>Export[&quot;heart.ply&quot;, %]
+</pre></div>
+
+
+<p>We need <code>blender</code> to convert it into another format. 
+Download it <a href="http://www.blender.org/download/get-blender">here</a> and 
+install <code>three.js</code> extension <a href="https://github.com/mrdoob/three.js/tree/master/utils/exporters/blender">here</a>.</p>
+<p>Open <code>blender</code> you will see a default cube. 
+On the left menu column you will see a <code>Delete</code>.  <br>
+<em>Yes! Go you!</em> <br>
+Then <code>File</code> -&gt; <code>Import</code> -&gt; <code>Stanford (.ply)</code>,
+and select our <code>heart.ply</code>. You will see it like this.</p>
+<p><img alt="heart2" src="img/heart2.png"></p>
+<p>Next, <code>File</code> -&gt; <code>User Preferences</code> -&gt; <code>Addons</code>,
+find a addon named <code>three.js format</code> and enable it. 
+Then <code>File</code> -&gt; <code>Export</code> -&gt; <code>Three.js (.js)</code> and we will get a <code>heart.js</code>. 
+It can be imported by <code>three.js</code> and shown in browser. </p>
+<p>The final step contains a little more codes 
+(<a href="https://github.com/scturtle/heart">github</a>)
+and <a href="http://scturtle.me/heart/heart.html">here</a> is the final example.</p>
+<p><img alt="heart3" src="img/heart3.png"></p>
+<p>This model is handy and you can do more romantic things with powerful <code>three.js</code>.  <br>
+But you have to make sure that she has a "real" browser supporting <code>webGL</code>.</p>
 <div id="show_disqus"><a onclick="load_disqus();return false;" href="##">Show comments</a></div>
 <div id="disqus_thread"></div>
 
