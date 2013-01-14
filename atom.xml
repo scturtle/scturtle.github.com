@@ -4,13 +4,13 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2013-01-05T16:39:00</updated>
+  <updated>2013-01-14T23:14:00</updated>
   <id>http://scturtle.me</id>
   <entry>
     <title type="html"><![CDATA[Draw a 3D heart in browser]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
     <link href="http://scturtle.me/2013/1/5/heart/"/>
-    <updated>2013-01-05T16:00:00</updated>
+    <updated>2013-01-05T17:00:00</updated>
     <id>http://scturtle.me/2013/1/5/heart/</id>
     <content type="html"><![CDATA[
 <p>Valentine's Day is approaching. Let's have some fun.</p>
@@ -333,6 +333,10 @@ y_i=2x_1y_1\,x_{i-1}+(2x_1^2+1)\,y_{i-1}$$</p>
 <p><img alt="pic" src="/2012/8/12/quicksmiletext/img/quicksmiletext.png"></p>
 <p>目前也没有写个配置界面，配置文件 smileTexts.plist 在用户的文稿（Documents）文件夹下，自行修改吧╮(￣▽￣")╭。</p>
 <p>项目地址：<a href="https://github.com/scturtle/QuickSmileText">github.com/scturtle/QuickSmileText</a>。</p>
+<hr>
+<p>Updated at 2013-1-14: <br>
+终于还是把配置界面写了。</p>
+<p><img alt="pic" src="/2012/8/12/quicksmiletext/img/preferences.png"></p>
 ]]> </content>
   </entry>
 </feed>
