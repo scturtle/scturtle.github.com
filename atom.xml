@@ -4,8 +4,74 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2013-01-14T23:14:00</updated>
+  <updated>2013-01-22T18:36:00</updated>
   <id>http://scturtle.me</id>
+  <entry>
+    <title type="html"><![CDATA[Configure forward/inverse search with Vim-LaTeX and SamutraPDF]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2013/1/22/forward-inverse-search/"/>
+    <updated>2013-01-22T18:30:00</updated>
+    <id>http://scturtle.me/2013/1/22/forward-inverse-search/</id>
+    <content type="html"><![CDATA[
+<p>Get the newest version of <a href="http://vim-latex.svn.sourceforge.net/viewvc/vim-latex/trunk/vimfiles/">Vim-LaTeX</a>.
+There is a <code>Download GNU tarball</code> link at the bottom.
+(I use <a href="https://github.com/gmarik/vundle">vundle</a> to install a old version 
+and replace it with the newest.)</p>
+<p>Get the newest version of <a href="https://sites.google.com/site/xhmikosr/progs/officetools">SumatraPDF</a>. Add the directory paths  of SumatraPDF and gvim into the system path variable.</p>
+<p>Download <a href="http://d.pr/f/4Oco">dde.exe</a>. Put it in <code>ftplugin\latex-suite\</code>.</p>
+<p>Edit <code>ftplugin\latex-suite\compiler.vim</code> with the following patch:</p>
+<div class="codehilite"><pre><span class="gd">--- compiler.vim.orig   Sat Oct 30 00:55:22 2010</span>
+<span class="gi">+++ compiler.vim    Tue Jan 22 18:21:10 2013</span>
+<span class="gu">@@ -321,6 +321,7 @@</span>
+ &quot;           gvim --servername LATEX --remote-silent +%l &quot;%f&quot;
+ &quot;      For inverse search, if you are reading this, then just pressing \ls
+ &quot;      will work.
+<span class="gi">+let s:path = expand(&#39;&lt;sfile&gt;:p:h&#39;)</span>
+ function! Tex_ForwardSearchLaTeX()
+    if &amp;ft != &#39;tex&#39;
+        echo &quot;calling Tex_ForwardSeachLaTeX from a non-tex file&quot;
+<span class="gu">@@ -343,10 +344,20 @@</span>
+
+    &quot; inverse search tips taken from Dimitri Antoniou&#39;s tip and Benji Fisher&#39;s
+    &quot; tips on vim.sf.net (vim.sf.net tip #225)
+<span class="gd">-   if (has(&#39;win32&#39;) &amp;&amp; (viewer == &quot;yap&quot; || viewer == &quot;YAP&quot; || viewer == &quot;Yap&quot;))</span>
+<span class="gi">+   if (has(&#39;win32&#39;) &amp;&amp; (viewer == &quot;yap&quot; || viewer == &quot;YAP&quot; || viewer == &quot;Yap&quot; || viewer =~? &quot;^sumatrapdf&quot;))</span>
+
+<span class="gd">-       let execString = &#39;silent! !start &#39;. viewer.&#39; -s &#39;.line(&#39;.&#39;).expand(&#39;%&#39;).&#39; &#39;.mainfnameRoot</span>
+<span class="gi">+       if (viewer == &quot;yap&quot; || viewer == &quot;YAP&quot; || viewer == &quot;Yap&quot;)</span>
+
+<span class="gi">+           let execString = &#39;silent! !start &#39;. viewer.&#39; -s &#39;.line(&#39;.&#39;).expand(&#39;%&#39;).&#39; &#39;.mainfnameRoot</span>
+<span class="gi">+</span>
+<span class="gi">+       elseif viewer =~? &quot;^sumatrapdf&quot;</span>
+<span class="gi">+           </span>
+<span class="gi">+           &quot; SumatraPDF forward search</span>
+<span class="gi">+           let relativeFile=substitute(expand(&quot;%:p&quot;), &quot;\\/&quot;, &#39;\&#39;,&quot;g&quot;)</span>
+<span class="gi">+           let pdfname=substitute(mainfnameFull.&#39;.&#39;.s:target, &quot;\\/&quot;, &#39;\&#39;,&quot;g&quot;)</span>
+<span class="gi">+           let execString = &#39;silent! !start &quot;&#39;.s:path.&#39;/dde.exe&quot; SUMATRA SUMATRA control &quot;[ForwardSearch(&quot;&#39;.pdfname.&#39;&quot;,&quot;&#39;.relativeFile.&#39;&quot;,&#39;.line(&#39;.&#39;).&#39;,0,0,0)]&quot; true&#39;</span>
+<span class="gi">+</span>
+<span class="gi">+       endif</span>
+
+    elseif (has(&#39;macunix&#39;) &amp;&amp; (viewer == &quot;Skim&quot; || viewer == &quot;PDFView&quot; || viewer == &quot;TeXniscope&quot;))
+        &quot; We&#39;re on a Mac using a traditional Mac viewer
+</pre></div>
+
+
+<p>Add following configurations into <code>_vimrc</code>:</p>
+<div class="codehilite"><pre><span class="k">filetype</span> plugin <span class="k">on</span>
+<span class="c">&quot;set shellslash  &quot; conflict with vundle</span>
+<span class="k">set</span> <span class="nb">grepprg</span><span class="p">=</span><span class="k">grep</span>\ <span class="p">-</span>nH\ $*
+<span class="k">filetype</span> indent <span class="k">on</span>
+<span class="k">let</span> <span class="k">g</span>:Tex_Leader<span class="p">=</span><span class="s1">&#39;,&#39;</span>  <span class="c">&quot; I use this</span>
+<span class="k">let</span> <span class="k">g</span>:tex_flavor<span class="p">=</span><span class="s1">&#39;latex&#39;</span>
+<span class="k">let</span> <span class="k">g</span>:Tex_DefaultTargetFormat <span class="p">=</span> <span class="s1">&#39;pdf&#39;</span>
+<span class="k">let</span> <span class="k">g</span>:Tex_ViewRule_pdf <span class="p">=</span> <span class="s1">&#39;SumatraPDF -reuse-instance -inverse-search &quot;gvim -c \&quot;:RemoteOpen +\%l \%f\&quot;&quot;&#39;</span>
+<span class="k">let</span> <span class="k">g</span>:Tex_CompileRule_pdf <span class="p">=</span> <span class="s1">&#39;pdflatex -synctex=-1 -src-specials -interaction=nonstopmode $*&#39;</span>
+</pre></div>
+
+
+<p>Then, <code>,ll</code> to compile, <code>,ls</code> to forward search and double click in SumatraPDF to inverse search.</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Draw a 3D heart in browser]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -320,23 +386,6 @@ y_i=2x_1y_1\,x_{i-1}+(2x_1^2+1)\,y_{i-1}$$</p>
 </video>
 </div></p>
 <p>项目地址：<a href="http://github.com/scturtle/vim-instant-markdown-py">github.com/scturtle/vim-instant-markdown-py</a>。源码中借鉴来的地方有注明。</p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[QuickSmileText - 托盘上的快捷颜文字]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2012/8/12/quicksmiletext/"/>
-    <updated>2012-08-12T10:00:00</updated>
-    <id>http://scturtle.me/2012/8/12/quicksmiletext/</id>
-    <content type="html"><![CDATA[
-<p>入了个 Macbook Air，准备全面投靠 Mac 平台，不学一点儿原生程序开发说不过去。平常在聊天时，想输入颜文字的时候往往手忙脚乱，打开网页复制，遂有此试手作，在托盘图标菜单上快速复制颜文字，成功后还有原生 Mountain Lion 的通知。</p>
-<p><img alt="pic" src="/2012/8/12/quicksmiletext/img/quicksmiletext.png"></p>
-<p>目前也没有写个配置界面，配置文件 smileTexts.plist 在用户的文稿（Documents）文件夹下，自行修改吧╮(￣▽￣")╭。</p>
-<p>项目地址：<a href="https://github.com/scturtle/QuickSmileText">github.com/scturtle/QuickSmileText</a>。</p>
-<hr>
-<p>Updated at 2013-1-14: <br>
-终于还是把配置界面写了。</p>
-<p><img alt="pic" src="/2012/8/12/quicksmiletext/img/preferences.png"></p>
 ]]> </content>
   </entry>
 </feed>

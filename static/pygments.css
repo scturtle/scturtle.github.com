@@ -12,7 +12,7 @@ pre .gd { color: #A00000 } /* Generic.Deleted */
 pre .ge { font-style: italic } /* Generic.Emph */
 pre .gr { color: #FF0000 } /* Generic.Error */
 pre .gh { color: #000080; font-weight: bold } /* Generic.Heading */
-pre .gi { color: #00A000 } /* Generic.Inserted */
+pre .gi { color: #006000 } /* Generic.Inserted */
 pre .go { color: #808080 } /* Generic.Output */
 pre .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
 pre .gs { font-weight: bold } /* Generic.Strong */
