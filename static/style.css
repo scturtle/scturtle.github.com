@@ -64,7 +64,7 @@ div.overview                    { margin: 25px 122px 25px 102px; }
 div.overview div.detail         { margin-left: 140px; }
 div.overview h1                 { display: inline; font-size: 20px; }
 div.overview div.date           { padding-top: 2px;
-                                  float: left; width: 130px; color: #888;
+                                  float: left; width: 125px; color: #888;
                                   text-align: right; font-style: italic; }
 
 /* picture */
@@ -72,7 +72,11 @@ img { border-radius: 0.2em;
       box-shadow: rgba(0,0,0,0.15) 0 1px 4px;
       box-sizing: border-box;
       border: #fff 0.3em solid;
-      display: block; margin: 0 auto; }
+      display: block; margin: 0 auto; 
+      /* for mobile */
+      max-width: 100%;
+      width: expression(this.width>740?"740px":this.width);
+      }
 
 /* pagination */
 div.pagination  { margin: 24px 0 0 0; text-align: center; }
@@ -90,3 +94,9 @@ blockquote, q{
     padding-left: 40px;
     color: #555;
 }
+/* for mobile */
+@media(max-width: 740px){
+div.container { width: auto; margin-left: 10px; margin-right: 10px;}
+div.overview { margin-left: 0px; margin-right: 0px; }
+}
+
