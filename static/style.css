@@ -28,8 +28,8 @@ div.body                    { clear: both; border-top: 1px dotted #ddd;
     padding-top: 20px;}
 div.container               { width: 740px; margin: 48px auto; padding: 0; }
 div.header                  { float: left; }
-div.header a                { font-size: 24px; line-height: 50px; }
-div.navigation              { float: right; margin-top: 20px; }
+div.header a                { font-size: 24px; }
+div.navigation              { float: right; padding-top: 8px; }
 div.navigation ul           { margin: 0; padding: 0; list-style: none; }
 div.navigation ul li        { display: inline; margin: 0 2px; padding: 0; }
 div.footer                  { border-top: 1px dotted #ddd; padding-top: 9px;
@@ -60,12 +60,12 @@ table           { border: 1px solid #ddd; border-collapse: collapse;
 td, th          { padding: 2px 12px; border: 1px solid #ddd; }
 
 /* blog overview */
-div.overview                    { margin: 25px 122px 25px 102px; }
-div.overview div.detail         { margin-left: 140px; }
-div.overview h1                 { display: inline; font-size: 20px; }
-div.overview div.date           { padding-top: 2px;
-                                  float: left; width: 125px; color: #888;
-                                  text-align: right; font-style: italic; }
+div.overview       { margin: 25px 122px 25px 102px; }
+div.overview h1    { display: inline; font-size: 20px; }
+div.detail         { margin-left: 140px; }
+div.date           { padding-top: 2px;
+                     float: left; width: 125px; color: #888;
+                     text-align: right; font-style: italic; }
 
 /* picture */
 img { border-radius: 0.2em;
@@ -98,5 +98,8 @@ blockquote, q{
 @media(max-width: 740px){
 div.container { width: auto; margin-left: 10px; margin-right: 10px;}
 div.overview { margin-left: 0px; margin-right: 0px; }
+div.date { display: none; }
+div.header a {font-size: 20px;} div.navigation { padding-top: 5px; }
+div.detail { margin-left: 0px; text-align: center;}
 }
 
