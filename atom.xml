@@ -4,8 +4,41 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2013-02-24T15:47:00</updated>
+  <updated>2013-03-29T11:39:00</updated>
   <id>http://scturtle.me</id>
+  <entry>
+    <title type="html"><![CDATA[About Desktop]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2013/0329-about-desktop/"/>
+    <updated>2013-03-29T11:00:00</updated>
+    <id>http://scturtle.me/2013/0329-about-desktop/</id>
+    <content type="html"><![CDATA[
+<p>日子水过，好久没更，这两天的一点琐碎想法，本来想写在推上，干脆拿来充一篇。</p>
+<p><a href="http://fosschef.com/2011/04/one-funny-wallpaper-of-why-linux/"><img alt="Imgur" src="http://i.imgur.com/U6K7R83.jpg"></a></p>
+<p>前几天翻 fav 发现这么张壁纸，看到那句「只是因为她好好玩哦」，
+想起原来折腾 linux 真的只是因为足够折腾，可以用来打发无聊时间。
+原来也推崇过 free 什么的，现在真是越来越现实，系统就是系统，
+用来干活的。熟悉起来，哪个干活都行。
+重心慢慢向做事上转移，折腾带来的麻烦大于乐趣时，
+就会从 linux 向 win 和 osx 转移（除非工作环境就是 linux）。</p>
+<p>看别人的 mac 上跑着 win 也不觉得什么了，
+看别人 win 上装着 XX管家、XX卫士、国产杀(yú)毒(lè)软件也不说什么了，
+看别人用 IE 一样用的很 happy 那就那样吧。
+只是在看到别人用着 360 系的东西时还是忍不住劝劝，这个毛病也得改。
+原来热衷的那些分区、清理垃圾、整理磁盘缓存、winPE 现在看看真没什么必要，
+也开始劝别人一个 C 盘就好了嘛，东西放在 win 给你分好类的库文件夹下就好了嘛。
+丢过几次东西后，重要的都习惯放在云上，电脑里几乎啥都不存了，
+格了好像也没丢什么，确实越来越像个一般工具了。</p>
+<p>还有想到就是从小到大的电脑都特么挺贵的，但是显卡都不好，玩不了市面上正火的游戏。
+每次都想下一次换个贵点儿的高端洋气上档次的，
+把市面上高洋上的游戏都玩个遍，过了这几年的瘾，
+最后还是很囧地发现跑不起来，快成诅咒了。
+原来也想把想玩儿但跑不起来的游戏记下来，等过几年自然就可以跑这些过时的游戏了。
+不过又应了一句俗话，等太久来的东西往往不是当初的样子了。
+而且最近发现找个想玩的游戏都难了。</p>
+<p>这肯定是中了叫做“玩不了好游戏”的诅咒。</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Configure forward/inverse search with Vim-LaTeX and SamutraPDF]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -361,31 +394,6 @@ y_i=2x_1y_1\,x_{i-1}+(2x_1^2+1)\,y_{i-1}$$</p>
 
 
 <p>幸运的是我们最后得到的 a 恰好是整数，也正是此题的解。</p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[vim-instant-markdown-py - vim 的 markdown 插件]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2012/8/15/vim-instant-markdown-py/"/>
-    <updated>2012-08-15T11:00:00</updated>
-    <id>http://scturtle.me/2012/8/15/vim-instant-markdown-py/</id>
-    <content type="html"><![CDATA[
-<p>偶然看到了 <a href="https://github.com/suan/vim-instant-markdown">vim-instant-markdown</a> 这个 vim 插件，
-能一边在 vim 里编辑 markdown 一边在网页上实时渲染，碉堡了。
-可是插件的各种依赖实在让人无奈，通过 ruby 调用 python 的 pygments，
-又用 node.js 来处理 markdown 和 websocket，node.js 安装起来挺费劲，
-而且使用管道不支持 windows。于是山寨了一个 python 版出来。</p>
-<p>依赖：vim 需要有 python 支持，要有 python 库 bottle，markdown 和 pygment。</p>
-<p>安装：<code>vim-instant-markdown-py.vim</code> 放到 <code>~/.vim/plugin</code> 下，
-其他三个文件找个方便的地方放就好了。</p>
-<p>运行：运行 <code>mdd.py</code>，（如果没有自动的话）打开 <code>index.html</code>，
-显示 <code>connected</code> 就可以打开 vim 编辑 markdown 文件了。</p>
-<p>演示: <br>
-<div style="text-align:center;">
-<video src="/2012/8/15/vim-instant-markdown-py/img/markdown.webm" controls>
-</video>
-</div></p>
-<p>项目地址：<a href="http://github.com/scturtle/vim-instant-markdown-py">github.com/scturtle/vim-instant-markdown-py</a>。源码中借鉴来的地方有注明。</p>
 ]]> </content>
   </entry>
 </feed>
