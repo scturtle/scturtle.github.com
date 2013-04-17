@@ -65,8 +65,10 @@ Proof is analogical:</p>
 </pre></div>
 
 
-<p>There is another amazing method to do this weighted random sampling: For each item, get a random $r_i \in [0, 1]$, and reweight it as $w'_i = r_i^{1 / {w_i}}$.
-Then we can select the one with the top new weight. Proof f this is a bit annoying.</p>
+<p>There is another amazing method to do this weighted random sampling:
+For each item, get a random $r_i \in [0, 1]$,
+and <em>reweight</em> this item as $w'_i = r_i^{1 / {w_i}}$.
+Then we can select the one with the top new weight. Proof of this is a bit annoying.</p>
 <p>If we choose the $i$-th item at last, this means $\forall j\neq i, w'_j &lt;w'_i$. As $r_i \in [0, 1]$, the probability is:</p>
 <p>$$ p_i = \int_0^1 p(\forall j\neq i, w'_j &lt;w'_i)\ \mathrm{d}\ r_i $$</p>
 <p>$r_j$ is independent with each other. So:</p>
