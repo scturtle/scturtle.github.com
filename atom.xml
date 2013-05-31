@@ -4,8 +4,22 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2013-05-20T23:41:00</updated>
+  <updated>2013-05-31T13:27:00</updated>
   <id>http://scturtle.me</id>
+  
+  <entry>
+    <title type="html"><![CDATA[Snake AI in python]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2013/0531-snake/"/>
+    <updated>2013-05-31T14:00:00</updated>
+    <id>http://scturtle.me/2013/0531-snake/</id>
+    <content type="html"><![CDATA[
+<p>Simple snake AI demo in python and pygame.
+Inspired by <a href="http://hawstein.com/posts/snake-ai.html">this blog</a>.
+Code is <a href="https://gist.github.com/scturtle/5678355">here</a>.</p>
+<p><img alt="snake.gif" src="http://dl.dropboxusercontent.com/u/1551217/share/snake.gif"></p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[正义]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -306,24 +320,6 @@ But you have to make sure that she has a "real" browser supporting <code>webGL</
 <p>「我家不在这星球 / 太深业力的地球 / 每当我望见星宿 / 我都不想逗留 」 — My Little Airport</p>
 </blockquote>
 <p><embed width="257" height="33" wmode="transparent" type="application/x-shockwave-flash" src="http://www.xiami.com/widget/0_1771386748/singlePlayer.swf"></p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[听听虾米]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2012/12/2/tingtingxiami/"/>
-    <updated>2012-12-02T19:00:00</updated>
-    <id>http://scturtle.me/2012/12/2/tingtingxiami/</id>
-    <content type="html"><![CDATA[
-<blockquote>
-<p>亲爱的用户，非常非常抱歉，由于版权方的要求，自2012年3月15日起，虾米无法为您所在的地区提供试听及下载服务。多谢您一直以来的支持，这些我们从来不会忘记，您的账号虾米将永久保留，请期待虾米回归那一天，我们在努力。 </p>
-</blockquote>
-<p>也就是偶尔想听听虾米，弄了两个东西，没地方放，搁这里吧。</p>
-<p>一个<a href="javascript:function%20xmplay(){s='<embed%20width=&#92;'257&#92;'%20height=&#92;'33&#92;'%20src=&/2012/12/2/tingtingxiami/#92;'http://www.xiami.com/widget/0_XXX/singlePlayer.swf&#92;'%20type=&#92;'application/x-shockwave-flash&#92;'%20wmode=&#92;'transparent&#92;'>';var%20l=$('.song_play');for(var%20i=0;i<l.length;i++){n=l[i].attributes['onclick'].value.match(/&#92;d+/);var%20p=l[i].parentElement;p.innerHTML=s.replace('XXX',n);p.style.width='257px';}};xmplay();void(0);">书签</a>，干了这么件事：</p>
-<p><img alt="before" src="/2012/12/2/tingtingxiami/img/before.png"></p>
-<p>变成这样：</p>
-<p><img alt="after" src="/2012/12/2/tingtingxiami/img/after.png"></p>
-<p>一个（巨难看难用的）下歌用的小webapp：<a href="http://xiamidl.herokuapp.com/">xiamidl</a>。</p>
 ]]> </content>
   </entry>
 </feed>
