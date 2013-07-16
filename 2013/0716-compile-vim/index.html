@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Compile a better GVim for Windows | ScTurtle&#39;s Pool</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/pygments.css" type="text/css">
+    <link href="/atom.xml" rel="alternate" title="ScTurtle&#39;s Pool" type="application/atom+xml">
+  </head>
+  <body>
+    <div class=container>
+      <div class=header>
+        <a href='/'>ScTurtle&#39;s Pool</a>
+      </div>
+      <div class=navigation>
+        <ul>
+          <li><a href='/'>blog</a>
+          <li><a href='/archive.html'>archive</a>
+          <li><a href='/tags/'>tags</a>
+          <li><a href='/about/'>about</a>
+        </ul>
+      </div>
+      <div class=body>
+
+
+<article>
+<h1 class=title>Compile a better GVim for Windows</h1>
+<p class=info>
+July 16, 2013
+<a href='/tags/other/'>#other</a>
+</p>
+<p>GVim in the default distribution is ugly on Windows. 
+It's not hard to build a better one.</p>
+<p><em>1.</em> Get the source of Vim:</p>
+<div class="codehilite"><pre>&gt; hg clone https://vim.googlecode.com/hg/ vim
+</pre></div>
+
+
+<p><em>2.</em> To get better font renderer, comment out these lines in <code>src/gui_w32.c</code>:</p>
+<div class="codehilite"><pre>......
+    /* On NT, tell the font renderer not to &quot;help&quot; us with Hebrew and Arabic
+     * text.  This doesn&#39;t work in 9x, so we have to deal with it manually on
+     * those systems. */
+<span class="gi">+   /*</span>
+    if (os_version.dwPlatformId == VER_PLATFORM_WIN32_NT)
+        foptions |= ETO_IGNORELANGUAGE;
+<span class="gi">+   */</span>
+......
+</pre></div>
+
+
+<p><em>3.</em> To support non-monospace fonts, comment out these lines in <code>src/os_mswin.c</code>:</p>
+<div class="codehilite"><pre>......
+ #ifndef FEAT_PROPORTIONAL_FONTS
+    /* Ignore non-monospace fonts without further ado */
+<span class="gi">+   /*</span>
+    if ((ntm-&gt;tmPitchAndFamily &amp; 1) != 0)
+        return 1;
+<span class="gi">+   */</span>
+ #endif
+......
+</pre></div>
+
+
+<p><em>4.</em> Get this <a href="http://tuxproject.de/projects/vim/_compile.bat.php">compile.bat</a>, 
+and modify compilation flags as follows(assuming you have Virsual Studio):</p>
+<div class="codehilite"><pre>......
+nmake -f Make_mvc.mak GUI=yes OLE=yes IME=yes GIME=yes DYNAMIC_IME=yes GDYNAMIC_IME=yes CSCOPE=yes MULTI_BYTE=yes MULTI_BYTE_IME=yes FEATURES=HUGE PYTHON=c:\Python27 DYNAMIC_PYTHON=yes PYTHON_VER=27
+......
+</pre></div>
+
+
+<p><em>5.</em> Run it at the <code>vim</code> folder, 
+and you will get a new distribution of vim at <code>src\templateoutput</code>.
+Move it to a suitable place, and run <code>install.exe</code> in it to do further configuration.
+Done!</p>
+</article>
+<div id="show_disqus"><a onclick="load_disqus();return false;" href="##">Show comments</a></div>
+<div id="disqus_thread"></div>
+
+
+      </div>
+      <div class=footer>
+        <p><a href='https://github.com/scturtle/turtleblog'>turtleblog</a> &copy; 2013 scturtle
+        <p> <a href="mailto:scturtle@gmail.com">mail</a>,
+        <a href="http://twitter.com/scturtle">twitter</a>,
+        <a href="http://github.com/scturtle">github</a>,
+        <a href='/atom.xml' rel=alternate title="Recent Blogs | ScTurtle&#39;s Pool">feed</a>
+      </div>
+    </div>
+
+<script type="text/javascript">
+  function load_disqus() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://scturtlespool.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    document.getElementById('show_disqus').style.display='none';
+  };
+</script>
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33410961-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+  </body>
+</html>

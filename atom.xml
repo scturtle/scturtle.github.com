@@ -4,9 +4,63 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2013-06-03T21:09:00</updated>
+  <updated>2013-07-16T21:43:00</updated>
   <id>http://scturtle.me</id>
   
+  <entry>
+    <title type="html"><![CDATA[Compile a better GVim for Windows]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2013/0716-compile-vim/"/>
+    <updated>2013-07-16T22:00:00</updated>
+    <id>http://scturtle.me/2013/0716-compile-vim/</id>
+    <content type="html"><![CDATA[
+<p>GVim in the default distribution is ugly on Windows. 
+It's not hard to build a better one.</p>
+<p><em>1.</em> Get the source of Vim:</p>
+<div class="codehilite"><pre>&gt; hg clone https://vim.googlecode.com/hg/ vim
+</pre></div>
+
+
+<p><em>2.</em> To get better font renderer, comment out these lines in <code>src/gui_w32.c</code>:</p>
+<div class="codehilite"><pre>......
+    /* On NT, tell the font renderer not to &quot;help&quot; us with Hebrew and Arabic
+     * text.  This doesn&#39;t work in 9x, so we have to deal with it manually on
+     * those systems. */
+<span class="gi">+   /*</span>
+    if (os_version.dwPlatformId == VER_PLATFORM_WIN32_NT)
+        foptions |= ETO_IGNORELANGUAGE;
+<span class="gi">+   */</span>
+......
+</pre></div>
+
+
+<p><em>3.</em> To support non-monospace fonts, comment out these lines in <code>src/os_mswin.c</code>:</p>
+<div class="codehilite"><pre>......
+ #ifndef FEAT_PROPORTIONAL_FONTS
+    /* Ignore non-monospace fonts without further ado */
+<span class="gi">+   /*</span>
+    if ((ntm-&gt;tmPitchAndFamily &amp; 1) != 0)
+        return 1;
+<span class="gi">+   */</span>
+ #endif
+......
+</pre></div>
+
+
+<p><em>4.</em> Get this <a href="http://tuxproject.de/projects/vim/_compile.bat.php">compile.bat</a>, 
+and modify compilation flags as follows(assuming you have Virsual Studio):</p>
+<div class="codehilite"><pre>......
+nmake -f Make_mvc.mak GUI=yes OLE=yes IME=yes GIME=yes DYNAMIC_IME=yes GDYNAMIC_IME=yes CSCOPE=yes MULTI_BYTE=yes MULTI_BYTE_IME=yes FEATURES=HUGE PYTHON=c:\Python27 DYNAMIC_PYTHON=yes PYTHON_VER=27
+......
+</pre></div>
+
+
+<p><em>5.</em> Run it at the <code>vim</code> folder, 
+and you will get a new distribution of vim at <code>src\templateoutput</code>.
+Move it to a suitable place, and run <code>install.exe</code> in it to do further configuration.
+Done!</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Snake AI in python]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -295,31 +349,6 @@ But you have to make sure that she has a "real" browser supporting <code>webGL</
 <p>少主人快要结婚了，又买了一件新家具。当这和自己一起来到这所房子的最后一件旧家具也被替换掉时，阿忠觉得自己可能也不会再待很久了。会去哪里呢，最坏是卖到收废品的地方被拆掉，最好也就是待在楼上的某个储藏室的黑暗角落里。那时没有人给自己上弦了吧，那么会停在哪一个时刻呢。</p>
 <p>秋天快到末尾了，阿忠发现燕子忙忙碌碌的大概也要离开了。阿忠不知道她会去哪里，也不知道她明年会不会回来，更不知道自己那时会不会还在这里。这时，阿忠想起头上那只会报时的布谷。因为在头顶，阿忠从来没见过那只布谷是什么样子的，而且报时功能也被关了很久了，燕子也没有见过。会不会和燕子长得很像呢，阿忠想。所以阿忠想给她一个惊喜。在某天傍晚，燕子刚从外面回来，正在整理尾羽。阿忠不知道从哪里来的力气，牟足了劲，终于推动齿轮，让小木门打开了。但是因为好久没活动了，齿轮已经生锈，小鸟在出来的一刹那，撞到木门边缘，掉了下去。没有惊喜，没有意想中清脆的报时声，只有摔在地上破碎的声音。燕子也被惊跑了。</p>
 <p>阿忠低头看着摔坏的布谷，早就褪色了，确实没有燕子好看呢。</p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[地球]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2012/12/5/earth/"/>
-    <updated>2012-12-05T12:00:00</updated>
-    <id>http://scturtle.me/2012/12/5/earth/</id>
-    <content type="html"><![CDATA[
-<p>少年，我看你骨骼惊奇，天赋异禀，想必不是凡人，你看我这里有……</p>
-<p>去你妈的，还少年，我都快大叔了。我快步离开路边这个傻逼老乞丐。</p>
-<p>走着走着，我想他那句不是凡人好像还有点儿意思。其实我也早就察觉到了，我和别人不大一样。别人的笑点我总搞不明白，我给他们看我觉得有意思的东西，却总是受到鄙夷的眼神。别人整天忙忙碌碌做的事情吧，我总是很没兴趣，反而会对一些很没意义的东西特别上心。罢了罢了，反正随大溜就好了，就不会显得不正常。这样的事情久了也就习惯了，反正人和人相互理解之类的这种鬼台词，骗骗小孩就好了，我这种大叔级的早就不信了。</p>
-<p>直到后来某一天，一部叫《黑衣人》的电影，给了我很大的冲击。里面那些看似正常的普通人，居然他妈的是一个个外星人！突然我想，我他妈的会不会也是个外星人，来自一个笑点不同，风格迥异的星球。那里的人在这里看来都很傻逼，这里的人在那里看来也是。这样想想还是蛮有意思的。不久我就开始沉迷于各种科幻电影小说，在其中寻找着各种蛛丝马迹，来证明这个世界上确实有外星人存在。这样的事儿做多了，反而自己显得越发不正常了。</p>
-<p>其实这种傻逼想法想多了就没意思了，慢慢就掐死了。直到有一天，我遇到一个和我差不多的人。一个人总是对着奇怪的事物发笑，总是做一些不明所以的事儿。不过看起来他要比我混得开一些，他能很轻松的辨别出别人的笑点，甚至还能讲一些让别人也哈哈大笑，而且无论做什么都做的还不错，身边总是聚集了一些人。不管怎样，我们还是像磁铁的两极一样相互吸引了。</p>
-<p>接触久了，突然有一天，他说，其实我是外星人。我才没有被吓到。我说，呵呵，其实我也是。他有个奇特的爱好就是天文，整天架着大炮筒子往天上看。他说他是被同伴弄丢了。或许是坐飞碟来到地球，出来小解回去发现碟已经飞走了，只好在这里混下去。他说地球其实并不适合外星人生活，累。他说他要找到他的那颗星球，才好回去。他说其实这些年 UFO 越来越多其实是同伴回来找他，但是地球上人太多，他也早就变得和他们一样了，所以一直没有被找到。他说其实有一次他看到 UFO 了，就落在那个山头，只是城里堵车，他没来得及赶过去。所以，他只好到现在还在不停的找。他问我信不。我说，我信。</p>
-<p>当你觉得自己不正常的时候，总是想去找和自己一样不正常的人，但是当你找到他们后，会发现他们实在是太不正常了，只好离他们远一些。</p>
-<p>有段时间没联系了。后来我再去找他，结果怎么也找不到了。他大概换了手机，也换了住所，去问他以前的同事也没什么消息。算了，一辈子这么长，弄丢几个人不算什么，可惜没有人和我一块儿看科幻小说了。</p>
-<p>最近有一些传闻，到2012年底，地球会毁灭。那一天，会有 UFO 出现，把还在地球上的外星人接回去。我忽然想起和他彻底断了联络好像是在 99 年那会儿，那时末日论也很盛行。该不会他的同伴也听到风声来把他接回去了吧。这狗屎运的。</p>
-<p>我也有点儿按耐不住了。开始买望远镜，天文书，整夜不停的对着天空研究。搜集最近 UFO 出现的时间地点，用各种不同的公式去拟合。大半夜的时候，如果突然醒了，就好像有什么征兆似的，赶忙跑出去东张西望地看。这快年底了，不知道时间够不够用，你们那边也要抓紧啊，我对着天空喊。不过看起来，还是21号那天最有戏，我已经做好准备了，买了个很大的移动硬盘，把所有喜欢的歌和游戏都拷进去了，随身带着，啥时候走都可以。</p>
-<p>当年天桥上那老乞丐或许真知道些什么。难道他有回去的票？如果再碰到一定要好好问问。</p>
-<p>等我回去了，如果碰到他，一定要好好骂他一顿，那时候只顾着自己走也不通知我。不过，估计他也只会傻傻的笑，骂完了我们再一起去喝酒。</p>
-<blockquote>
-<p>「我家不在这星球 / 太深业力的地球 / 每当我望见星宿 / 我都不想逗留 」 — My Little Airport</p>
-</blockquote>
-<p><embed width="257" height="33" wmode="transparent" type="application/x-shockwave-flash" src="http://www.xiami.com/widget/0_1771386748/singlePlayer.swf"></p>
 ]]> </content>
   </entry>
 </feed>
