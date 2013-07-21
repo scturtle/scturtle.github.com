@@ -4,9 +4,8 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2013-07-16T21:43:00</updated>
+  <updated>2013-07-21T16:05:00</updated>
   <id>http://scturtle.me</id>
-  
   <entry>
     <title type="html"><![CDATA[Compile a better GVim for Windows]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -72,28 +71,6 @@ Done!</p>
 Inspired by <a href="http://hawstein.com/posts/snake-ai.html">this blog</a>.
 Code is <a href="https://gist.github.com/scturtle/5678355">here</a>.</p>
 <p><img alt="snake.gif" src="http://dl.dropboxusercontent.com/u/1551217/share/snake.gif"></p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[正义]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2013/0521-justice/"/>
-    <updated>2013-05-21T00:00:00</updated>
-    <id>http://scturtle.me/2013/0521-justice/</id>
-    <content type="html"><![CDATA[
-<p>印在纸上的是正义 <br>
-传颂者多的是正义 <br>
-仗打赢了的是正义 <br>
-输的一方在他们的历史书里也是正义</p>
-<p>字正腔圆在无可奈何面前是正义 <br>
-金科玉律在别无选择面前是正义 <br>
-梨花带雨在束手无策面前是正义 <br>
-率先指责的往往标榜自己是正义</p>
-<p>在这个炎热与抑郁的夏天 <br>
-空调是无可置疑的正义 <br>
-在那个萧瑟和无聊的冬天 <br>
-你身体传来的温度 <br>
-便是正义</p>
 ]]> </content>
   </entry>
   <entry>
@@ -315,40 +292,158 @@ But you have to make sure that she has a "real" browser supporting <code>webGL</
 ]]> </content>
   </entry>
   <entry>
-    <title type="html"><![CDATA[maildog]]></title>
+    <title type="html"><![CDATA[地球]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2012/12/25/maildog/"/>
-    <updated>2012-12-25T11:00:00</updated>
-    <id>http://scturtle.me/2012/12/25/maildog/</id>
+    <link href="http://scturtle.me/2012/12/5/earth/"/>
+    <updated>2012-12-05T12:00:00</updated>
+    <id>http://scturtle.me/2012/12/5/earth/</id>
     <content type="html"><![CDATA[
-<p><img alt="maildog" src="/2012/12/25/maildog/img/maildog.png"></p>
-<p>A mail checker working on the system tray.</p>
-<ul>
-<li>PyQt, cross-platform</li>
-<li>Less than 100 lines</li>
-<li>IMAP, but keep unread</li>
-<li>check every 30 seconds</li>
-</ul>
-<p>Codes <a href="https://gist.github.com/4369460">here</a>.</p>
-<p>You need a <code>mail.ico</code> and a <code>config.json</code> containing <code>server</code>, <code>user</code>, <code>pasw</code> to start it.</p>
+<p>少年，我看你骨骼惊奇，天赋异禀，想必不是凡人，你看我这里有……</p>
+<p>去你妈的，还少年，我都快大叔了。我快步离开路边这个傻逼老乞丐。</p>
+<p>走着走着，我想他那句不是凡人好像还有点儿意思。其实我也早就察觉到了，我和别人不大一样。别人的笑点我总搞不明白，我给他们看我觉得有意思的东西，却总是受到鄙夷的眼神。别人整天忙忙碌碌做的事情吧，我总是很没兴趣，反而会对一些很没意义的东西特别上心。罢了罢了，反正随大溜就好了，就不会显得不正常。这样的事情久了也就习惯了，反正人和人相互理解之类的这种鬼台词，骗骗小孩就好了，我这种大叔级的早就不信了。</p>
+<p>直到后来某一天，一部叫《黑衣人》的电影，给了我很大的冲击。里面那些看似正常的普通人，居然他妈的是一个个外星人！突然我想，我他妈的会不会也是个外星人，来自一个笑点不同，风格迥异的星球。那里的人在这里看来都很傻逼，这里的人在那里看来也是。这样想想还是蛮有意思的。不久我就开始沉迷于各种科幻电影小说，在其中寻找着各种蛛丝马迹，来证明这个世界上确实有外星人存在。这样的事儿做多了，反而自己显得越发不正常了。</p>
+<p>其实这种傻逼想法想多了就没意思了，慢慢就掐死了。直到有一天，我遇到一个和我差不多的人。一个人总是对着奇怪的事物发笑，总是做一些不明所以的事儿。不过看起来他要比我混得开一些，他能很轻松的辨别出别人的笑点，甚至还能讲一些让别人也哈哈大笑，而且无论做什么都做的还不错，身边总是聚集了一些人。不管怎样，我们还是像磁铁的两极一样相互吸引了。</p>
+<p>接触久了，突然有一天，他说，其实我是外星人。我才没有被吓到。我说，呵呵，其实我也是。他有个奇特的爱好就是天文，整天架着大炮筒子往天上看。他说他是被同伴弄丢了。或许是坐飞碟来到地球，出来小解回去发现碟已经飞走了，只好在这里混下去。他说地球其实并不适合外星人生活，累。他说他要找到他的那颗星球，才好回去。他说其实这些年 UFO 越来越多其实是同伴回来找他，但是地球上人太多，他也早就变得和他们一样了，所以一直没有被找到。他说其实有一次他看到 UFO 了，就落在那个山头，只是城里堵车，他没来得及赶过去。所以，他只好到现在还在不停的找。他问我信不。我说，我信。</p>
+<p>当你觉得自己不正常的时候，总是想去找和自己一样不正常的人，但是当你找到他们后，会发现他们实在是太不正常了，只好离他们远一些。</p>
+<p>有段时间没联系了。后来我再去找他，结果怎么也找不到了。他大概换了手机，也换了住所，去问他以前的同事也没什么消息。算了，一辈子这么长，弄丢几个人不算什么，可惜没有人和我一块儿看科幻小说了。</p>
+<p>最近有一些传闻，到2012年底，地球会毁灭。那一天，会有 UFO 出现，把还在地球上的外星人接回去。我忽然想起和他彻底断了联络好像是在 99 年那会儿，那时末日论也很盛行。该不会他的同伴也听到风声来把他接回去了吧。这狗屎运的。</p>
+<p>我也有点儿按耐不住了。开始买望远镜，天文书，整夜不停的对着天空研究。搜集最近 UFO 出现的时间地点，用各种不同的公式去拟合。大半夜的时候，如果突然醒了，就好像有什么征兆似的，赶忙跑出去东张西望地看。这快年底了，不知道时间够不够用，你们那边也要抓紧啊，我对着天空喊。不过看起来，还是21号那天最有戏，我已经做好准备了，买了个很大的移动硬盘，把所有喜欢的歌和游戏都拷进去了，随身带着，啥时候走都可以。</p>
+<p>当年天桥上那老乞丐或许真知道些什么。难道他有回去的票？如果再碰到一定要好好问问。</p>
+<p>等我回去了，如果碰到他，一定要好好骂他一顿，那时候只顾着自己走也不通知我。不过，估计他也只会傻傻的笑，骂完了我们再一起去喝酒。</p>
+<blockquote>
+<p>「我家不在这星球 / 太深业力的地球 / 每当我望见星宿 / 我都不想逗留 」 — My Little Airport</p>
+</blockquote>
+<p><embed width="257" height="33" wmode="transparent" type="application/x-shockwave-flash" src="http://www.xiami.com/widget/0_1771386748/singlePlayer.swf"></p>
 ]]> </content>
   </entry>
   <entry>
-    <title type="html"><![CDATA[钟]]></title>
+    <title type="html"><![CDATA[张君宝小朋友]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2012/12/15/timepiece/"/>
-    <updated>2012-12-15T12:00:00</updated>
-    <id>http://scturtle.me/2012/12/15/timepiece/</id>
+    <link href="http://scturtle.me/2012/11/27/junbao/"/>
+    <updated>2012-11-27T10:00:00</updated>
+    <id>http://scturtle.me/2012/11/27/junbao/</id>
     <content type="html"><![CDATA[
-<p>阿忠是一面老钟。</p>
-<p>当然对于钟来说，老不老没有什么太大的区别。一样的滴答，时间以相同的速度消逝。</p>
-<p>虽然阿忠是一面钟，但他毕竟老了，已经记不起是什么时候来到这所房子的了。大概是老主人结婚的时候吧，他们一起搬到这所房子里来，从那时起就一直挂在北墙上。主人像爱惜其他家具一样爱惜阿忠，准时上弦，时常擦拭。这么多年，作为一面钟，阿忠也尽职尽责，更确切的说是小心翼翼的。年轻的时候不是这样，那时阿忠总能走的很准，即使该上弦了，阿忠也怕麻烦主人，尽力多跑一会儿。阿忠偶尔也会有调皮的时候，在主人快要上班的时候跑快一些，在拜访的老朋友要离开的时候跑慢一些。后来总归是不再年轻，阿忠慢慢力不从心，总担心是跑快了一点呢，还是跑慢了一点呢，是该上弦了呢，还是哪里出问题了呢，终日惶惶。有一次，阿忠打了一个盹儿，于是女主人的牛奶就煮糊了，虽然女主人不知道是阿忠的问题，但看着皱着眉头刷锅的女主人，阿忠还是很不好意思。那之后，阿忠就更不敢松懈了，只能在上弦的时候才可以休息一下。</p>
-<p>年年岁岁钟相似，岁岁年年人不同。在阿忠还没有很老的时候，主人已经很老了。一天阿忠看见主人慢慢捂着胸口在阿忠的下方躺下去。阿忠只是一面钟，不知所措。想发出声音，但也只有滴答滴答。阿忠想起来头上的那只布谷，但是阿忠不知道此时怎么请她出来。阿忠只能一直看着时间一点一点带走主人的气色。</p>
-<p>再后来女主人也不在了，只剩下少主人。在少主人还是小主人的时候，就很喜欢阿忠。因为每当阿忠头上的布谷扑扇翅膀从小木门出来报时的时候，小主人都会立马望过来，开心得拍手笑，即使前一分钟还在哭。后来小主人也慢慢地长大了，每次都跳着脚要够到那只布谷。再后来，小主人又长大了，当他已经不用跳着便能够到阿忠时，却已经不感兴趣了。时间依然流逝，阿忠还是那样尽职尽责，只是越发力不从心了，尤其是看到少主人把家里一件一件旧家具都换掉，阿忠也担心是否某一天自己也会被从北墙上摘下来，然后不再挂上去了。阿忠不知道现在的钟是啥样子的，他们大概几个月才上一次弦，他们也有布谷报时吗，还是有更新鲜的玩意儿。幸好少主人的女朋友，一个可爱的女孩子，蛮喜欢阿忠的，而且阿忠在北墙上也不显眼，反而和这古朴的木质房屋很搭调。不过每周上弦的时候，阿忠都会觉得惭愧。</p>
-<p>这年春天，老房子迎来了一位小小的客人。不知何时起一只燕子在房檐下定居了下来。阿忠起初没太在意，但是相比于满屋不会动的东西来说，这只活泼可爱的小家伙明显要有趣多了。她弧线的身躯，黑色的翅膀在阳光下折射出紫色光泽，白色的腹羽刚刚梳理好。尤其是她轻灵的身影，让一辈子在原地踏步的阿忠很是羡慕。渐渐地，阿忠的脑海里全是她了，每天她什么时候醒来，什么时候飞出去，什么时候才会回来，她在外面会看到什么，会做些什么，全是阿忠在意的事。慢慢的，阿忠发现想要走准更难了。每当想她的时候，时间好像就会慢下来；每当看她的时候，会感到紧张，时间飞一样的过去。阿忠不知道是该高兴还是困扰。</p>
-<p>少主人快要结婚了，又买了一件新家具。当这和自己一起来到这所房子的最后一件旧家具也被替换掉时，阿忠觉得自己可能也不会再待很久了。会去哪里呢，最坏是卖到收废品的地方被拆掉，最好也就是待在楼上的某个储藏室的黑暗角落里。那时没有人给自己上弦了吧，那么会停在哪一个时刻呢。</p>
-<p>秋天快到末尾了，阿忠发现燕子忙忙碌碌的大概也要离开了。阿忠不知道她会去哪里，也不知道她明年会不会回来，更不知道自己那时会不会还在这里。这时，阿忠想起头上那只会报时的布谷。因为在头顶，阿忠从来没见过那只布谷是什么样子的，而且报时功能也被关了很久了，燕子也没有见过。会不会和燕子长得很像呢，阿忠想。所以阿忠想给她一个惊喜。在某天傍晚，燕子刚从外面回来，正在整理尾羽。阿忠不知道从哪里来的力气，牟足了劲，终于推动齿轮，让小木门打开了。但是因为好久没活动了，齿轮已经生锈，小鸟在出来的一刹那，撞到木门边缘，掉了下去。没有惊喜，没有意想中清脆的报时声，只有摔在地上破碎的声音。燕子也被惊跑了。</p>
-<p>阿忠低头看着摔坏的布谷，早就褪色了，确实没有燕子好看呢。</p>
+<p>张君宝是一个小朋友。</p>
+<p>张君宝是一个快乐的小朋友。</p>
+<p>张君宝快乐的原因很简单，他还小，还没有什么可以烦恼的事。他可以对着折纸书挑战各种难度的形状，他可以把积木插成各种想象中的武器，他可以用沙子堆出各种见过没见过的城堡，他可以神游在各种动画片小人书里。</p>
+<p>张君宝也不总是一个人玩。他有两个朋友，大刘和王二。大刘是张君宝的小学同班同学。据说每个班都有一个大刘这样的同学，个子又高，成绩又差，傻乎乎的，所以别人都叫他傻大刘。大刘总是被安排在最后一排靠窗的位置，雷打不动，他每天的主要做的事就是托着下巴看着窗外愣神。有一天放学，大家都走了，作为值日生的张君宝发现，大刘还是那样坐着看着窗外愣神。他过去拍拍他问他在做什么。大刘一惊，问，下课了吗。张君宝笑了，他觉得他找到了一个朋友。王二不是张君宝的同学，他们是在马路边认识的。那时王二领着一只小黄狗，在吃汉堡。小黄狗一直围着王二叫，也想吃。王二不堪其扰，掀开汉堡，小心翼翼地夹出仅有的一片薄薄的火腿，给了小黄狗。可是小黄狗还在叫，于是王二只好再拿出西红柿啊菜叶啊给小黄狗，最后连面包都被小黄狗吃掉了。当王二发现自己还什么都没有吃的时候，嚎啕大哭。张君宝在一旁看得好笑，只好过去安慰他。于是他又有了一个朋友。</p>
+<p>后来，张君宝长大了。</p>
+<p>张君宝是怎么长大的呢？大概是因为他谈了三次恋爱。虽然每一次都以失败告终，但张君宝善于总结经验教训。第一次大概是因为每次和女孩儿吃饭他都严格实行AA制。第二次他吸取教训，于是很快就没有钱请女孩儿吃饭和买礼物了。第三次一切都进行的很好，无论从哪方面看都很好，所以像大多数美好的爱情故事一样，最后没有在一起。</p>
+<p>长大了的张君宝有一份还算靠谱的工作，在一家不大的公司。张君宝也说不清楚他的工作到底是什么，但他做的还可以。他没有再找女朋友，大刘和王二也很久不联系了，但是日子还是一样过，没有什么区别。再次碰到王二是一个深夜。加班到很晚的的张君宝走进了路边的一个狗肉摊，惊奇地发现了王二。王二也很高兴，给他加了一小块儿肉，坐下来和他叙旧。原来王二子承父业，成了这里的老板。王二还是那个王二，只是张君宝总觉得有些感觉不对了，他不确定他还是不是那个张君宝了。张君宝匆匆吃完走掉了，后来也没有再去。再次碰到大刘是在张君宝给公司跑手续的时候。在某个政府部门的办公桌的那头，大刘一本正经，没有抬头，好像也没有认出来他。盖完章后，张君宝小心翼翼地关门，发现大刘在托着下巴看着窗外愣神。这时张君宝突然有冲动，想进去告诉大刘，你还跟以前一样啊。可是这时候桌子上的电话响了。</p>
+<p>在一个冬天的早上，张君宝迷迷糊糊地醒来。在起床的一刹那，他好像看到了奇怪的画面。眼前的熟悉的场景突然变成黑白的了，有些雪花，有些失真，好像还有些马赛克。就像电视信号不好的时候，或者划痕太重的碟片。张君宝突然觉得一切都不真实了。后来这一天又发生了一些奇怪的事情。张君宝觉得这不是偶然，一定是有什么喻示，要让他做出一个艰难的决定。可他也想不出来有什么艰难的决定可以做。最后张君宝辞职了。他好像人间蒸发了一样，和所有人失去了联系。有人说他去环游世界了，有人说他彩票中大奖了，买下了南太平洋的一个小岛安度晚年去了，也有人说见他被警察带走了。</p>
+<p>其实他们不知道，张君宝又去当小朋友了。</p>
+]]> </content>
+  </entry>
+  <entry>
+    <title type="html"><![CDATA[情报理工海报的图像处理]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2012/11/6/poster-ocr/"/>
+    <updated>2012-11-06T22:00:00</updated>
+    <id>http://scturtle.me/2012/11/6/poster-ocr/</id>
+    <content type="html"><![CDATA[
+<p>最近这个东京大学情报理工的海报很火啊，试着做了做，无奈光 OCR 这个步骤就搞不定了。记下来权当消遣吧。</p>
+<p>首先我们来选一张新的海报，这张貌似是今年的：</p>
+<p><img class=align-center src='/2012/11/6/poster-ocr/img/poster.jpg' style='width:50%'/></p>
+<p>怎么 OCR 呢？直接拿“某某OCR”上貌似不太靠谱啊，那就先做一下预处理吧。首先试了下 Paint.NET 来做黑白、反色、调对比度，效果不好。</p>
+<p>注意到 0 和 1 都是灰色的，那就从颜色着手。灰说明 RGB 三个值相似，那就测试一下 3 个值和平均值的差（的绝对值的和），如果小于一定范围，而且这个平均值也在一定范围中，那么差不多就是灰色了。把其他颜色置白，灰色加黑就好。调参数的过程比较枯燥，但是相比试过的其他方法效果好多了。效果图：</p>
+<p><img class=align-center src='/2012/11/6/poster-ocr/img/p1.png' style='width:50%'/></p>
+<p>然后注意到红底部分咋全军覆没了呢？看了看取色的值，发现灰色和红色叠加后，RGB 值改变较大，于是又单独做了一下这个区域的范围，得到了更好的效果：</p>
+<p><img class=align-center src='/2012/11/6/poster-ocr/img/p2.png' style='width:50%'/></p>
+<p>这部分的代码：</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;poster.jpg&#39;</span><span class="p">)</span>
+
+<span class="n">pix</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+        <span class="k">if</span> <span class="mi">140</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="o">&lt;</span> <span class="mi">170</span><span class="p">:</span>
+            <span class="n">avg</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">abs</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">m</span><span class="p">,</span> <span class="n">b</span> <span class="o">-</span> <span class="n">m</span><span class="p">,</span> <span class="n">c</span> <span class="o">-</span> <span class="n">m</span><span class="p">)))</span>
+            <span class="k">if</span>   <span class="n">avg</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
+                <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">avg</span> <span class="o">&lt;</span> <span class="mi">70</span><span class="p">:</span>
+                <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">avg</span> <span class="o">&lt;</span> <span class="mi">90</span><span class="p">:</span>
+                <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="mi">80</span> <span class="o">&lt;</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">150</span> <span class="ow">and</span> <span class="mi">70</span> <span class="o">&lt;</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="mi">140</span> <span class="ow">and</span> <span class="mi">70</span> <span class="o">&lt;</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="mi">140</span><span class="p">:</span>
+                <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
+
+<span class="n">im</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">im</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;p.png&#39;</span><span class="p">,</span> <span class="s">&#39;png&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>这总可以拿去 OCR 了吧，无奈试了几个 OCR 的，都没效果。看来处理得还是太挫啊。本想就此打住写作业去，结果手痒又想起拿滑窗自己做下 OCR。机器学习什么的还是不去折腾了，就进行屌丝级像素比对吧。注意到一件比较蛋疼的事，那就是 0 和 1 特么的不对齐！连续的 1 有时候会吃掉一个宽像素，连续的 0 有时候又会撑出来一个。于是在滑窗的过程中做了一个抖动的判断，效果很好。下面是第一行的一部分和其结果（都正确呵呵）：</p>
+<p><img class=align-center src='/2012/11/6/poster-ocr/img/test.png' style='width:50%'/></p>
+<p><center>
+<code>1000111011100100110000101100100011101010</code>
+</center></p>
+<p>这部分的代码：</p>
+<div class="codehilite"><pre><span class="c"># coding: utf-8</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;test.png&#39;</span><span class="p">)</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">&#39;L&#39;</span><span class="p">)</span>  <span class="c"># 转灰度</span>
+<span class="n">pix</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<span class="n">size</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+
+
+<span class="c"># 获得7*5的区域的灰度矩阵</span>
+<span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">7</span><span class="p">)]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">pix</span><span class="p">[</span><span class="n">sx</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span> <span class="n">sy</span> <span class="o">+</span> <span class="n">y</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">d</span>
+
+<span class="c"># 前两个作为0,1标准</span>
+<span class="n">d1</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">d0</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+
+<span class="c"># 灰度矩阵和标准间比对打分</span>
+<span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
+    <span class="n">sc</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="n">sc</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">da</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">-</span> <span class="n">db</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">sc</span>
+
+
+<span class="c"># 根据打分猜0或1</span>
+<span class="k">def</span> <span class="nf">guess</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">):</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">score</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d0</span><span class="p">),</span> <span class="n">score</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">4</span><span class="p">:</span>
+    <span class="n">g</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">guess</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c"># 测试左抖动 1px</span>
+        <span class="n">gl</span><span class="p">,</span> <span class="n">sl</span> <span class="o">=</span> <span class="n">guess</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sl</span> <span class="o">&lt;</span> <span class="n">s</span> <span class="o">-</span> <span class="mi">1000</span><span class="p">:</span>
+            <span class="c">#print &#39;l&#39;,s,sl</span>
+            <span class="n">g</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">gl</span><span class="p">,</span> <span class="n">sl</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">5</span><span class="p">:</span>  <span class="c"># 测试右抖动 1px</span>
+        <span class="n">gr</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">guess</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sr</span> <span class="o">&lt;</span> <span class="n">s</span> <span class="o">-</span> <span class="mi">1000</span><span class="p">:</span>
+            <span class="c">#print &#39;r&#39;,s,sr</span>
+            <span class="n">g</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">gr</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="c">#print &#39;x:&#39;,x, s, g</span>
+    <span class="k">print</span> <span class="n">g</span><span class="p">,</span>
+    <span class="n">x</span> <span class="o">+=</span> <span class="mi">5</span>
+</pre></div>
 ]]> </content>
   </entry>
 </feed>
