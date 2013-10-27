@@ -4,8 +4,28 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2013-07-21T16:05:00</updated>
+  <updated>2013-10-27T22:39:00</updated>
   <id>http://scturtle.me</id>
+  
+  <entry>
+    <title type="html"><![CDATA[One Punch Man]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2013/1028-one-punch-man/"/>
+    <updated>2013-10-28T00:00:00</updated>
+    <id>http://scturtle.me/2013/1028-one-punch-man/</id>
+    <content type="html"><![CDATA[
+<p><img alt="one punch man" src="http://i.imgur.com/9oBxUQc.jpg" /></p>
+<p>继上半年看完了《二十世纪少年》后，最近补完了漫画《一拳超人》的重制版，又把原作版也追到最新了。很久没有看到这么喜欢的漫画了。各种随随便便又颠覆传统的设定，再加上主角那超像麻仓叶的吊儿郎当的个性，真是让我爱不释手啊。</p>
+<p>在<a href="http://www.mh5.tw/comic/9758/61242/p/20">番外篇2</a>中有这么一幕小女孩和主角的对话。其中几句有些感触：</p>
+<p>「当我在你这个年纪我也很怕这个世界， <br />
+即便到现在对我来说生活也没有变得更好」 <br />
+「但你很强，光头」 <br />
+「不管你强还是弱」   </p>
+<p>不管你强还是弱，可能像<a href="http://www.hecaitou.com/blogs/hecaitou/archives/134603.aspx">和菜头</a>先生说的那样，一种可以对生活应付裕如的心态从来不存在。没有人容易。但是在艰难之中依然步履不停，依然可以因种种小快乐欣喜，依然愿意去分担另一个人的不易，可能是我目前觉得最好的状态了。</p>
+<p>于是借和菜头那篇的最后的句式，也对自己说一句：   </p>
+<p>生日快乐！scturtle 君！</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Compile a better GVim for Windows]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -70,7 +90,7 @@ Done!</p>
 <p>Simple snake AI demo in python and pygame.
 Inspired by <a href="http://hawstein.com/posts/snake-ai.html">this blog</a>.
 Code is <a href="https://gist.github.com/scturtle/5678355">here</a>.</p>
-<p><img alt="snake.gif" src="http://dl.dropboxusercontent.com/u/1551217/share/snake.gif"></p>
+<p><img alt="snake.gif" src="http://dl.dropboxusercontent.com/u/1551217/share/snake.gif" /></p>
 ]]> </content>
   </entry>
   <entry>
@@ -81,7 +101,7 @@ Code is <a href="https://gist.github.com/scturtle/5678355">here</a>.</p>
     <id>http://scturtle.me/2013/0426-turtlenote/</id>
     <content type="html"><![CDATA[
 <p>An online markdown editor (in JS) supporting vi-mode key binding, code highlighting and tex formula.</p>
-<p><a href="http://scturtle.me/turtlenote/"><img alt="screenshort" src="http://i.imgur.com/E6Ar5bs.png"></a></p>
+<p><a href="http://scturtle.me/turtlenote/"><img alt="screenshort" src="http://i.imgur.com/E6Ar5bs.png" /></a></p>
 ]]> </content>
   </entry>
   <entry>
@@ -93,10 +113,10 @@ Code is <a href="https://gist.github.com/scturtle/5678355">here</a>.</p>
     <content type="html"><![CDATA[
 <p>Given a set of items, choosing random one with equal probability can be done by <code>random.choice(items)</code>.
 But what if we are given items one by one without knowing the length of the whole set?</p>
-<p>There is a simple algorithm: For the $k$-th item, we give up previous selection and choose this one with probability $\frac 1 k$.
-Proof as follows: If we select the $k$-th item, it means that we choose it with probability $\frac 1 k$ and give up all successors. 
+<p>There is a simple algorithm: For the <mathjax>$k$</mathjax>-th item, we give up previous selection and choose this one with probability <mathjax>$\frac 1 k$</mathjax>.
+Proof as follows: If we select the <mathjax>$k$</mathjax>-th item, it means that we choose it with probability <mathjax>$\frac 1 k$</mathjax> and give up all successors. 
 Product of probabilities of all these choices is:</p>
-<p>$$ p_k = \frac 1 k \times \frac {k} {k+1} \times \cdots \times \frac {n-2}{n-1} \times \frac {n-1} n = \frac 1 n $$</p>
+<p><mathjax>$$ p_k = \frac 1 k \times \frac {k} {k+1} \times \cdots \times \frac {n-2}{n-1} \times \frac {n-1} n = \frac 1 n $$</mathjax></p>
 <p>Codes in Python:</p>
 <div class="codehilite"><pre><span class="kn">import</span> <span class="nn">random</span>
 
@@ -109,12 +129,12 @@ Product of probabilities of all these choices is:</p>
 </pre></div>
 
 
-<p>We can generalize this algorithm. For a set of items, each one is associated with a weight $w_i$.
+<p>We can generalize this algorithm. For a set of items, each one is associated with a weight <mathjax>$w_i$</mathjax>.
 Our goal is to select a random one based on its weight ratio.
-The algorithm is similar to the previous one: For the $k$-th item, replace the current selection with it with probability $\frac {w_k} {\sum_{i=1}^k w_i}$.
+The algorithm is similar to the previous one: For the <mathjax>$k$</mathjax>-th item, replace the current selection with it with probability <mathjax>$\frac {w_k} {\sum_{i=1}^k w_i}$</mathjax>.
 Proof is analogical:</p>
-<p>$$p_k = \frac {w_k} {\sum_{i=1}^k w_i} \times \frac {\sum_{i=1}^k w_i} {\sum_{i=1}^{k+1} w_i} 
-\times \cdots \times \frac {\sum_{i=1}^{n-2} w_i} {\sum_{i=1}^{n-1} w_i} \times \frac {\sum_{i=1}^{n-1} w_i} {\sum_{i=1}^{n} w_i} = \frac {w_k} {\sum_{i=1}^n w_i}$$</p>
+<p><mathjax>$$p_k = \frac {w_k} {\sum_{i=1}^k w_i} \times \frac {\sum_{i=1}^k w_i} {\sum_{i=1}^{k+1} w_i} 
+\times \cdots \times \frac {\sum_{i=1}^{n-2} w_i} {\sum_{i=1}^{n-1} w_i} \times \frac {\sum_{i=1}^{n-1} w_i} {\sum_{i=1}^{n} w_i} = \frac {w_k} {\sum_{i=1}^n w_i}$$</mathjax></p>
 <p>Codes in Python:</p>
 <div class="codehilite"><pre><span class="k">def</span> <span class="nf">weightedChoice</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
     <span class="n">selection</span> <span class="o">=</span> <span class="bp">None</span>
@@ -128,18 +148,18 @@ Proof is analogical:</p>
 
 
 <p>There is another amazing method to do this weighted random sampling:
-For each item, get a random $r_i \in [0, 1]$,
-and <em>reweight</em> this item as $w'_i = r_i^{1 / {w_i}}$.
+For each item, get a random <mathjax>$r_i \in [0, 1]$</mathjax>,
+and <em>reweight</em> this item as <mathjax>$w'_i = r_i^{1 / {w_i}}$</mathjax>.
 Then we can select the one with the top new weight. Proof of this is a bit annoying.</p>
-<p>If we choose the $i$-th item at last, this means $\forall j\neq i, w'_j &lt;w'_i$. As $r_i \in [0, 1]$, the probability is:</p>
-<p>$$ p_i = \int_0^1 p(\forall j\neq i, w'_j &lt;w'_i)\ \mathrm{d}\ r_i $$</p>
-<p>$r_j$ is independent with each other. So:</p>
-<p>$$ p_i = \int_0^1 \prod_{j \neq i} p(w'_j &lt;w'_i)\ \mathrm{d} \ r_i $$</p>
-<p>As $r_j \in [0, 1]$, the inner probability can be simplified as:</p>
-<p>$$ p(w'_j &lt;w'_i) = p(r_j^{1 / w_j} &lt; r_i^{1 / w_i}) = p(r_j &lt; r_i^{w_j / w_i}) = r_i^{w_j / w_i} $$</p>
+<p>If we choose the <mathjax>$i$</mathjax>-th item at last, this means <mathjax>$\forall j\neq i, w'_j &lt;w'_i$</mathjax>. As <mathjax>$r_i \in [0, 1]$</mathjax>, the probability is:</p>
+<p><mathjax>$$ p_i = \int_0^1 p(\forall j\neq i, w'_j &lt;w'_i)\ \mathrm{d}\ r_i $$</mathjax></p>
+<p><mathjax>$r_j$</mathjax> is independent with each other. So:</p>
+<p><mathjax>$$ p_i = \int_0^1 \prod_{j \neq i} p(w'_j &lt;w'_i)\ \mathrm{d} \ r_i $$</mathjax></p>
+<p>As <mathjax>$r_j \in [0, 1]$</mathjax>, the inner probability can be simplified as:</p>
+<p><mathjax>$$ p(w'_j &lt;w'_i) = p(r_j^{1 / w_j} &lt; r_i^{1 / w_i}) = p(r_j &lt; r_i^{w_j / w_i}) = r_i^{w_j / w_i} $$</mathjax></p>
 <p>So:</p>
-<p>$$ p_i = \int_0^1 \prod_{j \neq i} r_i^{w_j / w_i}\ \mathrm{d}\ r_i
-= \int_0^1 r_i^{(w-w_i) / w_i}\ \mathrm{d}\ r_i = \frac {w_i} w $$</p>
+<p><mathjax>$$ p_i = \int_0^1 \prod_{j \neq i} r_i^{w_j / w_i}\ \mathrm{d}\ r_i
+= \int_0^1 r_i^{(w-w_i) / w_i}\ \mathrm{d}\ r_i = \frac {w_i} w $$</mathjax></p>
 <p>Same as our expectation.</p>
 <p>This blog is basically a summary of
 <a href="http://www.gocalf.com/blog/random-selection.html">these</a>
@@ -156,7 +176,7 @@ Refer to them for more content.</p>
     <id>http://scturtle.me/2013/0329-about-desktop/</id>
     <content type="html"><![CDATA[
 <p>日子水过，好久没更，这两天的一点琐碎想法，本来想写在推上，干脆拿来充一篇。</p>
-<p><a href="http://fosschef.com/2011/04/one-funny-wallpaper-of-why-linux/"><img alt="Imgur" src="http://i.imgur.com/U6K7R83.jpg"></a></p>
+<p><a href="http://fosschef.com/2011/04/one-funny-wallpaper-of-why-linux/"><img alt="Imgur" src="http://i.imgur.com/U6K7R83.jpg" /></a></p>
 <p>前几天翻 fav 发现这么张壁纸，看到那句「只是因为她好好玩哦」，
 想起原来折腾 linux 真的只是因为足够折腾，可以用来打发无聊时间。
 原来也推崇过 free 什么的，现在真是越来越现实，系统就是系统，
@@ -264,7 +284,7 @@ and replace it with the newest.)</p>
 </pre></div>
 
 
-<p><img alt="heart" src="/2013/1/5/heart/img/heart.png"></p>
+<p><img alt="heart" src="/2013/1/5/heart/img/heart.png" /></p>
 <p>Let's save it as a model file with this command:</p>
 <div class="codehilite"><pre>Export[&quot;heart.ply&quot;, %]
 </pre></div>
@@ -274,11 +294,11 @@ and replace it with the newest.)</p>
 Download it <a href="http://www.blender.org/download/get-blender">here</a> and 
 install <code>three.js</code> extension <a href="https://github.com/mrdoob/three.js/tree/master/utils/exporters/blender">here</a>.</p>
 <p>Open <code>blender</code> you will see a default cube. 
-On the left menu column you will see a <code>Delete</code>.  <br>
-<em>Yes! Go you!</em> <br>
+On the left menu column you will see a <code>Delete</code>.  <br />
+<em>Yes! Go you!</em> <br />
 Then <code>File</code> -&gt; <code>Import</code> -&gt; <code>Stanford (.ply)</code>,
 and select our <code>heart.ply</code>. You will see it like this.</p>
-<p><img alt="heart2" src="/2013/1/5/heart/img/heart2.png"></p>
+<p><img alt="heart2" src="/2013/1/5/heart/img/heart2.png" /></p>
 <p>Next, <code>File</code> -&gt; <code>User Preferences</code> -&gt; <code>Addons</code>,
 find a addon named <code>three.js format</code> and enable it. 
 Then <code>File</code> -&gt; <code>Export</code> -&gt; <code>Three.js (.js)</code> and we will get a <code>heart.js</code>. 
@@ -286,8 +306,8 @@ It can be imported by <code>three.js</code> and shown in browser. </p>
 <p>The final step contains a little more codes 
 (<a href="https://github.com/scturtle/heart">github</a>)
 and <a href="http://scturtle.me/heart/heart.html">here</a> is the final example.</p>
-<p><img alt="heart3" src="/2013/1/5/heart/img/heart3.png"></p>
-<p>This model is handy and you can do more romantic things with powerful <code>three.js</code>.  <br>
+<p><img alt="heart3" src="/2013/1/5/heart/img/heart3.png" /></p>
+<p>This model is handy and you can do more romantic things with powerful <code>three.js</code>.  <br />
 But you have to make sure that she has a "real" browser supporting <code>webGL</code>.</p>
 ]]> </content>
   </entry>
@@ -332,118 +352,6 @@ But you have to make sure that she has a "real" browser supporting <code>webGL</
 <p>长大了的张君宝有一份还算靠谱的工作，在一家不大的公司。张君宝也说不清楚他的工作到底是什么，但他做的还可以。他没有再找女朋友，大刘和王二也很久不联系了，但是日子还是一样过，没有什么区别。再次碰到王二是一个深夜。加班到很晚的的张君宝走进了路边的一个狗肉摊，惊奇地发现了王二。王二也很高兴，给他加了一小块儿肉，坐下来和他叙旧。原来王二子承父业，成了这里的老板。王二还是那个王二，只是张君宝总觉得有些感觉不对了，他不确定他还是不是那个张君宝了。张君宝匆匆吃完走掉了，后来也没有再去。再次碰到大刘是在张君宝给公司跑手续的时候。在某个政府部门的办公桌的那头，大刘一本正经，没有抬头，好像也没有认出来他。盖完章后，张君宝小心翼翼地关门，发现大刘在托着下巴看着窗外愣神。这时张君宝突然有冲动，想进去告诉大刘，你还跟以前一样啊。可是这时候桌子上的电话响了。</p>
 <p>在一个冬天的早上，张君宝迷迷糊糊地醒来。在起床的一刹那，他好像看到了奇怪的画面。眼前的熟悉的场景突然变成黑白的了，有些雪花，有些失真，好像还有些马赛克。就像电视信号不好的时候，或者划痕太重的碟片。张君宝突然觉得一切都不真实了。后来这一天又发生了一些奇怪的事情。张君宝觉得这不是偶然，一定是有什么喻示，要让他做出一个艰难的决定。可他也想不出来有什么艰难的决定可以做。最后张君宝辞职了。他好像人间蒸发了一样，和所有人失去了联系。有人说他去环游世界了，有人说他彩票中大奖了，买下了南太平洋的一个小岛安度晚年去了，也有人说见他被警察带走了。</p>
 <p>其实他们不知道，张君宝又去当小朋友了。</p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[情报理工海报的图像处理]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2012/11/6/poster-ocr/"/>
-    <updated>2012-11-06T22:00:00</updated>
-    <id>http://scturtle.me/2012/11/6/poster-ocr/</id>
-    <content type="html"><![CDATA[
-<p>最近这个东京大学情报理工的海报很火啊，试着做了做，无奈光 OCR 这个步骤就搞不定了。记下来权当消遣吧。</p>
-<p>首先我们来选一张新的海报，这张貌似是今年的：</p>
-<p><img class=align-center src='/2012/11/6/poster-ocr/img/poster.jpg' style='width:50%'/></p>
-<p>怎么 OCR 呢？直接拿“某某OCR”上貌似不太靠谱啊，那就先做一下预处理吧。首先试了下 Paint.NET 来做黑白、反色、调对比度，效果不好。</p>
-<p>注意到 0 和 1 都是灰色的，那就从颜色着手。灰说明 RGB 三个值相似，那就测试一下 3 个值和平均值的差（的绝对值的和），如果小于一定范围，而且这个平均值也在一定范围中，那么差不多就是灰色了。把其他颜色置白，灰色加黑就好。调参数的过程比较枯燥，但是相比试过的其他方法效果好多了。效果图：</p>
-<p><img class=align-center src='/2012/11/6/poster-ocr/img/p1.png' style='width:50%'/></p>
-<p>然后注意到红底部分咋全军覆没了呢？看了看取色的值，发现灰色和红色叠加后，RGB 值改变较大，于是又单独做了一下这个区域的范围，得到了更好的效果：</p>
-<p><img class=align-center src='/2012/11/6/poster-ocr/img/p2.png' style='width:50%'/></p>
-<p>这部分的代码：</p>
-<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-
-<span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;poster.jpg&#39;</span><span class="p">)</span>
-
-<span class="n">pix</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-
-<span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-        <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span>
-        <span class="n">m</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
-        <span class="k">if</span> <span class="mi">140</span> <span class="o">&lt;</span> <span class="n">m</span> <span class="o">&lt;</span> <span class="mi">170</span><span class="p">:</span>
-            <span class="n">avg</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">abs</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">m</span><span class="p">,</span> <span class="n">b</span> <span class="o">-</span> <span class="n">m</span><span class="p">,</span> <span class="n">c</span> <span class="o">-</span> <span class="n">m</span><span class="p">)))</span>
-            <span class="k">if</span>   <span class="n">avg</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span>
-                <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">avg</span> <span class="o">&lt;</span> <span class="mi">70</span><span class="p">:</span>
-                <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">avg</span> <span class="o">&lt;</span> <span class="mi">90</span><span class="p">:</span>
-                <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="mi">80</span> <span class="o">&lt;</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="mi">150</span> <span class="ow">and</span> <span class="mi">70</span> <span class="o">&lt;</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="mi">140</span> <span class="ow">and</span> <span class="mi">70</span> <span class="o">&lt;</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="mi">140</span><span class="p">:</span>
-                <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="n">pix</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
-
-<span class="n">im</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-<span class="n">im</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;p.png&#39;</span><span class="p">,</span> <span class="s">&#39;png&#39;</span><span class="p">)</span>
-</pre></div>
-
-
-<p>这总可以拿去 OCR 了吧，无奈试了几个 OCR 的，都没效果。看来处理得还是太挫啊。本想就此打住写作业去，结果手痒又想起拿滑窗自己做下 OCR。机器学习什么的还是不去折腾了，就进行屌丝级像素比对吧。注意到一件比较蛋疼的事，那就是 0 和 1 特么的不对齐！连续的 1 有时候会吃掉一个宽像素，连续的 0 有时候又会撑出来一个。于是在滑窗的过程中做了一个抖动的判断，效果很好。下面是第一行的一部分和其结果（都正确呵呵）：</p>
-<p><img class=align-center src='/2012/11/6/poster-ocr/img/test.png' style='width:50%'/></p>
-<p><center>
-<code>1000111011100100110000101100100011101010</code>
-</center></p>
-<p>这部分的代码：</p>
-<div class="codehilite"><pre><span class="c"># coding: utf-8</span>
-<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
-
-<span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;test.png&#39;</span><span class="p">)</span>
-<span class="n">im</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s">&#39;L&#39;</span><span class="p">)</span>  <span class="c"># 转灰度</span>
-<span class="n">pix</span> <span class="o">=</span> <span class="n">im</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
-<span class="n">size</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
-
-
-<span class="c"># 获得7*5的区域的灰度矩阵</span>
-<span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">):</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">7</span><span class="p">)]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">)]</span>
-    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-            <span class="n">d</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">pix</span><span class="p">[</span><span class="n">sx</span> <span class="o">+</span> <span class="n">x</span><span class="p">,</span> <span class="n">sy</span> <span class="o">+</span> <span class="n">y</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">d</span>
-
-<span class="c"># 前两个作为0,1标准</span>
-<span class="n">d1</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="n">d0</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-
-
-<span class="c"># 灰度矩阵和标准间比对打分</span>
-<span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="n">da</span><span class="p">,</span> <span class="n">db</span><span class="p">):</span>
-    <span class="n">sc</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
-            <span class="n">sc</span> <span class="o">+=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">da</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">-</span> <span class="n">db</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">])</span>
-    <span class="k">return</span> <span class="n">sc</span>
-
-
-<span class="c"># 根据打分猜0或1</span>
-<span class="k">def</span> <span class="nf">guess</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">):</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="n">sx</span><span class="p">,</span> <span class="n">sy</span><span class="p">)</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="n">score</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d0</span><span class="p">),</span> <span class="n">score</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">d1</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-
-<span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="k">while</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">4</span><span class="p">:</span>
-    <span class="n">g</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">guess</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c"># 测试左抖动 1px</span>
-        <span class="n">gl</span><span class="p">,</span> <span class="n">sl</span> <span class="o">=</span> <span class="n">guess</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">sl</span> <span class="o">&lt;</span> <span class="n">s</span> <span class="o">-</span> <span class="mi">1000</span><span class="p">:</span>
-            <span class="c">#print &#39;l&#39;,s,sl</span>
-            <span class="n">g</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">gl</span><span class="p">,</span> <span class="n">sl</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">5</span><span class="p">:</span>  <span class="c"># 测试右抖动 1px</span>
-        <span class="n">gr</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">guess</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">sr</span> <span class="o">&lt;</span> <span class="n">s</span> <span class="o">-</span> <span class="mi">1000</span><span class="p">:</span>
-            <span class="c">#print &#39;r&#39;,s,sr</span>
-            <span class="n">g</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">gr</span><span class="p">,</span> <span class="n">sr</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="c">#print &#39;x:&#39;,x, s, g</span>
-    <span class="k">print</span> <span class="n">g</span><span class="p">,</span>
-    <span class="n">x</span> <span class="o">+=</span> <span class="mi">5</span>
-</pre></div>
 ]]> </content>
   </entry>
 </feed>

@@ -29,14 +29,14 @@
 <h1 class=title>Random Sampling</h1>
 <p class=info>
 April 17, 2013
-<a href='/tags/math/'>#math</a>
+<a href='/tags/math.html'>#math</a>
 </p>
 <p>Given a set of items, choosing random one with equal probability can be done by <code>random.choice(items)</code>.
 But what if we are given items one by one without knowing the length of the whole set?</p>
-<p>There is a simple algorithm: For the $k$-th item, we give up previous selection and choose this one with probability $\frac 1 k$.
-Proof as follows: If we select the $k$-th item, it means that we choose it with probability $\frac 1 k$ and give up all successors. 
+<p>There is a simple algorithm: For the <mathjax>$k$</mathjax>-th item, we give up previous selection and choose this one with probability <mathjax>$\frac 1 k$</mathjax>.
+Proof as follows: If we select the <mathjax>$k$</mathjax>-th item, it means that we choose it with probability <mathjax>$\frac 1 k$</mathjax> and give up all successors. 
 Product of probabilities of all these choices is:</p>
-<p>$$ p_k = \frac 1 k \times \frac {k} {k+1} \times \cdots \times \frac {n-2}{n-1} \times \frac {n-1} n = \frac 1 n $$</p>
+<p><mathjax>$$ p_k = \frac 1 k \times \frac {k} {k+1} \times \cdots \times \frac {n-2}{n-1} \times \frac {n-1} n = \frac 1 n $$</mathjax></p>
 <p>Codes in Python:</p>
 <div class="codehilite"><pre><span class="kn">import</span> <span class="nn">random</span>
 
@@ -49,12 +49,12 @@ Product of probabilities of all these choices is:</p>
 </pre></div>
 
 
-<p>We can generalize this algorithm. For a set of items, each one is associated with a weight $w_i$.
+<p>We can generalize this algorithm. For a set of items, each one is associated with a weight <mathjax>$w_i$</mathjax>.
 Our goal is to select a random one based on its weight ratio.
-The algorithm is similar to the previous one: For the $k$-th item, replace the current selection with it with probability $\frac {w_k} {\sum_{i=1}^k w_i}$.
+The algorithm is similar to the previous one: For the <mathjax>$k$</mathjax>-th item, replace the current selection with it with probability <mathjax>$\frac {w_k} {\sum_{i=1}^k w_i}$</mathjax>.
 Proof is analogical:</p>
-<p>$$p_k = \frac {w_k} {\sum_{i=1}^k w_i} \times \frac {\sum_{i=1}^k w_i} {\sum_{i=1}^{k+1} w_i} 
-\times \cdots \times \frac {\sum_{i=1}^{n-2} w_i} {\sum_{i=1}^{n-1} w_i} \times \frac {\sum_{i=1}^{n-1} w_i} {\sum_{i=1}^{n} w_i} = \frac {w_k} {\sum_{i=1}^n w_i}$$</p>
+<p><mathjax>$$p_k = \frac {w_k} {\sum_{i=1}^k w_i} \times \frac {\sum_{i=1}^k w_i} {\sum_{i=1}^{k+1} w_i} 
+\times \cdots \times \frac {\sum_{i=1}^{n-2} w_i} {\sum_{i=1}^{n-1} w_i} \times \frac {\sum_{i=1}^{n-1} w_i} {\sum_{i=1}^{n} w_i} = \frac {w_k} {\sum_{i=1}^n w_i}$$</mathjax></p>
 <p>Codes in Python:</p>
 <div class="codehilite"><pre><span class="k">def</span> <span class="nf">weightedChoice</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
     <span class="n">selection</span> <span class="o">=</span> <span class="bp">None</span>
@@ -68,18 +68,18 @@ Proof is analogical:</p>
 
 
 <p>There is another amazing method to do this weighted random sampling:
-For each item, get a random $r_i \in [0, 1]$,
-and <em>reweight</em> this item as $w'_i = r_i^{1 / {w_i}}$.
+For each item, get a random <mathjax>$r_i \in [0, 1]$</mathjax>,
+and <em>reweight</em> this item as <mathjax>$w'_i = r_i^{1 / {w_i}}$</mathjax>.
 Then we can select the one with the top new weight. Proof of this is a bit annoying.</p>
-<p>If we choose the $i$-th item at last, this means $\forall j\neq i, w'_j &lt;w'_i$. As $r_i \in [0, 1]$, the probability is:</p>
-<p>$$ p_i = \int_0^1 p(\forall j\neq i, w'_j &lt;w'_i)\ \mathrm{d}\ r_i $$</p>
-<p>$r_j$ is independent with each other. So:</p>
-<p>$$ p_i = \int_0^1 \prod_{j \neq i} p(w'_j &lt;w'_i)\ \mathrm{d} \ r_i $$</p>
-<p>As $r_j \in [0, 1]$, the inner probability can be simplified as:</p>
-<p>$$ p(w'_j &lt;w'_i) = p(r_j^{1 / w_j} &lt; r_i^{1 / w_i}) = p(r_j &lt; r_i^{w_j / w_i}) = r_i^{w_j / w_i} $$</p>
+<p>If we choose the <mathjax>$i$</mathjax>-th item at last, this means <mathjax>$\forall j\neq i, w'_j &lt;w'_i$</mathjax>. As <mathjax>$r_i \in [0, 1]$</mathjax>, the probability is:</p>
+<p><mathjax>$$ p_i = \int_0^1 p(\forall j\neq i, w'_j &lt;w'_i)\ \mathrm{d}\ r_i $$</mathjax></p>
+<p><mathjax>$r_j$</mathjax> is independent with each other. So:</p>
+<p><mathjax>$$ p_i = \int_0^1 \prod_{j \neq i} p(w'_j &lt;w'_i)\ \mathrm{d} \ r_i $$</mathjax></p>
+<p>As <mathjax>$r_j \in [0, 1]$</mathjax>, the inner probability can be simplified as:</p>
+<p><mathjax>$$ p(w'_j &lt;w'_i) = p(r_j^{1 / w_j} &lt; r_i^{1 / w_i}) = p(r_j &lt; r_i^{w_j / w_i}) = r_i^{w_j / w_i} $$</mathjax></p>
 <p>So:</p>
-<p>$$ p_i = \int_0^1 \prod_{j \neq i} r_i^{w_j / w_i}\ \mathrm{d}\ r_i
-= \int_0^1 r_i^{(w-w_i) / w_i}\ \mathrm{d}\ r_i = \frac {w_i} w $$</p>
+<p><mathjax>$$ p_i = \int_0^1 \prod_{j \neq i} r_i^{w_j / w_i}\ \mathrm{d}\ r_i
+= \int_0^1 r_i^{(w-w_i) / w_i}\ \mathrm{d}\ r_i = \frac {w_i} w $$</mathjax></p>
 <p>Same as our expectation.</p>
 <p>This blog is basically a summary of
 <a href="http://www.gocalf.com/blog/random-selection.html">these</a>
@@ -110,6 +110,7 @@ Refer to them for more content.</p>
     document.getElementById('show_disqus').style.display='none';
   };
 </script>
+
 <script type="text/x-mathjax-config"> 
 MathJax.Hub.Config({
   tex2jax: {

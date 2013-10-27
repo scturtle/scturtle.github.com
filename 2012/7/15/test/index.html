@@ -29,7 +29,7 @@
 <h1 class=title>测试</h1>
 <p class=info>
 July 15, 2012
-<a href='/tags/other/'>#other</a>
+<a href='/tags/other.html'>#other</a>
 </p>
 <h1>测试</h1>
 <h2>测试</h2>
@@ -38,15 +38,15 @@ July 15, 2012
 <h5>测试</h5>
 <h6>测试</h6>
 <p>Long long very long English? Long long very long English! Long long very long English. </p>
-<p>测试 latex 公式： $\frac 12$。</p>
+<p>测试 latex 公式： <mathjax>$\frac 12$</mathjax>。</p>
 <p>测试<em>强调</em>，<strong>加重</strong>。</p>
 <p>测试超链接：<a href="www.google.com">google</a>。</p>
 <p>测试分界线:</p>
-<hr>
-<p>测试换行： <br>
+<hr />
+<p>测试换行： <br />
 测试行内代码 <code>test</code>。</p>
 <p>测试图片：</p>
-<p><img alt="pic" src="img/head.jpg"></p>
+<p><img alt="pic" src="img/head.jpg" /></p>
 <p><img class=align-center src='img/head.jpg' style='width:100px'/></p>
 <p>测试代码块：</p>
 <div class="codehilite"><pre><span class="n">A</span> <span class="o">=</span> <span class="s">r&#39;&#39;&#39;B = &quot;A = r\&#39;&#39;&#39;&quot; + A + &quot;</span>\<span class="s">&#39;&#39;&#39;</span><span class="se">\n</span><span class="s">&quot; + A</span>
@@ -103,6 +103,7 @@ July 15, 2012
     document.getElementById('show_disqus').style.display='none';
   };
 </script>
+
 <script type="text/x-mathjax-config"> 
 MathJax.Hub.Config({
   tex2jax: {

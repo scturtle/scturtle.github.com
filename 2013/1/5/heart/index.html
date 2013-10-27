@@ -29,7 +29,7 @@
 <h1 class=title>Draw a 3D heart in browser</h1>
 <p class=info>
 January 5, 2013
-<a href='/tags/other/'>#other</a>
+<a href='/tags/other.html'>#other</a>
 </p>
 <p>Valentine's Day is approaching. Let's have some fun.</p>
 <p>First, we all know that <code>mathematica</code> can draw a beautiful
@@ -41,7 +41,7 @@ January 5, 2013
 </pre></div>
 
 
-<p><img alt="heart" src="img/heart.png"></p>
+<p><img alt="heart" src="img/heart.png" /></p>
 <p>Let's save it as a model file with this command:</p>
 <div class="codehilite"><pre>Export[&quot;heart.ply&quot;, %]
 </pre></div>
@@ -51,11 +51,11 @@ January 5, 2013
 Download it <a href="http://www.blender.org/download/get-blender">here</a> and 
 install <code>three.js</code> extension <a href="https://github.com/mrdoob/three.js/tree/master/utils/exporters/blender">here</a>.</p>
 <p>Open <code>blender</code> you will see a default cube. 
-On the left menu column you will see a <code>Delete</code>.  <br>
-<em>Yes! Go you!</em> <br>
+On the left menu column you will see a <code>Delete</code>.  <br />
+<em>Yes! Go you!</em> <br />
 Then <code>File</code> -&gt; <code>Import</code> -&gt; <code>Stanford (.ply)</code>,
 and select our <code>heart.ply</code>. You will see it like this.</p>
-<p><img alt="heart2" src="img/heart2.png"></p>
+<p><img alt="heart2" src="img/heart2.png" /></p>
 <p>Next, <code>File</code> -&gt; <code>User Preferences</code> -&gt; <code>Addons</code>,
 find a addon named <code>three.js format</code> and enable it. 
 Then <code>File</code> -&gt; <code>Export</code> -&gt; <code>Three.js (.js)</code> and we will get a <code>heart.js</code>. 
@@ -63,8 +63,8 @@ It can be imported by <code>three.js</code> and shown in browser. </p>
 <p>The final step contains a little more codes 
 (<a href="https://github.com/scturtle/heart">github</a>)
 and <a href="http://scturtle.me/heart/heart.html">here</a> is the final example.</p>
-<p><img alt="heart3" src="img/heart3.png"></p>
-<p>This model is handy and you can do more romantic things with powerful <code>three.js</code>.  <br>
+<p><img alt="heart3" src="img/heart3.png" /></p>
+<p>This model is handy and you can do more romantic things with powerful <code>three.js</code>.  <br />
 But you have to make sure that she has a "real" browser supporting <code>webGL</code>.</p>
 </article>
 <div id="show_disqus"><a onclick="load_disqus();return false;" href="##">Show comments</a></div>
@@ -90,6 +90,7 @@ But you have to make sure that she has a "real" browser supporting <code>webGL</
     document.getElementById('show_disqus').style.display='none';
   };
 </script>
+
 
 <script type="text/javascript">
   var _gaq = _gaq || [];
