@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Average Running Time of Quicksort | ScTurtle&#39;s Pool</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/pygments.css" type="text/css">
+    <link href="/atom.xml" rel="alternate" title="ScTurtle&#39;s Pool" type="application/atom+xml">
+  </head>
+  <body>
+    <div class=container>
+      <div class=header>
+        <a href='/'>ScTurtle&#39;s Pool</a>
+      </div>
+      <div class=navigation>
+        <ul>
+          <li><a href='/'>blog</a>
+          <li><a href='/archive.html'>archive</a>
+          <li><a href='/tags/'>tags</a>
+          <li><a href='/about/'>about</a>
+        </ul>
+      </div>
+      <div class=body>
+
+
+<article>
+<h1 class=title>Average Running Time of Quicksort</h1>
+<p class=info>
+November 9, 2013
+<a href='/tags/math.html'>#math</a>
+<a href='/tags/algo.html'>#algo</a>
+</p>
+<p>From an interesting <a href="http://aofa.cs.princeton.edu/lectures/lectures13/AA01-AofA.pdf">slide</a>.</p>
+<p>We denote <mathjax>$C_N$</mathjax> as the <em>expected</em> number of comparisons used by sorting an array of length <mathjax>$N$</mathjax>.
+The recursive formula is like this:
+<mathjax>$$C_N = (N+1) + \sum_{1\leq k \leq N} \frac 1N (C_{k-1}+C_{N-k})$$</mathjax></p>
+<p>which <mathjax>$N+1$</mathjax> is the comparisons needed for partitioning, 
+and then plus <mathjax>$N$</mathjax> ways of partitioning with equal probability.
+Also we have <mathjax>$C_0 = 0$</mathjax>. </p>
+<p>Noticing the symmetric parttern in the sum part, we get:
+<mathjax>$$C_N = (N+1) + \frac 2N \sum_{1\leq k \leq N} C_{k-1}$$</mathjax>
+then
+<mathjax>$$NC_N = N(N+1) + 2 \sum_{1\leq k \leq N} C_{k-1}$$</mathjax></p>
+<p>Time to high school math. First, we write down same formula for N-1:
+<mathjax>$$(N-1)C_{N-1} = (N-1)N + 2 \sum_{1\leq k \leq N-1} C_{k-1}$$</mathjax></p>
+<p>Then we subtract the above two equations to get:
+<mathjax>$$NC_N - (N-1)C_{N-1} = 2N + 2C_{N-1}$$</mathjax>
+<mathjax>$$NC_N = (N+1)C_{N-1} + 2N$$</mathjax></p>
+<p>Key and tricky step, divide both side by <mathjax>$N(N+1)$</mathjax>:
+<mathjax>$$\frac{C_N}{N+1} = \frac{C_{N-1}}{N} + \frac{2}{N+1}$$</mathjax></p>
+<p>Expand the right part to the end of the world:
+<mathjax>$$\begin{split}
+\frac{C_N}{N+1} &amp;= \frac{C_{N-1}}{N} + \frac 2{N+1} \\
+&amp;= \frac{C_{N-2}}{N-1} + \frac 2N + \frac 2{N+1} \\
+&amp;= C_0 + \frac 22 + \frac 23 + \dots + \frac 2N + \frac 2{N+1}
+\end{split}$$</mathjax></p>
+<p>Ignore small items:
+<mathjax>$$c_N \sim 2N \sum_{1 \leq k \leq N} \frac 1k - 2N$$</mathjax></p>
+<p>Finally, use the magic <a href="http://en.wikipedia.org/wiki/Euler%E2%80%93Mascheroni_constant"><code>Euler constant</code></a> <mathjax>$\gamma$</mathjax>:
+<mathjax>$$\begin{split}
+c_N &amp;\sim 2N (\int_1^\infty \frac 1x \mathrm{d} x + \gamma) - 2N \\
+&amp;=2N \ln N - 2(1-\gamma)N
+\end{split}$$</mathjax></p>
+<p>It's <mathjax>$O(N \log N)$</mathjax>.</p>
+</article>
+<div id="show_disqus"><a onclick="load_disqus();return false;" href="##">Show comments</a></div>
+<div id="disqus_thread"></div>
+
+
+      </div>
+      <div class=footer>
+        <p><a href='https://github.com/scturtle/turtleblog'>turtleblog</a> &copy; 2013 scturtle
+        <p> <a href="mailto:scturtle@gmail.com">mail</a>,
+        <a href="http://twitter.com/scturtle">twitter</a>,
+        <a href="http://github.com/scturtle">github</a>,
+        <a href='/atom.xml' rel=alternate title="Recent Blogs | ScTurtle&#39;s Pool">feed</a>
+      </div>
+    </div>
+
+<script type="text/javascript">
+  function load_disqus() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://scturtlespool.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    document.getElementById('show_disqus').style.display='none';
+  };
+</script>
+
+<script type="text/x-mathjax-config"> 
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ["\\(","\\)"]],
+    processEscapes: true
+  }
+}); </script>
+<script type="text/javascript" 
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33410961-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+  </body>
+</html>
