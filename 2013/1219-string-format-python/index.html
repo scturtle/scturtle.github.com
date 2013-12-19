@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Python 字符串格式化详参 | ScTurtle&#39;s Pool</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/pygments.css" type="text/css">
+    <link href="/atom.xml" rel="alternate" title="ScTurtle&#39;s Pool" type="application/atom+xml">
+  </head>
+  <body>
+    <div class=container>
+      <div class=header>
+        <a href='/'>ScTurtle&#39;s Pool</a>
+      </div>
+      <div class=navigation>
+        <ul>
+          <li><a href='/'>blog</a>
+          <li><a href='/archive.html'>archive</a>
+          <li><a href='/tags/'>tags</a>
+          <li><a href='/about/'>about</a>
+        </ul>
+      </div>
+      <div class=body>
+
+
+<article>
+<h1 class=title>Python 字符串格式化详参</h1>
+<p class=info>
+December 19, 2013
+<a href='/tags/python.html'>#python</a>
+</p>
+<p><a href="http://docs.python.org/dev/library/string.html#formatspec">来源docs</a></p>
+<p><code>{}</code> 包裹的是替换域，<code>{{</code> 和 <code>}}</code> 可用来 escape。</p>
+<p>语法</p>
+<div class="codehilite"><pre>替换域 ::=  &quot;{&quot; [域名] [&quot;!&quot; 转换] [&quot;:&quot; 格式] &quot;}&quot;
+域名   ::=  参数名 (&quot;.&quot; 属性名 | &quot;[&quot; 索引 &quot;]&quot;)*
+参数名 ::=  [关键字 | 数字]
+属性名 ::=  关键字
+索引   ::=  数字 | 索引字符串
+索引   ::=  &lt;任何字符除了 &quot;]&quot;&gt; +
+转换   ::=  &quot;r&quot; | &quot;s&quot; | &quot;a&quot;
+格式   ::=  &lt;如下介绍&gt;
+</pre></div>
+
+
+<p>参数名要么是关键字（keyword=“...”）要么是数字（标识第几个参数，3.1中默认可忽略）。
+参数名后可加 <code>.属性名</code>（<code>getattr()</code>）或 <code>[索引]</code>（<code>__getitem__()</code>）。</p>
+<p>转换域进行格式化之前的强制类型转换（而不是默认的<code>__format__()</code>）。<code>!s</code> 调用 <code>str()</code>，<code>!r</code> 调用 <code>repr()</code>，<code>!a</code> 调用 <code>ascii()</code>。</p>
+<p>格式域控制字段宽度，对齐，填充，小数精度等。依据是每种类型自己定义的<code>微语言</code>。格式域可嵌套但只能包含域名。大多数内置类型支持默认的微语言：</p>
+<div class="codehilite"><pre>格式 ::=  [[fill]align][sign][#][0][width][,][.precision][type]
+fill     ::=  &lt;填充字符除了 &#39;{&#39; or &#39;}&#39;&gt;
+align ::=  &quot;&lt;&quot; | &quot;&gt;&quot; | &quot;=&quot; | &quot;^&quot;
+sign  ::=  &quot;+&quot; | &quot;-&quot; | &quot; &quot;
+width ::=  integer
+precision ::=  integer
+type ::=  &quot;b&quot; | &quot;c&quot; | &quot;d&quot; | &quot;e&quot; | &quot;E&quot; | &quot;f&quot; | &quot;F&quot; | &quot;g&quot; | &quot;G&quot; | &quot;n&quot; | &quot;o&quot; | &quot;s&quot; | &quot;x&quot; | &quot;X&quot; | &quot;%&quot;
+</pre></div>
+
+
+<p>align：左对齐，右对齐，填充符号和数字间，居中。</p>
+<p>sign：正数前+负数前-，正数前无负数前-，正数前空格负数前-。</p>
+<p>#：整数、浮点数、复数和 Decimal 使用<code>替代格式</code>。比如整数在用十六进制输出时添加<code>0x</code>前缀。</p>
+<p>width：前导<code>0</code>则相当于<code>fill='0' &amp; align='='</code>。</p>
+<p>,：数字自动添加千分号。</p>
+<p>precision：和<code>type = "f" | "F" | "g" | "G"</code>控制浮点精度，或表示最大域空间。</p>
+<p>type：二进制，字符，十进制，科学计数，科学计数大写，定点，定点(NAN, INF)，
+<em>标准格式（太长）</em>，标准格式大写，<em>数字</em>，八进制，十六进制，十六进制大写，百分比。
+不写的话整数十进制，浮点数差不多是标准格式。</p>
+</article>
+<div id="show_disqus"><a onclick="load_disqus();return false;" href="##">Show comments</a></div>
+<div id="disqus_thread"></div>
+
+
+      </div>
+      <div class=footer>
+        <p><a href='https://github.com/scturtle/turtleblog'>turtleblog</a> &copy; 2013 scturtle
+        <p> <a href="mailto:scturtle@gmail.com">mail</a>,
+        <a href="http://twitter.com/scturtle">twitter</a>,
+        <a href="http://github.com/scturtle">github</a>,
+        <a href='/atom.xml' rel=alternate title="Recent Blogs | ScTurtle&#39;s Pool">feed</a>
+      </div>
+    </div>
+
+<script type="text/javascript">
+  function load_disqus() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://scturtlespool.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    document.getElementById('show_disqus').style.display='none';
+  };
+</script>
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33410961-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+  </body>
+</html>

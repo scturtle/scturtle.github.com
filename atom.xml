@@ -4,9 +4,55 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2013-11-09T19:37:00</updated>
+  <updated>2013-12-19T17:51:00</updated>
   <id>http://scturtle.me</id>
   
+  <entry>
+    <title type="html"><![CDATA[Python 字符串格式化详参]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2013/1219-string-format-python/"/>
+    <updated>2013-12-19T18:00:00</updated>
+    <id>http://scturtle.me/2013/1219-string-format-python/</id>
+    <content type="html"><![CDATA[
+<p><a href="http://docs.python.org/dev/library/string.html#formatspec">来源docs</a></p>
+<p><code>{}</code> 包裹的是替换域，<code>{{</code> 和 <code>}}</code> 可用来 escape。</p>
+<p>语法</p>
+<div class="codehilite"><pre>替换域 ::=  &quot;{&quot; [域名] [&quot;!&quot; 转换] [&quot;:&quot; 格式] &quot;}&quot;
+域名   ::=  参数名 (&quot;.&quot; 属性名 | &quot;[&quot; 索引 &quot;]&quot;)*
+参数名 ::=  [关键字 | 数字]
+属性名 ::=  关键字
+索引   ::=  数字 | 索引字符串
+索引   ::=  &lt;任何字符除了 &quot;]&quot;&gt; +
+转换   ::=  &quot;r&quot; | &quot;s&quot; | &quot;a&quot;
+格式   ::=  &lt;如下介绍&gt;
+</pre></div>
+
+
+<p>参数名要么是关键字（keyword=“...”）要么是数字（标识第几个参数，3.1中默认可忽略）。
+参数名后可加 <code>.属性名</code>（<code>getattr()</code>）或 <code>[索引]</code>（<code>__getitem__()</code>）。</p>
+<p>转换域进行格式化之前的强制类型转换（而不是默认的<code>__format__()</code>）。<code>!s</code> 调用 <code>str()</code>，<code>!r</code> 调用 <code>repr()</code>，<code>!a</code> 调用 <code>ascii()</code>。</p>
+<p>格式域控制字段宽度，对齐，填充，小数精度等。依据是每种类型自己定义的<code>微语言</code>。格式域可嵌套但只能包含域名。大多数内置类型支持默认的微语言：</p>
+<div class="codehilite"><pre>格式 ::=  [[fill]align][sign][#][0][width][,][.precision][type]
+fill     ::=  &lt;填充字符除了 &#39;{&#39; or &#39;}&#39;&gt;
+align ::=  &quot;&lt;&quot; | &quot;&gt;&quot; | &quot;=&quot; | &quot;^&quot;
+sign  ::=  &quot;+&quot; | &quot;-&quot; | &quot; &quot;
+width ::=  integer
+precision ::=  integer
+type ::=  &quot;b&quot; | &quot;c&quot; | &quot;d&quot; | &quot;e&quot; | &quot;E&quot; | &quot;f&quot; | &quot;F&quot; | &quot;g&quot; | &quot;G&quot; | &quot;n&quot; | &quot;o&quot; | &quot;s&quot; | &quot;x&quot; | &quot;X&quot; | &quot;%&quot;
+</pre></div>
+
+
+<p>align：左对齐，右对齐，填充符号和数字间，居中。</p>
+<p>sign：正数前+负数前-，正数前无负数前-，正数前空格负数前-。</p>
+<p>#：整数、浮点数、复数和 Decimal 使用<code>替代格式</code>。比如整数在用十六进制输出时添加<code>0x</code>前缀。</p>
+<p>width：前导<code>0</code>则相当于<code>fill='0' &amp; align='='</code>。</p>
+<p>,：数字自动添加千分号。</p>
+<p>precision：和<code>type = "f" | "F" | "g" | "G"</code>控制浮点精度，或表示最大域空间。</p>
+<p>type：二进制，字符，十进制，科学计数，科学计数大写，定点，定点(NAN, INF)，
+<em>标准格式（太长）</em>，标准格式大写，<em>数字</em>，八进制，十六进制，十六进制大写，百分比。
+不写的话整数十进制，浮点数差不多是标准格式。</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Average Running Time of Quicksort]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -350,31 +396,6 @@ and <a href="http://scturtle.me/heart/heart.html">here</a> is the final example.
 <p><img alt="heart3" src="/2013/1/5/heart/img/heart3.png" /></p>
 <p>This model is handy and you can do more romantic things with powerful <code>three.js</code>.  <br />
 But you have to make sure that she has a "real" browser supporting <code>webGL</code>.</p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[地球]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2012/12/5/earth/"/>
-    <updated>2012-12-05T12:00:00</updated>
-    <id>http://scturtle.me/2012/12/5/earth/</id>
-    <content type="html"><![CDATA[
-<p>少年，我看你骨骼惊奇，天赋异禀，想必不是凡人，你看我这里有……</p>
-<p>去你妈的，还少年，我都快大叔了。我快步离开路边这个傻逼老乞丐。</p>
-<p>走着走着，我想他那句不是凡人好像还有点儿意思。其实我也早就察觉到了，我和别人不大一样。别人的笑点我总搞不明白，我给他们看我觉得有意思的东西，却总是受到鄙夷的眼神。别人整天忙忙碌碌做的事情吧，我总是很没兴趣，反而会对一些很没意义的东西特别上心。罢了罢了，反正随大溜就好了，就不会显得不正常。这样的事情久了也就习惯了，反正人和人相互理解之类的这种鬼台词，骗骗小孩就好了，我这种大叔级的早就不信了。</p>
-<p>直到后来某一天，一部叫《黑衣人》的电影，给了我很大的冲击。里面那些看似正常的普通人，居然他妈的是一个个外星人！突然我想，我他妈的会不会也是个外星人，来自一个笑点不同，风格迥异的星球。那里的人在这里看来都很傻逼，这里的人在那里看来也是。这样想想还是蛮有意思的。不久我就开始沉迷于各种科幻电影小说，在其中寻找着各种蛛丝马迹，来证明这个世界上确实有外星人存在。这样的事儿做多了，反而自己显得越发不正常了。</p>
-<p>其实这种傻逼想法想多了就没意思了，慢慢就掐死了。直到有一天，我遇到一个和我差不多的人。一个人总是对着奇怪的事物发笑，总是做一些不明所以的事儿。不过看起来他要比我混得开一些，他能很轻松的辨别出别人的笑点，甚至还能讲一些让别人也哈哈大笑，而且无论做什么都做的还不错，身边总是聚集了一些人。不管怎样，我们还是像磁铁的两极一样相互吸引了。</p>
-<p>接触久了，突然有一天，他说，其实我是外星人。我才没有被吓到。我说，呵呵，其实我也是。他有个奇特的爱好就是天文，整天架着大炮筒子往天上看。他说他是被同伴弄丢了。或许是坐飞碟来到地球，出来小解回去发现碟已经飞走了，只好在这里混下去。他说地球其实并不适合外星人生活，累。他说他要找到他的那颗星球，才好回去。他说其实这些年 UFO 越来越多其实是同伴回来找他，但是地球上人太多，他也早就变得和他们一样了，所以一直没有被找到。他说其实有一次他看到 UFO 了，就落在那个山头，只是城里堵车，他没来得及赶过去。所以，他只好到现在还在不停的找。他问我信不。我说，我信。</p>
-<p>当你觉得自己不正常的时候，总是想去找和自己一样不正常的人，但是当你找到他们后，会发现他们实在是太不正常了，只好离他们远一些。</p>
-<p>有段时间没联系了。后来我再去找他，结果怎么也找不到了。他大概换了手机，也换了住所，去问他以前的同事也没什么消息。算了，一辈子这么长，弄丢几个人不算什么，可惜没有人和我一块儿看科幻小说了。</p>
-<p>最近有一些传闻，到2012年底，地球会毁灭。那一天，会有 UFO 出现，把还在地球上的外星人接回去。我忽然想起和他彻底断了联络好像是在 99 年那会儿，那时末日论也很盛行。该不会他的同伴也听到风声来把他接回去了吧。这狗屎运的。</p>
-<p>我也有点儿按耐不住了。开始买望远镜，天文书，整夜不停的对着天空研究。搜集最近 UFO 出现的时间地点，用各种不同的公式去拟合。大半夜的时候，如果突然醒了，就好像有什么征兆似的，赶忙跑出去东张西望地看。这快年底了，不知道时间够不够用，你们那边也要抓紧啊，我对着天空喊。不过看起来，还是21号那天最有戏，我已经做好准备了，买了个很大的移动硬盘，把所有喜欢的歌和游戏都拷进去了，随身带着，啥时候走都可以。</p>
-<p>当年天桥上那老乞丐或许真知道些什么。难道他有回去的票？如果再碰到一定要好好问问。</p>
-<p>等我回去了，如果碰到他，一定要好好骂他一顿，那时候只顾着自己走也不通知我。不过，估计他也只会傻傻的笑，骂完了我们再一起去喝酒。</p>
-<blockquote>
-<p>「我家不在这星球 / 太深业力的地球 / 每当我望见星宿 / 我都不想逗留 」 — My Little Airport</p>
-</blockquote>
-<p><embed width="257" height="33" wmode="transparent" type="application/x-shockwave-flash" src="http://www.xiami.com/widget/0_1771386748/singlePlayer.swf"></p>
 ]]> </content>
   </entry>
 </feed>
