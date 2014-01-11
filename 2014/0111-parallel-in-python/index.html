@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Parallel in Python | ScTurtle&#39;s Pool</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/pygments.css" type="text/css">
+    <link href="/atom.xml" rel="alternate" title="ScTurtle&#39;s Pool" type="application/atom+xml">
+  </head>
+  <body>
+    <div class=container>
+      <div class=header>
+        <a href='/'>ScTurtle&#39;s Pool</a>
+      </div>
+      <div class=navigation>
+        <ul>
+          <li><a href='/'>blog</a>
+          <li><a href='/archive.html'>archive</a>
+          <li><a href='/tags/'>tags</a>
+          <li><a href='/about/'>about</a>
+        </ul>
+      </div>
+      <div class=body>
+
+
+<article>
+<h1 class=title>Parallel in Python</h1>
+<p class=info>
+January 11, 2014
+<a href='/tags/python.html'>#python</a>
+</p>
+<p>Multithreading and multiprocessing can be very easy in python ! <br />
+Following tests are processed on a machine with 24 cores.</p>
+<p>The original program:</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
+<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">factorial</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">%</span><span class="mi">1000</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">6000</span><span class="p">))</span> <span class="o">%</span> <span class="mi">1000</span>
+
+<span class="c"># $ time pypy test.py</span>
+<span class="c"># 314</span>
+<span class="c"># </span>
+<span class="c"># real    0m18.202s</span>
+<span class="c"># user    0m18.099s</span>
+<span class="c"># sys     0m0.057s</span>
+</pre></div>
+
+
+<p>With <a href="http://docs.python.org/2/library/multiprocessing.html"><code>multiprocessing</code></a>
+:</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
+<span class="c"># from multiprocessing.dummy import Pool  # but using threads</span>
+
+<span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
+<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">imap_unordered</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">%</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">6000</span><span class="p">)))</span> <span class="o">%</span> <span class="mi">1000</span>
+
+<span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+<span class="c"># $ time pypy test2.py</span>
+<span class="c"># 314</span>
+<span class="c"># </span>
+<span class="c"># real    0m5.545s</span>
+<span class="c"># user    0m41.953s</span>
+<span class="c"># sys     0m0.986s</span>
+</pre></div>
+
+
+<p>With <a href="http://docs.python.org/3.4/library/concurrent.futures.html"><code>concurrent.futures</code></a> (<a href="https://pypi.python.org/pypi/futures">Backport in 2.7</a>):</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
+<span class="kn">import</span> <span class="nn">futures</span>  <span class="c"># &lt;= 2.7</span>
+<span class="c"># from concurrent import futures  # &gt;= 3.2</span>
+
+<span class="c"># with futures.ThreadPoolExecutor() as executor:</span>
+<span class="k">with</span> <span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">()</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+    <span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">%</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">6000</span><span class="p">)))</span> <span class="o">%</span> <span class="mi">1000</span>
+
+<span class="c"># $ time pypy test3.py</span>
+<span class="c"># 314</span>
+<span class="c"># </span>
+<span class="c"># real    0m6.804s</span>
+<span class="c"># user    0m45.791s</span>
+<span class="c"># sys     0m1.409s</span>
+</pre></div>
+</article>
+<div id="show_disqus"><a onclick="load_disqus();return false;" href="##">Show comments</a></div>
+<div id="disqus_thread"></div>
+
+
+      </div>
+      <div class=footer>
+        <p><a href='https://github.com/scturtle/turtleblog'>turtleblog</a> &copy; 2013 scturtle
+        <p> <a href="mailto:scturtle@gmail.com">mail</a>,
+        <a href="http://twitter.com/scturtle">twitter</a>,
+        <a href="http://github.com/scturtle">github</a>,
+        <a href='/atom.xml' rel=alternate title="Recent Blogs | ScTurtle&#39;s Pool">feed</a>
+      </div>
+    </div>
+
+<script type="text/javascript">
+  function load_disqus() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://scturtlespool.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    document.getElementById('show_disqus').style.display='none';
+  };
+</script>
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33410961-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+  </body>
+</html>

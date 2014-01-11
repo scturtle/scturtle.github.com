@@ -4,9 +4,70 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2013-12-19T17:51:00</updated>
+  <updated>2014-01-11T10:25:00</updated>
   <id>http://scturtle.me</id>
   
+  <entry>
+    <title type="html"><![CDATA[Parallel in Python]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2014/0111-parallel-in-python/"/>
+    <updated>2014-01-11T10:00:00</updated>
+    <id>http://scturtle.me/2014/0111-parallel-in-python/</id>
+    <content type="html"><![CDATA[
+<p>Multithreading and multiprocessing can be very easy in python ! <br />
+Following tests are processed on a machine with 24 cores.</p>
+<p>The original program:</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
+<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">factorial</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">%</span><span class="mi">1000</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">6000</span><span class="p">))</span> <span class="o">%</span> <span class="mi">1000</span>
+
+<span class="c"># $ time pypy test.py</span>
+<span class="c"># 314</span>
+<span class="c"># </span>
+<span class="c"># real    0m18.202s</span>
+<span class="c"># user    0m18.099s</span>
+<span class="c"># sys     0m0.057s</span>
+</pre></div>
+
+
+<p>With <a href="http://docs.python.org/2/library/multiprocessing.html"><code>multiprocessing</code></a>
+:</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
+<span class="c"># from multiprocessing.dummy import Pool  # but using threads</span>
+
+<span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
+<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">imap_unordered</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">%</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">6000</span><span class="p">)))</span> <span class="o">%</span> <span class="mi">1000</span>
+
+<span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+<span class="c"># $ time pypy test2.py</span>
+<span class="c"># 314</span>
+<span class="c"># </span>
+<span class="c"># real    0m5.545s</span>
+<span class="c"># user    0m41.953s</span>
+<span class="c"># sys     0m0.986s</span>
+</pre></div>
+
+
+<p>With <a href="http://docs.python.org/3.4/library/concurrent.futures.html"><code>concurrent.futures</code></a> (<a href="https://pypi.python.org/pypi/futures">Backport in 2.7</a>):</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
+<span class="kn">import</span> <span class="nn">futures</span>  <span class="c"># &lt;= 2.7</span>
+<span class="c"># from concurrent import futures  # &gt;= 3.2</span>
+
+<span class="c"># with futures.ThreadPoolExecutor() as executor:</span>
+<span class="k">with</span> <span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">()</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
+    <span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">%</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">6000</span><span class="p">)))</span> <span class="o">%</span> <span class="mi">1000</span>
+
+<span class="c"># $ time pypy test3.py</span>
+<span class="c"># 314</span>
+<span class="c"># </span>
+<span class="c"># real    0m6.804s</span>
+<span class="c"># user    0m45.791s</span>
+<span class="c"># sys     0m1.409s</span>
+</pre></div>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Python 字符串格式化详参]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -352,50 +413,6 @@ and replace it with the newest.)</p>
 
 
 <p>Then, <code>,ll</code> to compile, <code>,ls</code> to forward search and double click in SumatraPDF to inverse search.</p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Draw a 3D heart in browser]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2013/1/5/heart/"/>
-    <updated>2013-01-05T17:00:00</updated>
-    <id>http://scturtle.me/2013/1/5/heart/</id>
-    <content type="html"><![CDATA[
-<p>Valentine's Day is approaching. Let's have some fun.</p>
-<p>First, we all know that <code>mathematica</code> can draw a beautiful
-3d heart with only one single command:</p>
-<div class="codehilite"><pre>ContourPlot3D[
-  320 (-x^2 z^3 - 9 y^2 z^3/80 + (x^2 + 9 y^2/4 + z^2 - 1)^3) == 0,
-  {x, -1.3, 1.3}, {y, -1.3, 1.3}, {z, -1.3, 1.3}, 
-  ContourStyle -&gt; Directive[Red]]
-</pre></div>
-
-
-<p><img alt="heart" src="/2013/1/5/heart/img/heart.png" /></p>
-<p>Let's save it as a model file with this command:</p>
-<div class="codehilite"><pre>Export[&quot;heart.ply&quot;, %]
-</pre></div>
-
-
-<p>We need <code>blender</code> to convert it into another format. 
-Download it <a href="http://www.blender.org/download/get-blender">here</a> and 
-install <code>three.js</code> extension <a href="https://github.com/mrdoob/three.js/tree/master/utils/exporters/blender">here</a>.</p>
-<p>Open <code>blender</code> you will see a default cube. 
-On the left menu column you will see a <code>Delete</code>.  <br />
-<em>Yes! Go you!</em> <br />
-Then <code>File</code> -&gt; <code>Import</code> -&gt; <code>Stanford (.ply)</code>,
-and select our <code>heart.ply</code>. You will see it like this.</p>
-<p><img alt="heart2" src="/2013/1/5/heart/img/heart2.png" /></p>
-<p>Next, <code>File</code> -&gt; <code>User Preferences</code> -&gt; <code>Addons</code>,
-find a addon named <code>three.js format</code> and enable it. 
-Then <code>File</code> -&gt; <code>Export</code> -&gt; <code>Three.js (.js)</code> and we will get a <code>heart.js</code>. 
-It can be imported by <code>three.js</code> and shown in browser. </p>
-<p>The final step contains a little more codes 
-(<a href="https://github.com/scturtle/heart">github</a>)
-and <a href="http://scturtle.me/heart/heart.html">here</a> is the final example.</p>
-<p><img alt="heart3" src="/2013/1/5/heart/img/heart3.png" /></p>
-<p>This model is handy and you can do more romantic things with powerful <code>three.js</code>.  <br />
-But you have to make sure that she has a "real" browser supporting <code>webGL</code>.</p>
 ]]> </content>
   </entry>
 </feed>
