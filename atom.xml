@@ -4,9 +4,697 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2014-01-11T10:25:00</updated>
+  <updated>2014-02-11T17:30:00</updated>
   <id>http://scturtle.me</id>
   
+  <entry>
+    <title type="html"><![CDATA[Test IPython Notebook]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2014/0211-test-ipynb/"/>
+    <updated>2014-02-11T17:00:00</updated>
+    <id>http://scturtle.me/2014/0211-test-ipynb/</id>
+    <content type="html"><![CDATA[
+<div class="ipynb">
+
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[1]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="o">%</span><span class="k">pylab</span> <span class="n">inline</span>
+<span class="o">%</span><span class="k">load_ext</span> <span class="n">sympy</span><span class="o">.</span><span class="n">interactive</span><span class="o">.</span><span class="n">ipythonprinting</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+
+Welcome to pylab, a matplotlib-based Python environment [backend: module://IPython.zmq.pylab.backend_inline].
+For more information, type &apos;help(pylab)&apos;.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="calculator">calculator</h1>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[2]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Rational</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">oo</span></pre></div>
+
+</div>
+</div>
+
+</div>
+symbols
+
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[3]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Symbol</span><span class="p">,</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">var</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x,y,z&#39;</span><span class="p">)</span></pre></div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>many symbols such as <code>alpha,beta,delta,gamma,mu,lambda,phi,sigma,theta</code> are in</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[4]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy.abc</span> <span class="kn">import</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span></pre></div>
+
+</div>
+</div>
+
+</div>
+expression operations
+
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[5]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[5]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+$$x^{2} + 2 x y + y^{2}$$
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[6]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[6]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+$$\left(y + 1\right)^{2}$$
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>complex number</p>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[7]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">I</span>
+<span class="n">I</span><span class="o">*</span><span class="n">I</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[7]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+$$-1$$
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="algebra">Algebra</h1>
+</div>
+partial fraction decomposition and together back
+
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[8]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">apart</span><span class="p">,</span> <span class="n">together</span>
+<span class="n">apart</span><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[8]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+$$1 + \frac{2}{x -1}$$
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[9]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">together</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[9]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+$$\frac{x + 1}{x -1}$$
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="calculus">Calculus</h1>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[10]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">limit</span><span class="p">,</span> <span class="n">sin</span>
+<span class="n">limit</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">10</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">oo</span><span class="p">)</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[10]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+$$2$$
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[11]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[11]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+$$x - \frac{1}{6} x^{3} + \frac{1}{120} x^{5} - \frac{1}{5040} x^{7} + \frac{1}{362880} x^{9} + \mathcal{O}\left(x^{10}\right)$$
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[12]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">summation</span><span class="p">,</span> <span class="n">factorial</span>
+<span class="n">summation</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">factorial</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">oo</span><span class="p">))</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[12]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+$$e$$
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="diff">diff</h3>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[13]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">diff</span>
+<span class="n">diff</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">)</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[13]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+$$\cos{\left (x \right )}$$
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[14]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">diff</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[14]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+$$- \sin{\left (x \right )}$$
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="integration">integration</h3>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[15]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">integrate</span><span class="p">,</span> <span class="n">erf</span>
+<span class="n">integrate</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[15]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+$$x^{6}$$
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[16]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="n">integrate</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[16]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+$$1$$
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="functions">functions</h1>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[17]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Function</span>
+<span class="n">f</span><span class="o">=</span><span class="n">Function</span><span class="p">(</span><span class="s">&#39;f&#39;</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[17]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+$$\frac{\partial^{2}}{\partial^{2} x}  \operatorname{f}{\left (x \right )}$$
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[18]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">solve</span>
+<span class="n">solve</span><span class="p">([</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">6</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">15</span><span class="p">],</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[18]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+<pre>
+{x: -3, y: 1}</pre>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="linear-algebra">Linear Algebra</h1>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[19]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Matrix</span>
+<span class="n">Matrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[19]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+$$\left[\begin{smallmatrix}1 & 0\\0 & 1\end{smallmatrix}\right]$$
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="pattern-matching">Pattern matching</h1>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[20]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Wild</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">Wild</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">)</span>
+<span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">p</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt output_prompt">
+    Out[20]:</div>
+<div class="box-flex1 output_subarea output_pyout">
+
+
+<pre>
+{p: 5}</pre>
+
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="pretty-printing">Pretty printing</h1>
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[21]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">pprint</span><span class="p">,</span> <span class="n">Integral</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+⌠      
+⎮  2   
+⎮ x  dx
+⌡      
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[22]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy.printing.python</span> <span class="kn">import</span> <span class="n">python</span>
+<span class="k">print</span> <span class="n">python</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+x = Symbol(&apos;x&apos;)
+e = Integral(x**2, x)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell vbox">
+<div class="input hbox">
+<div class="prompt input_prompt">
+In&nbsp;[23]:
+</div>
+<div class="input_area box-flex1">
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">latex</span>
+<span class="k">print</span> <span class="n">latex</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></pre></div>
+
+</div>
+</div>
+
+<div class="vbox output_wrapper">
+<div class="output vbox">
+
+
+<div class="hbox output_area"><div class="prompt"></div>
+<div class="box-flex1 output_subarea output_stream output_stdout">
+<pre>
+\int x^{2}\, dx
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+</div>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Parallel in Python]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -347,72 +1035,6 @@ Refer to them for more content.</p>
 不过又应了一句俗话，等太久来的东西往往不是当初的样子了。
 而且最近发现找个想玩的游戏都难了。</p>
 <p>这肯定是中了叫做“玩不了好游戏”的诅咒。</p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Configure forward/inverse search with Vim-LaTeX and SamutraPDF]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2013/1/22/forward-inverse-search/"/>
-    <updated>2013-01-22T18:30:00</updated>
-    <id>http://scturtle.me/2013/1/22/forward-inverse-search/</id>
-    <content type="html"><![CDATA[
-<p>Get the newest version of <a href="http://vim-latex.svn.sourceforge.net/viewvc/vim-latex/trunk/vimfiles/">Vim-LaTeX</a>.
-There is a <code>Download GNU tarball</code> link at the bottom.
-(I use <a href="https://github.com/gmarik/vundle">vundle</a> to install a old version 
-and replace it with the newest.)</p>
-<p>Get the newest version of <a href="https://sites.google.com/site/xhmikosr/progs/officetools">SumatraPDF</a>. Add the directory paths  of SumatraPDF and gvim into the system path variable.</p>
-<p>Download <a href="http://d.pr/f/LbV">dde.exe</a>. Put it in <code>ftplugin\latex-suite\</code>.</p>
-<p>Modify <code>ftplugin\latex-suite\compiler.vim</code> with the following patch:</p>
-<div class="codehilite"><pre><span class="gd">--- compiler.vim.orig   Sat Oct 30 00:55:22 2010</span>
-<span class="gi">+++ compiler.vim    Tue Jan 22 18:21:10 2013</span>
-<span class="gu">@@ -321,6 +321,7 @@</span>
- &quot;           gvim --servername LATEX --remote-silent +%l &quot;%f&quot;
- &quot;      For inverse search, if you are reading this, then just pressing \ls
- &quot;      will work.
-<span class="gi">+let s:path = expand(&#39;&lt;sfile&gt;:p:h&#39;)</span>
- function! Tex_ForwardSearchLaTeX()
-    if &amp;ft != &#39;tex&#39;
-        echo &quot;calling Tex_ForwardSeachLaTeX from a non-tex file&quot;
-<span class="gu">@@ -343,10 +344,20 @@</span>
-
-    &quot; inverse search tips taken from Dimitri Antoniou&#39;s tip and Benji Fisher&#39;s
-    &quot; tips on vim.sf.net (vim.sf.net tip #225)
-<span class="gd">-   if (has(&#39;win32&#39;) &amp;&amp; (viewer == &quot;yap&quot; || viewer == &quot;YAP&quot; || viewer == &quot;Yap&quot;))</span>
-<span class="gi">+   if (has(&#39;win32&#39;) &amp;&amp; (viewer == &quot;yap&quot; || viewer == &quot;YAP&quot; || viewer == &quot;Yap&quot; || viewer =~? &quot;^sumatrapdf&quot;))</span>
-
-<span class="gd">-       let execString = &#39;silent! !start &#39;. viewer.&#39; -s &#39;.line(&#39;.&#39;).expand(&#39;%&#39;).&#39; &#39;.mainfnameRoot</span>
-<span class="gi">+       if (viewer == &quot;yap&quot; || viewer == &quot;YAP&quot; || viewer == &quot;Yap&quot;)</span>
-
-<span class="gi">+           let execString = &#39;silent! !start &#39;. viewer.&#39; -s &#39;.line(&#39;.&#39;).expand(&#39;%&#39;).&#39; &#39;.mainfnameRoot</span>
-<span class="gi">+</span>
-<span class="gi">+       elseif viewer =~? &quot;^sumatrapdf&quot;</span>
-<span class="gi">+           </span>
-<span class="gi">+           &quot; SumatraPDF forward search</span>
-<span class="gi">+           let relativeFile=substitute(expand(&quot;%:p&quot;), &quot;\\/&quot;, &#39;\&#39;,&quot;g&quot;)</span>
-<span class="gi">+           let pdfname=substitute(mainfnameFull.&#39;.&#39;.s:target, &quot;\\/&quot;, &#39;\&#39;,&quot;g&quot;)</span>
-<span class="gi">+           let execString = &#39;silent! !start &quot;&#39;.s:path.&#39;/dde.exe&quot; SUMATRA SUMATRA control &quot;[ForwardSearch(&quot;&#39;.pdfname.&#39;&quot;,&quot;&#39;.relativeFile.&#39;&quot;,&#39;.line(&#39;.&#39;).&#39;,0,0,0)]&quot; true&#39;</span>
-<span class="gi">+</span>
-<span class="gi">+       endif</span>
-
-    elseif (has(&#39;macunix&#39;) &amp;&amp; (viewer == &quot;Skim&quot; || viewer == &quot;PDFView&quot; || viewer == &quot;TeXniscope&quot;))
-        &quot; We&#39;re on a Mac using a traditional Mac viewer
-</pre></div>
-
-
-<p>Add following configurations into <code>_vimrc</code>:</p>
-<div class="codehilite"><pre><span class="k">filetype</span> plugin <span class="k">on</span>
-<span class="c">&quot;set shellslash  &quot; conflict with vundle</span>
-<span class="k">set</span> <span class="nb">grepprg</span><span class="p">=</span><span class="k">grep</span>\ <span class="p">-</span>nH\ $*
-<span class="k">filetype</span> indent <span class="k">on</span>
-<span class="k">let</span> <span class="k">g</span>:Tex_Leader<span class="p">=</span><span class="s1">&#39;,&#39;</span>  <span class="c">&quot; I use this</span>
-<span class="k">let</span> <span class="k">g</span>:tex_flavor<span class="p">=</span><span class="s1">&#39;latex&#39;</span>
-<span class="k">let</span> <span class="k">g</span>:Tex_DefaultTargetFormat <span class="p">=</span> <span class="s1">&#39;pdf&#39;</span>
-<span class="k">let</span> <span class="k">g</span>:Tex_ViewRule_pdf <span class="p">=</span> <span class="s1">&#39;SumatraPDF -reuse-instance -inverse-search &quot;gvim -c \&quot;:RemoteOpen +\%l \%f\&quot;&quot;&#39;</span>
-<span class="k">let</span> <span class="k">g</span>:Tex_CompileRule_pdf <span class="p">=</span> <span class="s1">&#39;pdflatex -synctex=-1 -src-specials -interaction=nonstopmode $*&#39;</span>
-</pre></div>
-
-
-<p>Then, <code>,ll</code> to compile, <code>,ls</code> to forward search and double click in SumatraPDF to inverse search.</p>
 ]]> </content>
   </entry>
 </feed>
