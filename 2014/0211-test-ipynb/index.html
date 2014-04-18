@@ -34,25 +34,27 @@ February 11, 2014
 </p>
 <div class="ipynb">
 
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[1]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="o">%</span><span class="k">pylab</span> <span class="n">inline</span>
 <span class="o">%</span><span class="k">load_ext</span> <span class="n">sympy</span><span class="o">.</span><span class="n">interactive</span><span class="o">.</span><span class="n">ipythonprinting</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
 <pre>
 
 Welcome to pylab, a matplotlib-based Python environment [backend: module://IPython.zmq.pylab.backend_inline].
@@ -65,581 +67,687 @@ For more information, type &apos;help(pylab)&apos;.
 </div>
 
 </div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="calculator">calculator</h1>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="calculator">calculator</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[2]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Rational</span>
 <span class="n">a</span> <span class="o">=</span> <span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
 <span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">oo</span></pre></div>
 
 </div>
 </div>
+</div>
 
 </div>
-symbols
-
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+                symbols
+                
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[3]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Symbol</span><span class="p">,</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">var</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
 <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x,y,z&#39;</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
+</div>
 
 </div>
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>many symbols such as <code>alpha,beta,delta,gamma,mu,lambda,phi,sigma,theta</code> are in</p>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>many symbols such as <code>alpha,beta,delta,gamma,mu,lambda,phi,sigma,theta</code> are in</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[4]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy.abc</span> <span class="kn">import</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span></pre></div>
 
 </div>
 </div>
+</div>
 
 </div>
-expression operations
-
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+                expression operations
+                
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[5]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[5]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_latex output_subarea output_pyout">
 $$x^{2} + 2 x y + y^{2}$$
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[6]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[6]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_latex output_subarea output_pyout">
 $$\left(y + 1\right)^{2}$$
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-
-</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>complex number</p>
+<p>complex number</p>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[7]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">I</span>
 <span class="n">I</span><span class="o">*</span><span class="n">I</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[7]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_latex output_subarea output_pyout">
 $$-1$$
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-
-</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="algebra">Algebra</h1>
+<h1 id="algebra">Algebra</h1>
 </div>
-partial fraction decomposition and together back
-
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+</div>
+</div>
+                partial fraction decomposition and together back
+                
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[8]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">apart</span><span class="p">,</span> <span class="n">together</span>
 <span class="n">apart</span><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[8]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_latex output_subarea output_pyout">
 $$1 + \frac{2}{x -1}$$
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[9]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="n">together</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[9]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_latex output_subarea output_pyout">
 $$\frac{x + 1}{x -1}$$
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-
-</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="calculus">Calculus</h1>
+<h1 id="calculus">Calculus</h1>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[10]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">limit</span><span class="p">,</span> <span class="n">sin</span>
 <span class="n">limit</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">10</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">oo</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[10]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_latex output_subarea output_pyout">
 $$2$$
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[11]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[11]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_latex output_subarea output_pyout">
 $$x - \frac{1}{6} x^{3} + \frac{1}{120} x^{5} - \frac{1}{5040} x^{7} + \frac{1}{362880} x^{9} + \mathcal{O}\left(x^{10}\right)$$
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[12]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">summation</span><span class="p">,</span> <span class="n">factorial</span>
 <span class="n">summation</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">factorial</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">oo</span><span class="p">))</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[12]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_latex output_subarea output_pyout">
 $$e$$
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-
-</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="diff">diff</h3>
+<h3 id="diff">diff</h3>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[13]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">diff</span>
 <span class="n">diff</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[13]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_latex output_subarea output_pyout">
 $$\cos{\left (x \right )}$$
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[14]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="n">diff</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[14]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_latex output_subarea output_pyout">
 $$- \sin{\left (x \right )}$$
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-
-</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="integration">integration</h3>
+<h3 id="integration">integration</h3>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[15]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">integrate</span><span class="p">,</span> <span class="n">erf</span>
 <span class="n">integrate</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[15]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_latex output_subarea output_pyout">
 $$x^{6}$$
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[16]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="n">integrate</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[16]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_latex output_subarea output_pyout">
 $$1$$
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-
-</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="functions">functions</h1>
+<h1 id="functions">functions</h1>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[17]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Function</span>
 <span class="n">f</span><span class="o">=</span><span class="n">Function</span><span class="p">(</span><span class="s">&#39;f&#39;</span><span class="p">)</span>
 <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[17]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_latex output_subarea output_pyout">
 $$\frac{\partial^{2}}{\partial^{2} x}  \operatorname{f}{\left (x \right )}$$
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[18]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">solve</span>
 <span class="n">solve</span><span class="p">([</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">6</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">15</span><span class="p">],</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[18]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_text output_subarea output_pyout">
 <pre>
 {x: -3, y: 1}</pre>
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-
-</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="linear-algebra">Linear Algebra</h1>
+<h1 id="linear-algebra">Linear Algebra</h1>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[19]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Matrix</span>
 <span class="n">Matrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[19]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_latex output_subarea output_pyout">
 $$\left[\begin{smallmatrix}1 & 0\\0 & 1\end{smallmatrix}\right]$$
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-
-</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="pattern-matching">Pattern matching</h1>
+<h1 id="pattern-matching">Pattern matching</h1>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[20]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Wild</span>
 <span class="n">p</span> <span class="o">=</span> <span class="n">Wild</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">)</span>
 <span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">p</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt output_prompt">
+<div class="output_area"><div class="prompt output_prompt">
     Out[20]:</div>
-<div class="box-flex1 output_subarea output_pyout">
 
 
+<div class="output_text output_subarea output_pyout">
 <pre>
 {p: 5}</pre>
+</div>
+
+</div>
 
 </div>
 </div>
 
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
 </div>
-
-</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="pretty-printing">Pretty printing</h1>
+<h1 id="pretty-printing">Pretty printing</h1>
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[21]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">pprint</span><span class="p">,</span> <span class="n">Integral</span>
 <span class="n">pprint</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
 <pre>
 ⌠      
 ⎮  2   
@@ -653,24 +761,26 @@ In&nbsp;[21]:
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[22]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy.printing.python</span> <span class="kn">import</span> <span class="n">python</span>
 <span class="k">print</span> <span class="n">python</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
 <pre>
 x = Symbol(&apos;x&apos;)
 e = Integral(x**2, x)
@@ -682,24 +792,26 @@ e = Integral(x**2, x)
 </div>
 
 </div>
-<div class="cell border-box-sizing code_cell vbox">
-<div class="input hbox">
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">
 In&nbsp;[23]:
 </div>
-<div class="input_area box-flex1">
+<div class="inner_cell">
+    <div class="input_area">
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">latex</span>
 <span class="k">print</span> <span class="n">latex</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></pre></div>
 
 </div>
 </div>
+</div>
 
-<div class="vbox output_wrapper">
-<div class="output vbox">
+<div class="output_wrapper">
+<div class="output">
 
 
-<div class="hbox output_area"><div class="prompt"></div>
-<div class="box-flex1 output_subarea output_stream output_stdout">
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
 <pre>
 \int x^{2}\, dx
 </pre>

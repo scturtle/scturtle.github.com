@@ -1,0 +1,190 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Genetic Algorithm and Image Evolution | ScTurtle&#39;s Pool</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/pygments.css" type="text/css">
+    <link href="/atom.xml" rel="alternate" title="ScTurtle&#39;s Pool" type="application/atom+xml">
+  </head>
+  <body>
+    <div class=container>
+      <div class=header>
+        <a href='/'>ScTurtle&#39;s Pool</a>
+      </div>
+      <div class=navigation>
+        <ul>
+          <li><a href='/'>blog</a>
+          <li><a href='/archive.html'>archive</a>
+          <li><a href='/tags/'>tags</a>
+          <li><a href='/about/'>about</a>
+        </ul>
+      </div>
+      <div class=body>
+
+
+<article>
+<h1 class=title>Genetic Algorithm and Image Evolution</h1>
+<p class=info>
+April 18, 2014
+<a href='/tags/algo.html'>#algo</a>
+<a href='/tags/python.html'>#python</a>
+</p>
+<p style='text-align: center;'>
+<img src='img/head.png' style='block:inline'/>
+<img src='img/result.bmp' style='block:inline'/>
+</p>
+
+<p>Recently, I find a <a href="http://multigrad.blogspot.hk/2014/04/math-evolution-and-dirty-tricks.html">blog</a> about how to use <a href="https://code.google.com/p/deap/">DEAP</a>,
+a genetic programming library in Python,
+to find the magic number in the famous <a href="http://en.wikipedia.org/wiki/Fast_inverse_square_root">fast inverse square root</a> algorithm.
+It seems that genetic algorithm is not too difficult
+and let's play it on an <a href="http://rogeralsing.com/2008/12/07/genetic-programming-evolution-of-mona-lisa/">old toy programming game</a>.</p>
+<p>The purpose is to use a certain number of triangles to approximate an image.
+A lot of works have been done on this in various programming languages.
+But let's try it by hand and in Python.</p>
+<p>The idea of genetic algorithm is repeatedly evolution on a population of DNA.
+Good DNA are kept and used to generate the next generation through crossover and mutation.
+In plain words, crossover is exchanging small parts between two DNA and mutation is random change on one DNA.</p>
+<p>First, we need to import something:</p>
+<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">deap</span> <span class="kn">import</span> <span class="n">base</span><span class="p">,</span> <span class="n">creator</span><span class="p">,</span> <span class="n">tools</span><span class="p">,</span> <span class="n">algorithms</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">ImageDraw</span>
+<span class="o">...</span>
+</pre></div>
+
+
+<p>Let's fix some constants.
+The size of image is restricted to be 100x100.
+Each generation contains a population of 40 individuals.
+And the DNA of each individual is just a set of 50 triangles.</p>
+<div class="codehilite"><pre><span class="n">PIC</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;head.jpg&#39;</span><span class="p">)</span>
+<span class="n">SIZE</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">NUMBER_OF_TRIANGLES</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">POPULATION</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">NGEN</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">POLY</span> <span class="o">=</span> <span class="mi">3</span>
+</pre></div>
+
+
+<p>We need <code>gen_one_triangle()</code> to generate one triangle in random position with random color and transparency.</p>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">gen_one_triangle</span><span class="p">():</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">([(</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">POLY</span><span class="p">)]),</span>
+            <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span> <span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">30</span><span class="p">))</span>
+</pre></div>
+
+
+<p>With DEAP, we define some classes and the initial part:</p>
+<div class="codehilite"><pre><span class="n">creator</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;Fitness&quot;</span><span class="p">,</span> <span class="n">base</span><span class="o">.</span><span class="n">Fitness</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,))</span>  <span class="c"># maximize fitness</span>
+<span class="n">creator</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="s">&quot;Individual&quot;</span><span class="p">,</span> <span class="nb">list</span><span class="p">,</span> <span class="n">fitness</span><span class="o">=</span><span class="n">creator</span><span class="o">.</span><span class="n">Fitness</span><span class="p">)</span>  <span class="c"># individual class</span>
+
+<span class="n">toolbox</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">Toolbox</span><span class="p">()</span>
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&quot;attr&quot;</span><span class="p">,</span> <span class="n">gen_one_triangle</span><span class="p">)</span>  <span class="c"># the above function</span>
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&quot;individual&quot;</span><span class="p">,</span> <span class="n">tools</span><span class="o">.</span><span class="n">initRepeat</span><span class="p">,</span>  <span class="c"># initialization of individual</span>
+                 <span class="n">creator</span><span class="o">.</span><span class="n">Individual</span><span class="p">,</span> <span class="n">toolbox</span><span class="o">.</span><span class="n">attr</span><span class="p">,</span> <span class="n">NUMBER_OF_TRIANGLES</span><span class="p">)</span>
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&quot;population&quot;</span><span class="p">,</span> <span class="n">tools</span><span class="o">.</span><span class="n">initRepeat</span><span class="p">,</span>  <span class="c"># initialization of population</span>
+                 <span class="nb">list</span><span class="p">,</span> <span class="n">toolbox</span><span class="o">.</span><span class="n">individual</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Now we should figure out how to evaluate the intermediate result (50 triangles). I draw them on an blank background and do pixel by pixel comparison with the origin image:</p>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">triangles_to_image</span><span class="p">(</span><span class="n">triangles</span><span class="p">):</span>
+    <span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&#39;RGB&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">),</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">tri</span> <span class="ow">in</span> <span class="n">triangles</span><span class="p">:</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s">&#39;RGBA&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">SIZE</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">))</span>
+        <span class="n">draw</span> <span class="o">=</span> <span class="n">ImageDraw</span><span class="o">.</span><span class="n">Draw</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="n">draw</span><span class="o">.</span><span class="n">polygon</span><span class="p">(</span><span class="n">tri</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fill</span><span class="o">=</span><span class="n">tri</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="n">im</span><span class="o">.</span><span class="n">paste</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">)</span>
+        <span class="k">del</span> <span class="n">mask</span><span class="p">,</span> <span class="n">draw</span>
+    <span class="k">return</span> <span class="n">im</span>
+
+<span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="n">im1</span><span class="p">,</span> <span class="n">t2</span><span class="p">):</span>
+    <span class="n">im2</span> <span class="o">=</span> <span class="n">triangles_to_image</span><span class="p">(</span><span class="n">t2</span><span class="p">)</span>
+    <span class="n">pix1</span><span class="p">,</span> <span class="n">pix2</span> <span class="o">=</span> <span class="n">im1</span><span class="o">.</span><span class="n">load</span><span class="p">(),</span> <span class="n">im2</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">SIZE</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">SIZE</span><span class="p">):</span>
+            <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span> <span class="o">=</span> <span class="n">pix1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+            <span class="n">b1</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">b3</span> <span class="o">=</span> <span class="n">pix2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+            <span class="n">ans</span> <span class="o">+=</span> <span class="p">(</span><span class="n">a1</span> <span class="o">-</span> <span class="n">b1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">a2</span> <span class="o">-</span> <span class="n">b2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">a3</span> <span class="o">-</span> <span class="n">b3</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span> <span class="o">/</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">SIZE</span> <span class="o">*</span> <span class="n">SIZE</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">255</span> <span class="o">*</span> <span class="mi">255</span><span class="p">)),</span>
+
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&quot;evaluate&quot;</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="n">evaluate</span><span class="p">,</span> <span class="n">PIC</span><span class="p">))</span>
+</pre></div>
+
+
+<p>For crossover we use the default function in DEAP to work on sequences.
+And we define a <code>mutate</code> function to change position or color of one triangle in individual.
+(That function is a bit long and boring. Let's skip it ...)
+We also use the default select function in DEAP.
+Register them:</p>
+<div class="codehilite"><pre><span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&quot;evaluate&quot;</span><span class="p">,</span> <span class="n">partial</span><span class="p">(</span><span class="n">evaluate</span><span class="p">,</span> <span class="n">PIC</span><span class="p">))</span>
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&quot;mate&quot;</span><span class="p">,</span> <span class="n">tools</span><span class="o">.</span><span class="n">cxTwoPoint</span><span class="p">)</span>  <span class="c"># crossover</span>
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&quot;mutate&quot;</span><span class="p">,</span> <span class="n">mutate</span><span class="p">)</span>  <span class="c"># mutation</span>
+<span class="n">toolbox</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&quot;select&quot;</span><span class="p">,</span> <span class="n">tools</span><span class="o">.</span><span class="n">selTournament</span><span class="p">,</span> <span class="n">tournsize</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+
+<p>Finally, in the <code>main</code> function we just call the algorithm function in one line.</p>
+<div class="codehilite"><pre><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">pop</span> <span class="o">=</span> <span class="n">toolbox</span><span class="o">.</span><span class="n">population</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">POPULATION</span><span class="p">)</span>
+    <span class="n">hof</span> <span class="o">=</span> <span class="n">tools</span><span class="o">.</span><span class="n">HallOfFame</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">tools</span><span class="o">.</span><span class="n">Statistics</span><span class="p">(</span><span class="k">lambda</span> <span class="n">ind</span><span class="p">:</span> <span class="n">ind</span><span class="o">.</span><span class="n">fitness</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="n">stats</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&quot;std&quot;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">std</span><span class="p">)</span>
+    <span class="n">stats</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&quot;max&quot;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+    <span class="n">stats</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&quot;avg&quot;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">mean</span><span class="p">)</span>
+    <span class="n">stats</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="s">&quot;min&quot;</span><span class="p">,</span> <span class="n">numpy</span><span class="o">.</span><span class="n">min</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">pop</span><span class="p">,</span> <span class="n">log</span> <span class="o">=</span> <span class="n">algorithms</span><span class="o">.</span><span class="n">eaSimple</span><span class="p">(</span>
+            <span class="n">pop</span><span class="p">,</span> <span class="n">toolbox</span><span class="p">,</span> <span class="n">cxpb</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">mutpb</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">ngen</span><span class="o">=</span><span class="n">NGEN</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="n">stats</span><span class="p">,</span>
+            <span class="n">halloffame</span><span class="o">=</span><span class="n">hof</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="nb">open</span><span class="p">(</span><span class="s">&#39;result.txt&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">hof</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">triangles_to_image</span><span class="p">(</span><span class="n">hof</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;result.bmp&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>The picture in the head of this blog is generated through 10,000 generations within sevaral hours.  <br />
+The full source code is <a href="https://gist.github.com/scturtle/11035675">here</a>.
+Feel free to play with it.</p>
+</article>
+<div id="show_disqus"><a onclick="load_disqus();return false;" href="##">Show comments</a></div>
+<div id="disqus_thread"></div>
+
+
+      </div>
+      <div class=footer>
+        <p><a href='https://github.com/scturtle/turtleblog'>turtleblog</a> &copy; 2013 scturtle
+        <p> <a href="mailto:scturtle@gmail.com">mail</a>,
+        <a href="http://twitter.com/scturtle">twitter</a>,
+        <a href="http://github.com/scturtle">github</a>,
+        <a href='/atom.xml' rel=alternate title="Recent Blogs | ScTurtle&#39;s Pool">feed</a>
+      </div>
+    </div>
+
+<script type="text/javascript">
+  function load_disqus() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = 'http://scturtlespool.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    document.getElementById('show_disqus').style.display='none';
+  };
+</script>
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33410961-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+  </body>
+</html>
