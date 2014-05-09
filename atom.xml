@@ -4,7 +4,7 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2014-04-18T19:07:00</updated>
+  <updated>2014-05-09T17:14:00</updated>
   <id>http://scturtle.me</id>
   
   <entry>
@@ -15,8 +15,8 @@
     <id>http://scturtle.me/2014/0418-ga/</id>
     <content type="html"><![CDATA[
 <p style='text-align: center;'>
-<img src='/2014/0418-ga/img/head.png' style='block:inline'/>
-<img src='/2014/0418-ga/img/result.bmp' style='block:inline'/>
+<img src='/2014/0418-ga/img/head.png' style='display:inline'/>
+<img src='/2014/0418-ga/img/result.bmp' style='display:inline'/>
 </p>
 
 <p>Recently, I find a <a href="http://multigrad.blogspot.hk/2014/04/math-evolution-and-dirty-tricks.html">blog</a> about how to use <a href="https://code.google.com/p/deap/">DEAP</a>,
