@@ -4,7 +4,7 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2014-05-09T17:24:00</updated>
+  <updated>2014-05-29T14:07:00</updated>
   <id>http://scturtle.me</id>
   
   <entry>
@@ -201,8 +201,15 @@ In&nbsp;[2]:
 </div>
 
 </div>
-                symbols
-                
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>symbols</p>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
@@ -242,8 +249,15 @@ In&nbsp;[4]:
 </div>
 
 </div>
-                expression operations
-                
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>expression operations</p>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
@@ -356,8 +370,15 @@ $$-1$$
 </div>
 </div>
 </div>
-                partial fraction decomposition and together back
-                
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>partial fraction decomposition and together back</p>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">
