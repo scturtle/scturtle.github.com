@@ -4,9 +4,40 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2014-05-29T14:07:00</updated>
+  <updated>2014-07-11T23:58:00</updated>
   <id>http://scturtle.me</id>
   
+  <entry>
+    <title type="html"><![CDATA[Minimal Haskell Environment With Latest GHC and Cabal-Install on Windows]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2014/0711-hask-env/"/>
+    <updated>2014-07-11T23:00:00</updated>
+    <id>http://scturtle.me/2014/0711-hask-env/</id>
+    <content type="html"><![CDATA[
+<p>Delete old environment if you have <code>C:\Users\USERNAME\AppData\Roaming\cabal</code> and <code>C:\Users\USERNAME\AppData\Roaming\ghc</code>.</p>
+<p>Download <a href="http://www.haskell.org/ghc/">latest GHC</a> and unzip it to <code>C:\Program Files\haskell</code>.</p>
+<p>Add <code>C:\Program Files\haskell\bin\</code> into <code>PATH</code>.</p>
+<p>Get a pre-built <a href="http://www.haskell.org/cabal/download.html">cabal.exe</a>.
+And put it into the above path.</p>
+<p>Following command are executed under <a href="http://www.mingw.org/wiki/msys">MSYS</a>. <code>Cygwin</code> just fails.</p>
+<p>Get packages list from hackage:</p>
+<div class="codehilite"><pre>$ cabal update
+</pre></div>
+
+
+<p>If it tells you to <code>cabal install cabal-install</code>, don't believe it :)</p>
+<p>We first get a right version of cabal and then the latest cabal-install:</p>
+<div class="codehilite"><pre>$ cabal install cabal
+$ export PATH=&quot;/c/Program Files/haskell/perl&quot;:&quot;/c/Program Files/haskell/mingw/bin&quot;:$PATH
+$ cabal install cabal-install
+</pre></div>
+
+
+<p>Replace our original <code>cabal.exe</code> by the one built in <code>C:\Users\USERNAME\AppData\Roaming\cabal\bin\</code>.
+Also add the above path into <code>PATH</code>.</p>
+<p>Now we have the latest <code>GHC</code> and <code>Cabal-Install</code> :)</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Genetic Algorithm and Image Evolution]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -1198,70 +1229,6 @@ Code is <a href="https://gist.github.com/scturtle/5678355">here</a>.</p>
     <content type="html"><![CDATA[
 <p>An online markdown editor (in JS) supporting vi-mode key binding, code highlighting and tex formula.</p>
 <p><a href="http://scturtle.me/turtlenote/"><img alt="screenshort" src="http://i.imgur.com/E6Ar5bs.png" /></a></p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Random Sampling]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2013/0417-random-sampling/"/>
-    <updated>2013-04-17T19:00:00</updated>
-    <id>http://scturtle.me/2013/0417-random-sampling/</id>
-    <content type="html"><![CDATA[
-<p>Given a set of items, choosing random one with equal probability can be done by <code>random.choice(items)</code>.
-But what if we are given items one by one without knowing the length of the whole set?</p>
-<p>There is a simple algorithm: For the <mathjax>$k$</mathjax>-th item, we give up previous selection and choose this one with probability <mathjax>$\frac 1 k$</mathjax>.
-Proof as follows: If we select the <mathjax>$k$</mathjax>-th item, it means that we choose it with probability <mathjax>$\frac 1 k$</mathjax> and give up all successors. 
-Product of probabilities of all these choices is:</p>
-<p><mathjax>$$ p_k = \frac 1 k \times \frac {k} {k+1} \times \cdots \times \frac {n-2}{n-1} \times \frac {n-1} n = \frac 1 n $$</mathjax></p>
-<p>Codes in Python:</p>
-<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">random</span>
-
-<span class="k">def</span> <span class="nf">choice</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
-    <span class="n">selection</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">selection</span> <span class="o">=</span> <span class="n">item</span>
-    <span class="k">return</span> <span class="n">selection</span>
-</pre></div>
-
-
-<p>We can generalize this algorithm. For a set of items, each one is associated with a weight <mathjax>$w_i$</mathjax>.
-Our goal is to select a random one based on its weight ratio.
-The algorithm is similar to the previous one: For the <mathjax>$k$</mathjax>-th item, replace the current selection with it with probability <mathjax>$\frac {w_k} {\sum_{i=1}^k w_i}$</mathjax>.
-Proof is analogical:</p>
-<p><mathjax>$$p_k = \frac {w_k} {\sum_{i=1}^k w_i} \times \frac {\sum_{i=1}^k w_i} {\sum_{i=1}^{k+1} w_i} 
-\times \cdots \times \frac {\sum_{i=1}^{n-2} w_i} {\sum_{i=1}^{n-1} w_i} \times \frac {\sum_{i=1}^{n-1} w_i} {\sum_{i=1}^{n} w_i} = \frac {w_k} {\sum_{i=1}^n w_i}$$</mathjax></p>
-<p>Codes in Python:</p>
-<div class="codehilite"><pre><span class="k">def</span> <span class="nf">weightedChoice</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
-    <span class="n">selection</span> <span class="o">=</span> <span class="bp">None</span>
-    <span class="n">total_weight</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="k">for</span> <span class="n">item</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">weights</span><span class="p">):</span>
-        <span class="n">total_weight</span> <span class="o">+=</span> <span class="n">weight</span>
-        <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">total_weight</span> <span class="o">&lt;</span> <span class="n">weight</span><span class="p">:</span>
-            <span class="n">selection</span> <span class="o">=</span> <span class="n">item</span>
-    <span class="k">return</span> <span class="n">selection</span>
-</pre></div>
-
-
-<p>There is another amazing method to do this weighted random sampling:
-For each item, get a random <mathjax>$r_i \in [0, 1]$</mathjax>,
-and <em>reweight</em> this item as <mathjax>$w'_i = r_i^{1 / {w_i}}$</mathjax>.
-Then we can select the one with the top new weight. Proof of this is a bit annoying.</p>
-<p>If we choose the <mathjax>$i$</mathjax>-th item at last, this means <mathjax>$\forall j\neq i, w'_j &lt;w'_i$</mathjax>. As <mathjax>$r_i \in [0, 1]$</mathjax>, the probability is:</p>
-<p><mathjax>$$ p_i = \int_0^1 p(\forall j\neq i, w'_j &lt;w'_i)\ \mathrm{d}\ r_i $$</mathjax></p>
-<p><mathjax>$r_j$</mathjax> is independent with each other. So:</p>
-<p><mathjax>$$ p_i = \int_0^1 \prod_{j \neq i} p(w'_j &lt;w'_i)\ \mathrm{d} \ r_i $$</mathjax></p>
-<p>As <mathjax>$r_j \in [0, 1]$</mathjax>, the inner probability can be simplified as:</p>
-<p><mathjax>$$ p(w'_j &lt;w'_i) = p(r_j^{1 / w_j} &lt; r_i^{1 / w_i}) = p(r_j &lt; r_i^{w_j / w_i}) = r_i^{w_j / w_i} $$</mathjax></p>
-<p>So:</p>
-<p><mathjax>$$ p_i = \int_0^1 \prod_{j \neq i} r_i^{w_j / w_i}\ \mathrm{d}\ r_i
-= \int_0^1 r_i^{(w-w_i) / w_i}\ \mathrm{d}\ r_i = \frac {w_i} w $$</mathjax></p>
-<p>Same as our expectation.</p>
-<p>This blog is basically a summary of
-<a href="http://www.gocalf.com/blog/random-selection.html">these</a>
-<a href="http://www.gocalf.com/blog/weighted-random-selection.html">three</a>
-<a href="http://www.gocalf.com/blog/weighted-random-selection-2.html">blogs</a>.
-Refer to them for more content.</p>
 ]]> </content>
   </entry>
 </feed>
