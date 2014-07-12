@@ -1,9 +1,10 @@
 /* modified from lucumr.pocoo.org, haskell-lang.org */
 /* general style */
-body { font-family: Open Sans; font-size: 16px; margin: 0; padding: 0; color: #333 }
+body { font-family: Open Sans; font-size: 16px; margin: 0; padding: 0;
+       color: #333; background-color: #f6f7f9; }
 hr   { border: none; border-top: 1px solid #ddd; height: 0; }
-a    { color: #4f4371; text-decoration: none; }
-code { color: #4f4371; }
+a    { color: #37638E; text-decoration: none; }
+code { color: #37638E; }
 a:hover { text-decoration: underline; }
 mathjax { font-size: 14px; }
 
@@ -35,16 +36,15 @@ li                          { padding: 0; }
 /* code */
 pre, code { font-family: Menlo,Monaco,"Andale Mono",
             "lucida console", "Courier New",monospace;
-            border: 1px solid #ccc; border-radius: 4px; color: #333; }
+            border: 1px solid #ccc; border-radius: 4px;
+            color: #333;  background-color: #eef0f3; }
 pre       { font-size: 0.82em; line-height: 1.42857; 
-            padding: 10px; background: #f5f5f5;
-            overflow: auto;}
-code      { font-size: 13px; background: #f5f5f5;
-            padding: 2px 5px; margin: 0 2px; }
+            padding: 10px; overflow: auto;}
+code      { font-size: 13px; padding: 2px 5px; margin: 0 2px; }
 
 /* tables */
 table           { border: 1px solid #ddd; border-collapse: collapse;
-                  background: #fafafa; }
+                  background-color: #eef0f3; }
 td, th          { padding: 2px 12px; border: 1px solid #ddd; }
 
 /* blog overview */
