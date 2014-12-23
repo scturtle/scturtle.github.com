@@ -57,9 +57,9 @@ Aug 12, 2012
 
 <script type="text/javascript">
   function load_disqus() {
-    var dsq = document.createElement('script');
-    dsq.type = 'text/javascript'; dsq.async = true;
-    dsq.src = 'https://scturtlespool.disqus.com/embed.js';
+    var disqus_shortname = 'scturtlespool';
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     document.getElementById('show_disqus').style.display='none';
   };

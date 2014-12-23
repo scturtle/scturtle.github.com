@@ -4,9 +4,25 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2014-12-18T13:41:00</updated>
+  <updated>2014-12-23T23:04:00</updated>
   <id>http://scturtle.me</id>
   
+  <entry>
+    <title type="html"><![CDATA[Play 0hh1.com with PyAutoGUI]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="http://scturtle.me/2014/1223-auto-0hh1/"/>
+    <updated>2014-12-23T23:00:00</updated>
+    <id>http://scturtle.me/2014/1223-auto-0hh1/</id>
+    <content type="html"><![CDATA[
+<div style="text-align: center;">
+<video style="width: 480px;" loop="" controls="controls" src="https://pbs.twimg.com/tweet_video/B5iMCp3CAAEKvHJ.mp4"></video>
+</div>
+
+<p>Inspired by <a href="http://inventwithpython.com/blog/2014/12/17/programming-a-bot-to-play-the-sushi-go-round-flash-game/">this blog</a>.</p>
+<p>Much simpler example showing how to play <a href="http://0hh1.com">0hh1.com</a>(simple game like 2048) with <a href="https://pyautogui.readthedocs.org/en/latest/">PyAutoGUI</a>.</p>
+<p>Code is <a href="https://gist.github.com/scturtle/9403534f32ff7a95dd3f">here</a>.</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[SVM with Stochastic Gradient Descent]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -2622,60 +2638,6 @@ c_N &amp;\sim 2N (\int_1^\infty \frac 1x \mathrm{d} x + \gamma) - 2N \\
 <p>不管你强还是弱，可能像<a href="http://www.hecaitou.com/blogs/hecaitou/archives/134603.aspx">和菜头</a>先生说的那样，一种可以对生活应付裕如的心态从来不存在。没有人容易。但是在艰难之中依然步履不停，依然可以因种种小快乐欣喜，依然愿意去分担另一个人的不易，可能是我目前觉得最好的状态了。</p>
 <p>于是借和菜头那篇的最后的句式，也对自己说一句：   </p>
 <p>生日快乐！scturtle 君！</p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Compile a better GVim for Windows]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2013/0716-compile-vim/"/>
-    <updated>2013-07-16T22:00:00</updated>
-    <id>http://scturtle.me/2013/0716-compile-vim/</id>
-    <content type="html"><![CDATA[
-<p>GVim in the default distribution is ugly on Windows. 
-It's not hard to build a better one.</p>
-<p><em>1.</em> Get the source of Vim:</p>
-<div class="codehilite"><pre>&gt; hg clone https://vim.googlecode.com/hg/ vim
-</pre></div>
-
-
-<p><em>2.</em> To get better font renderer, comment out these lines in <code>src/gui_w32.c</code>:</p>
-<div class="codehilite"><pre>......
-    /* On NT, tell the font renderer not to &quot;help&quot; us with Hebrew and Arabic
-     * text.  This doesn&#39;t work in 9x, so we have to deal with it manually on
-     * those systems. */
-<span class="gi">+   /*</span>
-    if (os_version.dwPlatformId == VER_PLATFORM_WIN32_NT)
-        foptions |= ETO_IGNORELANGUAGE;
-<span class="gi">+   */</span>
-......
-</pre></div>
-
-
-<p><em>3.</em> To support non-monospace fonts, comment out these lines in <code>src/os_mswin.c</code>:</p>
-<div class="codehilite"><pre>......
- #ifndef FEAT_PROPORTIONAL_FONTS
-    /* Ignore non-monospace fonts without further ado */
-<span class="gi">+   /*</span>
-    if ((ntm-&gt;tmPitchAndFamily &amp; 1) != 0)
-        return 1;
-<span class="gi">+   */</span>
- #endif
-......
-</pre></div>
-
-
-<p><em>4.</em> Get this <a href="http://tuxproject.de/projects/vim/_compile.bat.php">compile.bat</a>, 
-and modify compilation flags as follows(assuming you have Virsual Studio):</p>
-<div class="codehilite"><pre>......
-nmake -f Make_mvc.mak GUI=yes OLE=yes IME=yes GIME=yes DYNAMIC_IME=yes GDYNAMIC_IME=yes CSCOPE=yes MULTI_BYTE=yes MULTI_BYTE_IME=yes FEATURES=HUGE PYTHON=c:\Python27 DYNAMIC_PYTHON=yes PYTHON_VER=27
-......
-</pre></div>
-
-
-<p><em>5.</em> Run it at the <code>vim</code> folder, 
-and you will get a new distribution of vim at <code>src\templateoutput</code>.
-Move it to a suitable place, and run <code>install.exe</code> in it to do further configuration.
-Done!</p>
 ]]> </content>
   </entry>
 </feed>
