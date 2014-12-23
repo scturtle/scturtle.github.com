@@ -4,7 +4,7 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="http://scturtle.me/atom.xml" rel="self"/>
   <link href="http://scturtle.me/"/>
-  <updated>2014-12-23T23:04:00</updated>
+  <updated>2014-12-23T23:25:00</updated>
   <id>http://scturtle.me</id>
   
   <entry>
@@ -14,10 +14,7 @@
     <updated>2014-12-23T23:00:00</updated>
     <id>http://scturtle.me/2014/1223-auto-0hh1/</id>
     <content type="html"><![CDATA[
-<div style="text-align: center;">
-<video style="width: 480px;" loop="" controls="controls" src="https://pbs.twimg.com/tweet_video/B5iMCp3CAAEKvHJ.mp4"></video>
-</div>
-
+<p><img src="https://dl.dropboxusercontent.com/u/1551217/0hh1.gif" style="max-width:480px;"/></p>
 <p>Inspired by <a href="http://inventwithpython.com/blog/2014/12/17/programming-a-bot-to-play-the-sushi-go-round-flash-game/">this blog</a>.</p>
 <p>Much simpler example showing how to play <a href="http://0hh1.com">0hh1.com</a>(simple game like 2048) with <a href="https://pyautogui.readthedocs.org/en/latest/">PyAutoGUI</a>.</p>
 <p>Code is <a href="https://gist.github.com/scturtle/9403534f32ff7a95dd3f">here</a>.</p>
