@@ -2,17 +2,17 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[ScTurtle's Pool]]></title>
-  <link href="http://scturtle.me/atom.xml" rel="self"/>
-  <link href="http://scturtle.me/"/>
-  <updated>2014-12-29T17:38:00</updated>
-  <id>http://scturtle.me</id>
+  <link href="https://scturtle.me//atom.xml" rel="self"/>
+  <link href="https://scturtle.me/"/>
+  <updated>2015-01-08T19:43:06.082291+08:00</updated>
+  <id>https://scturtle.me//</id>
   
   <entry>
     <title type="html"><![CDATA[Play 0hh1.com with PyAutoGUI]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2014/1223-auto-0hh1/"/>
-    <updated>2014-12-23T23:00:00</updated>
-    <id>http://scturtle.me/2014/1223-auto-0hh1/</id>
+    <link href="https://scturtle.me//2014/1223-auto-0hh1/"/>
+    <updated>2014-12-23T23:00:00+08:00</updated>
+    <id>https://scturtle.me//2014/1223-auto-0hh1/</id>
     <content type="html"><![CDATA[
 <p><img src="https://dl.dropboxusercontent.com/u/1551217/0hh1.gif" style="max-width:480px;"/></p>
 <p>Inspired by <a href="http://inventwithpython.com/blog/2014/12/17/programming-a-bot-to-play-the-sushi-go-round-flash-game/">this blog</a>.</p>
@@ -23,9 +23,9 @@
   <entry>
     <title type="html"><![CDATA[SVM with Stochastic Gradient Descent]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2014/1218-svm-sgd/"/>
-    <updated>2014-12-18T10:00:00</updated>
-    <id>http://scturtle.me/2014/1218-svm-sgd/</id>
+    <link href="https://scturtle.me//2014/1218-svm-sgd/"/>
+    <updated>2014-12-18T10:00:00+08:00</updated>
+    <id>https://scturtle.me//2014/1218-svm-sgd/</id>
     <content type="html"><![CDATA[
 <div class="ipynb">
 
@@ -657,9 +657,9 @@ RERERFQI/w9InBx3xTLIOQAAAABJRU5ErkJggg==
   <entry>
     <title type="html"><![CDATA[Logistic Regression with Stochastic Gradient Descent]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2014/1207-sgd/"/>
-    <updated>2014-12-07T18:00:00</updated>
-    <id>http://scturtle.me/2014/1207-sgd/</id>
+    <link href="https://scturtle.me//2014/1207-sgd/"/>
+    <updated>2014-12-07T18:00:00+08:00</updated>
+    <id>https://scturtle.me//2014/1207-sgd/</id>
     <content type="html"><![CDATA[
 <div class="ipynb">
 
@@ -1494,9 +1494,9 @@ A7BVRop+Nd2rAAAAAElFTkSuQmCC
   <entry>
     <title type="html"><![CDATA[Minimal Haskell Environment With Latest GHC and Cabal-Install on Windows]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2014/0711-hask-env/"/>
-    <updated>2014-07-11T23:00:00</updated>
-    <id>http://scturtle.me/2014/0711-hask-env/</id>
+    <link href="https://scturtle.me//2014/0711-hask-env/"/>
+    <updated>2014-07-11T23:00:00+08:00</updated>
+    <id>https://scturtle.me//2014/0711-hask-env/</id>
     <content type="html"><![CDATA[
 <p>Delete old environment if you have <code>C:\Users\USERNAME\AppData\Roaming\cabal</code> and <code>C:\Users\USERNAME\AppData\Roaming\ghc</code>.</p>
 <p>Download <a href="http://www.haskell.org/ghc/">latest GHC</a> and unzip it to <code>C:\Program Files\haskell</code>.</p>
@@ -1525,9 +1525,9 @@ Also add the above path into <code>PATH</code>.</p>
   <entry>
     <title type="html"><![CDATA[Genetic Algorithm and Image Evolution]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2014/0418-ga/"/>
-    <updated>2014-04-18T18:00:00</updated>
-    <id>http://scturtle.me/2014/0418-ga/</id>
+    <link href="https://scturtle.me//2014/0418-ga/"/>
+    <updated>2014-04-18T18:00:00+08:00</updated>
+    <id>https://scturtle.me//2014/0418-ga/</id>
     <content type="html"><![CDATA[
 <p style='text-align: center;'>
 <img src='/2014/0418-ga/img/head.png' style='display:inline'/>
@@ -1652,9 +1652,9 @@ Feel free to play with it.</p>
   <entry>
     <title type="html"><![CDATA[Test IPython Notebook]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2014/0211-test-ipynb/"/>
-    <updated>2014-02-11T17:00:00</updated>
-    <id>http://scturtle.me/2014/0211-test-ipynb/</id>
+    <link href="https://scturtle.me//2014/0211-test-ipynb/"/>
+    <updated>2014-02-11T17:00:00+08:00</updated>
+    <id>https://scturtle.me//2014/0211-test-ipynb/</id>
     <content type="html"><![CDATA[
 <div class="ipynb">
 
@@ -2473,9 +2473,9 @@ In&nbsp;[23]:
   <entry>
     <title type="html"><![CDATA[Parallel in Python]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2014/0111-parallel-in-python/"/>
-    <updated>2014-01-11T10:00:00</updated>
-    <id>http://scturtle.me/2014/0111-parallel-in-python/</id>
+    <link href="https://scturtle.me//2014/0111-parallel-in-python/"/>
+    <updated>2014-01-11T10:00:00+08:00</updated>
+    <id>https://scturtle.me//2014/0111-parallel-in-python/</id>
     <content type="html"><![CDATA[
 <p>Multithreading and multiprocessing can be very easy in python ! <br />
 Following tests are processed on a machine with 24 cores.</p>
@@ -2534,9 +2534,9 @@ Following tests are processed on a machine with 24 cores.</p>
   <entry>
     <title type="html"><![CDATA[Python 字符串格式化详参]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2013/1219-string-format-python/"/>
-    <updated>2013-12-19T18:00:00</updated>
-    <id>http://scturtle.me/2013/1219-string-format-python/</id>
+    <link href="https://scturtle.me//2013/1219-string-format-python/"/>
+    <updated>2013-12-19T18:00:00+08:00</updated>
+    <id>https://scturtle.me//2013/1219-string-format-python/</id>
     <content type="html"><![CDATA[
 <p><a href="http://docs.python.org/dev/library/string.html#formatspec">来源docs</a></p>
 <p><code>{}</code> 包裹的是替换域，<code>{{</code> 和 <code>}}</code> 可用来 escape。</p>
@@ -2580,9 +2580,9 @@ type ::=  &quot;b&quot; | &quot;c&quot; | &quot;d&quot; | &quot;e&quot; | &quot;
   <entry>
     <title type="html"><![CDATA[Average Running Time of Quicksort]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2013/1109-quicksort/"/>
-    <updated>2013-11-09T20:00:00</updated>
-    <id>http://scturtle.me/2013/1109-quicksort/</id>
+    <link href="https://scturtle.me//2013/1109-quicksort/"/>
+    <updated>2013-11-09T20:00:00+08:00</updated>
+    <id>https://scturtle.me//2013/1109-quicksort/</id>
     <content type="html"><![CDATA[
 <p>From an interesting <a href="http://aofa.cs.princeton.edu/lectures/lectures13/AA01-AofA.pdf">slide</a>.</p>
 <p>We denote <mathjax>$C_N$</mathjax> as the <em>expected</em> number of comparisons used by sorting an array of length <mathjax>$N$</mathjax>.
@@ -2621,9 +2621,9 @@ c_N &amp;\sim 2N (\int_1^\infty \frac 1x \mathrm{d} x + \gamma) - 2N \\
   <entry>
     <title type="html"><![CDATA[One Punch Man]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="http://scturtle.me/2013/1028-one-punch-man/"/>
-    <updated>2013-10-28T00:00:00</updated>
-    <id>http://scturtle.me/2013/1028-one-punch-man/</id>
+    <link href="https://scturtle.me//2013/1028-one-punch-man/"/>
+    <updated>2013-10-28T00:00:00+08:00</updated>
+    <id>https://scturtle.me//2013/1028-one-punch-man/</id>
     <content type="html"><![CDATA[
 <p><img alt="one punch man" src="http://i.imgur.com/9oBxUQc.jpg" /></p>
 <p>继上半年看完了《二十世纪少年》后，最近补完了漫画《一拳超人》的重制版，又把原作版也追到最新了。很久没有看到这么喜欢的漫画了。各种随随便便又颠覆传统的设定，再加上主角那超像麻仓叶的吊儿郎当的个性，真是让我爱不释手啊。</p>
