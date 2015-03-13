@@ -4,9 +4,89 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="https://scturtle.me//atom.xml" rel="self"/>
   <link href="https://scturtle.me/"/>
-  <updated>2015-01-31T12:05:14.896665+08:00</updated>
+  <updated>2015-03-14T00:57:49.767089+08:00</updated>
   <id>https://scturtle.me//</id>
   
+  <entry>
+    <title type="html"><![CDATA[字符串搜索的 Horspool 算法]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="https://scturtle.me//2015/0314-horspool/"/>
+    <updated>2015-03-14T00:00:00+08:00</updated>
+    <id>https://scturtle.me//2015/0314-horspool/</id>
+    <content type="html"><![CDATA[
+<blockquote>
+<p>当你要手写一个字符串搜索算法，你会写什么？</p>
+</blockquote>
+<p>本文将要介绍的 Horspool 算法简单又不慢，一看就懂，一学就会，一写就过！</p>
+<p>假设我们要在一个叫 haystack 的字符串中搜索另一个叫 needle 的字符串。先对齐，从后往前搜到某个不匹配的字符：</p>
+<pre>
+ab<font color=red>c</font><font color=green>bab</font>ababab
+cb<font color=red>a</font><font color=green>bab</font>
+</pre>
+
+<p>我们可以把 needle 右移一位然后重新从最后一个开始匹配，这是最朴素的算法。但是我们可不可以多移几位呢？我们看 haystack 中的第三个 b，一个策略是移动 needle 使得这个 b 和 needle 里倒数第二个 b 对齐来，这样 needle 移了两个位置。</p>
+<pre>
+abcba<font color=green>b</font>ababab
+  cba<font color=green>b</font>ab
+</pre>
+
+<p>needle 里第一个 b 不行，因为会错过解；最后一个 b 也不行，因为 needle 没有动。所以除了 needle 里最后一个位置之外，倒数第一个配对的字符才是正确的选择。</p>
+<p>所以我们知道如何预处理一下 needle，记录 <strong>needle 每个字符的倒数第一次出现的位置(末尾除外)离 needle 末尾的距离</strong>，来作为跳转步数。不在 needle 里出现的字符对应的跳转步数则为 |needle|。哎呀这个岂不很好写的：</p>
+<div class="codehilite"><pre><span class="kt">int</span> <span class="n">jmp_table</span><span class="p">[</span><span class="n">UCHAR_MAX</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">UCHAR_MAX</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="n">jmp_table</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">nlen</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">last</span> <span class="o">=</span> <span class="n">nlen</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">last</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="n">jmp_table</span><span class="p">[</span><span class="n">needle</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">last</span> <span class="o">-</span> <span class="n">i</span><span class="p">;</span>
+</pre></div>
+
+
+<p>好了现在我们知道，每次出现不匹配时，找到 haystack 里和 needle 对应的最后一个字符，再在 needle 里找它倒数第一次出现的位置(末尾除外)，然后把它们对齐。就是这么简单。</p>
+<p>完整的 C++ 代码：</p>
+<div class="codehilite"><pre><span class="kt">int</span> <span class="nf">horspool</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">haystack</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">needle</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kt">int</span> <span class="n">hlen</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">haystack</span><span class="p">),</span> <span class="n">nlen</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">needle</span><span class="p">);</span>
+  <span class="kt">int</span> <span class="n">jmp_table</span><span class="p">[</span><span class="n">UCHAR_MAX</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">UCHAR_MAX</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="n">jmp_table</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">nlen</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">last</span> <span class="o">=</span> <span class="n">nlen</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">last</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="n">jmp_table</span><span class="p">[</span><span class="n">needle</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">last</span> <span class="o">-</span> <span class="n">i</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">while</span><span class="p">(</span><span class="n">j</span> <span class="o">&lt;=</span> <span class="n">hlen</span> <span class="o">-</span> <span class="n">nlen</span><span class="p">){</span>
+    <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">haystack</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="n">last</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">last</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">haystack</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">needle</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">--</span><span class="n">i</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">return</span> <span class="n">j</span><span class="p">;</span>
+    <span class="n">j</span> <span class="o">+=</span> <span class="n">jmp_table</span><span class="p">[</span><span class="n">c</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>简单到 Haskell 的也很好写哇：</p>
+<div class="codehilite"><pre><span class="cm">{-# LANGUAGE OverloadedStrings #-}</span>
+<span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.Map</span> <span class="k">as</span> <span class="n">M</span> <span class="p">(</span><span class="n">findWithDefault</span><span class="p">,</span> <span class="n">fromList</span><span class="p">)</span>
+<span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.ByteString</span> <span class="k">as</span> <span class="n">BS</span>
+
+<span class="nf">horspool</span> <span class="ow">::</span> <span class="kt">BS</span><span class="o">.</span><span class="kt">ByteString</span> <span class="ow">-&gt;</span> <span class="kt">BS</span><span class="o">.</span><span class="kt">ByteString</span> <span class="ow">-&gt;</span> <span class="kt">Maybe</span> <span class="kt">Int</span>
+<span class="nf">horspool</span> <span class="n">s</span> <span class="n">p</span> <span class="ow">=</span> <span class="n">f</span> <span class="p">(</span><span class="n">lenp</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="n">lenp</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="n">lenp</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="kr">where</span> <span class="n">lenp</span> <span class="ow">=</span> <span class="kt">BS</span><span class="o">.</span><span class="n">length</span> <span class="n">p</span>
+        <span class="n">lens</span> <span class="ow">=</span> <span class="kt">BS</span><span class="o">.</span><span class="n">length</span> <span class="n">s</span>
+        <span class="n">jmptbl</span> <span class="ow">=</span> <span class="kt">M</span><span class="o">.</span><span class="n">fromList</span> <span class="o">$</span> <span class="n">zip</span> <span class="p">(</span><span class="kt">BS</span><span class="o">.</span><span class="n">unpack</span> <span class="n">p</span><span class="p">)</span> <span class="p">[</span><span class="n">lenp</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">lenp</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">..</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">jmp</span> <span class="n">x</span> <span class="ow">=</span> <span class="kt">M</span><span class="o">.</span><span class="n">findWithDefault</span> <span class="n">lenp</span> <span class="n">x</span> <span class="n">jmptbl</span>
+        <span class="n">f</span> <span class="n">i</span> <span class="n">j</span> <span class="n">k</span>
+          <span class="o">|</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="n">lens</span> <span class="ow">=</span> <span class="kt">Nothing</span>
+          <span class="o">|</span> <span class="n">j</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">=</span> <span class="kt">Just</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+          <span class="o">|</span> <span class="n">s</span> <span class="p">`</span><span class="kt">BS</span><span class="o">.</span><span class="n">index</span><span class="p">`</span> <span class="n">i</span> <span class="o">==</span> <span class="n">p</span> <span class="p">`</span><span class="kt">BS</span><span class="o">.</span><span class="n">index</span><span class="p">`</span> <span class="n">j</span> <span class="ow">=</span> <span class="n">f</span> <span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">k</span>
+          <span class="o">|</span> <span class="n">otherwise</span> <span class="ow">=</span> <span class="kr">let</span> <span class="n">k&#39;</span> <span class="ow">=</span> <span class="n">k</span> <span class="o">+</span> <span class="n">jmp</span> <span class="p">(</span><span class="n">s</span> <span class="p">`</span><span class="kt">BS</span><span class="o">.</span><span class="n">index</span><span class="p">`</span> <span class="n">k</span><span class="p">)</span>
+                         <span class="kr">in</span> <span class="n">f</span> <span class="n">k&#39;</span> <span class="p">(</span><span class="n">lenp</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="n">k&#39;</span>
+
+<span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+<span class="nf">main</span> <span class="ow">=</span> <span class="n">print</span> <span class="o">$</span> <span class="n">horspool</span> <span class="s">&quot;abcbabababab&quot;</span> <span class="s">&quot;cbabab&quot;</span>
+</pre></div>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[用 Coq 来证明“今天”是周几]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -118,12 +198,10 @@
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[1]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="o">%</span><span class="k">pylab</span> <span class="n">inline</span></pre></div>
+<div class=" highlight hl-ipython3"><pre><span class="o">%</span><span class="k">pylab</span> inline</pre></div>
 
 </div>
 </div>
@@ -135,9 +213,7 @@ In&nbsp;[1]:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Populating the interactive namespace from numpy and matplotlib
-</pre>
+<pre>Populating the interactive namespace from numpy and matplotlib</pre>
 </div>
 </div>
 
@@ -147,13 +223,11 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[2]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">scale</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">scale</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
 <span class="n">X0</span><span class="p">,</span> <span class="n">y0</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">y0</span><span class="p">[</span><span class="n">y0</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">]</span>
@@ -173,33 +247,34 @@ In&nbsp;[2]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>SVM can be writen as:</p>
-<p>$$ \min_w \frac 1 n \sum_{i=1}^n \max\{0, 1-y_i \langle w, X_i \rangle \} +  \frac \lambda 2 \|w\|^2 $$</p>
-<p>A form of Hinge loss + penalty.</p>
-<p>Average for each $X_i$:<br>$f(w;i) = \max\{0, 1-y_i \langle w, X_i \rangle \} + \frac \lambda 2 \|w\|^2$</p>
-<p>The derivative:<br>$\nabla_i = \lambda w - [y_i \langle w, X_i \rangle &lt; 1] y_i X_i$</p>
-<p>Update rule:<br>$w \leftarrow (1 - \frac 1 i)w + \frac 1 {\lambda \cdot i} [y_i \langle w, X_i \rangle &lt; 1] y_i X_i $</p>
+$$ \min_w \frac 1 n \sum_{i=1}^n \max\{0, 1-y_i \langle w, X_i \rangle \} +  \frac \lambda 2 \|w\|^2 $$<p>A form of Hinge loss + penalty.</p>
+<p>Average for each $X_i$:<br>
+$f(w;i) = \max\{0, 1-y_i \langle w, X_i \rangle \} + \frac \lambda 2 \|w\|^2$</p>
+<p>The derivative:<br>
+$\nabla_i = \lambda w - [y_i \langle w, X_i \rangle < 1] y_i X_i$</p>
+<p>Update rule:<br>
+$w \leftarrow (1 - \frac 1 i)w + \frac 1 {\lambda \cdot i} [y_i \langle w, X_i \rangle < 1] y_i X_i $</p>
 <p>Ref: <a href="http://www.magicbroom.info/Papers/ShalevSiSrCo09.pdf">[Shai Shalev-Shwartz, et al., 2011]</a></p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[3]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+<div class=" highlight hl-ipython3"><pre><span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
 <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
 <span class="n">l</span> <span class="o">=</span> <span class="mf">0.01</span>
 <span class="n">T</span> <span class="o">=</span> <span class="mi">10</span><span class="o">*</span><span class="n">n</span>
-<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">T</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">T</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
     <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
     <span class="n">w</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.</span><span class="o">-</span><span class="mf">1.</span><span class="o">/</span><span class="n">t</span><span class="p">)</span> <span class="o">*</span> <span class="n">w</span>
     <span class="k">if</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">w</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">w</span> <span class="o">+=</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">l</span><span class="o">/</span><span class="n">t</span>
-<span class="k">print</span> <span class="s">&#39;weight:&#39;</span><span class="p">,</span> <span class="n">w</span>
-<span class="k">print</span> <span class="s">&#39;err_cnt:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">*</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span></pre></div>
+<span class="nb">print</span> <span class="s">&#39;weight:&#39;</span><span class="p">,</span> <span class="n">w</span>
+<span class="nb">print</span> <span class="s">&#39;err_cnt:&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">w</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">*</span><span class="n">y</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
@@ -211,10 +286,8 @@ In&nbsp;[3]:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-weight: [ 1.05557221  0.98411711  0.3       ]
-err_cnt: 0
-</pre>
+<pre>weight: [ 1.05557221  0.98411711  0.3       ]
+err_cnt: 0</pre>
 </div>
 </div>
 
@@ -224,12 +297,10 @@ err_cnt: 0
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[4]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
 <span class="n">zz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">w</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
               <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()]])</span>
 <span class="n">zz</span> <span class="o">=</span> <span class="n">zz</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
@@ -246,13 +317,11 @@ In&nbsp;[4]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[4]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[4]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-&lt;matplotlib.collections.PathCollection at 0x107887e90&gt;</pre>
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.collections.PathCollection at 0x107887e90&gt;</pre>
 </div>
 
 </div>
@@ -755,18 +824,16 @@ RERERFQI/w9InBx3xTLIOQAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="load-dataset">load dataset</h1>
+<h1 id="load-dataset">load dataset<a class="anchor-link" href="#load-dataset">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[1]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="o">%</span><span class="k">pylab</span> <span class="n">inline</span></pre></div>
+<div class=" highlight hl-ipython3"><pre><span class="o">%</span><span class="k">pylab</span> inline</pre></div>
 
 </div>
 </div>
@@ -778,9 +845,7 @@ In&nbsp;[1]:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Populating the interactive namespace from numpy and matplotlib
-</pre>
+<pre>Populating the interactive namespace from numpy and matplotlib</pre>
 </div>
 </div>
 
@@ -790,13 +855,11 @@ Populating the interactive namespace from numpy and matplotlib
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[2]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">scale</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="k">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="k">import</span> <span class="n">scale</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
 <span class="n">X0</span><span class="p">,</span> <span class="n">y0</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">y0</span><span class="p">[</span><span class="n">y0</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
@@ -815,18 +878,16 @@ In&nbsp;[2]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="logistic-regression">logistic regression</h2>
+<h2 id="logistic-regression">logistic regression<a class="anchor-link" href="#logistic-regression">&#182;</a></h2>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[3]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
 <span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
 <span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></pre></div>
 
@@ -838,13 +899,11 @@ In&nbsp;[3]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[3]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[3]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
+<div class="output_text output_subarea output_execute_result">
+<pre>LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
           intercept_scaling=1, penalty=&apos;l2&apos;, random_state=None, tol=0.0001)</pre>
 </div>
 
@@ -856,12 +915,10 @@ LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[4]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">myplot</span><span class="p">(</span><span class="n">pred_func</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span class="k">def</span> <span class="nf">myplot</span><span class="p">(</span><span class="n">pred_func</span><span class="p">):</span>
     <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
     <span class="n">f1_min</span><span class="p">,</span> <span class="n">f1_max</span> <span class="o">=</span> <span class="n">f1</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">f1</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">f2_min</span><span class="p">,</span> <span class="n">f2_max</span> <span class="o">=</span> <span class="n">f2</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">f2</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
@@ -1197,22 +1254,20 @@ RU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="sgd">SGD</h2>
-<p>Original gradient descent update step:</p>
+<h2 id="SGD">SGD<a class="anchor-link" href="#SGD">&#182;</a></h2><p>Original gradient descent update step:</p>
 <p>$w \leftarrow w - \frac \alpha n \cdot (p(X)-y) \cdot X$</p>
 <p>Stochastic gradient descent:</p>
 <p>$w \leftarrow w - \alpha \cdot (p(X_i) - y_i) \cdot X_i$</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[5]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
     <span class="n">wTx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
     <span class="k">return</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span> <span class="n">wTx</span> <span class="p">))</span>
 
@@ -1220,11 +1275,11 @@ In&nbsp;[5]:
     <span class="n">p</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
     <span class="n">w</span> <span class="o">-=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     
-<span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">w</span><span class="o">=</span><span class="k">None</span><span class="p">):</span>
     <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
-    <span class="k">if</span> <span class="n">w</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">w</span> <span class="ow">is</span> <span class="k">None</span><span class="p">:</span>
         <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">xrange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
         <span class="n">update</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">,:],</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">alpha</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">w</span></pre></div>
 
@@ -1235,21 +1290,19 @@ In&nbsp;[5]:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[6]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="c"># shuffle for SGD</span>
+<div class=" highlight hl-ipython3"><pre><span class="c"># shuffle for SGD</span>
 <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
 <span class="n">Xr</span><span class="p">,</span> <span class="n">yr</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">indices</span><span class="p">,],</span> <span class="n">y</span><span class="p">[</span><span class="n">indices</span><span class="p">,]</span>
 <span class="c"># train</span>
 <span class="n">w</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">Xr</span><span class="p">,</span> <span class="n">yr</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-<span class="k">print</span> <span class="s">&#39;weight:&#39;</span><span class="p">,</span> <span class="n">w</span>
+<span class="nb">print</span> <span class="s">&#39;weight:&#39;</span><span class="p">,</span> <span class="n">w</span>
 <span class="c"># predict</span>
 <span class="n">p</span> <span class="o">=</span> <span class="p">[</span><span class="n">predict</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">Xr</span><span class="p">]</span>
-<span class="k">print</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">yr</span> <span class="o">==</span> <span class="nb">map</span><span class="p">(</span><span class="nb">round</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+<span class="nb">print</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">yr</span> <span class="o">==</span> <span class="nb">map</span><span class="p">(</span><span class="nb">round</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
 <span class="c"># plot</span>
 <span class="n">myplot</span><span class="p">(</span><span class="k">lambda</span> <span class="n">X</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="n">predict</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">X</span><span class="p">]))</span></pre></div>
 
@@ -1263,10 +1316,8 @@ In&nbsp;[6]:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-weight: [ 1.87257167  2.2578766  -0.03898801]
-0.95
-</pre>
+<pre>weight: [ 1.87257167  2.2578766  -0.03898801]
+0.95</pre>
 </div>
 </div>
 
@@ -1747,14 +1798,12 @@ Feel free to play with it.</p>
 
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[1]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="o">%</span><span class="k">pylab</span> <span class="n">inline</span>
-<span class="o">%</span><span class="k">load_ext</span> <span class="n">sympy</span><span class="o">.</span><span class="n">interactive</span><span class="o">.</span><span class="n">ipythonprinting</span>
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span></pre></div>
+<div class=" highlight hl-ipython3"><pre><span class="o">%</span><span class="k">pylab</span> inline
+<span class="o">%</span><span class="k">load_ext</span> sympy.interactive.ipythonprinting
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span></pre></div>
 
 </div>
 </div>
@@ -1767,10 +1816,8 @@ In&nbsp;[1]:
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
-
 Welcome to pylab, a matplotlib-based Python environment [backend: module://IPython.zmq.pylab.backend_inline].
-For more information, type &apos;help(pylab)&apos;.
-</pre>
+For more information, type &apos;help(pylab)&apos;.</pre>
 </div>
 </div>
 
@@ -1783,20 +1830,18 @@ For more information, type &apos;help(pylab)&apos;.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="calculator">calculator</h1>
+<h1 id="calculator">calculator<a class="anchor-link" href="#calculator">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[2]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Rational</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">Rational</span>
 <span class="n">a</span> <span class="o">=</span> <span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">oo</span></pre></div>
+<span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">oo</span></pre></div>
 
 </div>
 </div>
@@ -1809,17 +1854,16 @@ In&nbsp;[2]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>symbols</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[3]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Symbol</span><span class="p">,</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">var</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">Symbol</span><span class="p">,</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">var</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
 <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x,y,z&#39;</span><span class="p">)</span></pre></div>
 
@@ -1834,17 +1878,16 @@ In&nbsp;[3]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>many symbols such as <code>alpha,beta,delta,gamma,mu,lambda,phi,sigma,theta</code> are in</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[4]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy.abc</span> <span class="kn">import</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span></pre></div>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy.abc</span> <span class="k">import</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span></pre></div>
 
 </div>
 </div>
@@ -1857,17 +1900,16 @@ In&nbsp;[4]:
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>expression operations</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[5]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span></pre></div>
+<div class=" highlight hl-ipython3"><pre><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span></pre></div>
 
 </div>
 </div>
@@ -1877,11 +1919,10 @@ In&nbsp;[5]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[5]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
 
 
-<div class="output_latex output_subarea output_pyout">
+<div class="output_latex output_subarea output_execute_result">
 $$x^{2} + 2 x y + y^{2}$$
 </div>
 
@@ -1893,12 +1934,10 @@ $$x^{2} + 2 x y + y^{2}$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[6]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></pre></div>
+<div class=" highlight hl-ipython3"><pre><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
@@ -1908,11 +1947,10 @@ In&nbsp;[6]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[6]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
 
 
-<div class="output_latex output_subarea output_pyout">
+<div class="output_latex output_subarea output_execute_result">
 $$\left(y + 1\right)^{2}$$
 </div>
 
@@ -1928,17 +1966,16 @@ $$\left(y + 1\right)^{2}$$
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>complex number</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[7]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">I</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">I</span>
 <span class="n">I</span><span class="o">*</span><span class="n">I</span></pre></div>
 
 </div>
@@ -1949,11 +1986,10 @@ In&nbsp;[7]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[7]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
 
 
-<div class="output_latex output_subarea output_pyout">
+<div class="output_latex output_subarea output_execute_result">
 $$-1$$
 </div>
 
@@ -1968,7 +2004,7 @@ $$-1$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="algebra">Algebra</h1>
+<h1 id="Algebra">Algebra<a class="anchor-link" href="#Algebra">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -1978,17 +2014,16 @@ $$-1$$
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>partial fraction decomposition and together back</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[8]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">apart</span><span class="p">,</span> <span class="n">together</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">apart</span><span class="p">,</span> <span class="n">together</span>
 <span class="n">apart</span><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span></pre></div>
 
 </div>
@@ -1999,11 +2034,10 @@ In&nbsp;[8]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[8]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
 
 
-<div class="output_latex output_subarea output_pyout">
+<div class="output_latex output_subarea output_execute_result">
 $$1 + \frac{2}{x -1}$$
 </div>
 
@@ -2015,12 +2049,10 @@ $$1 + \frac{2}{x -1}$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[9]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">together</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></pre></div>
+<div class=" highlight hl-ipython3"><pre><span class="n">together</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
@@ -2030,11 +2062,10 @@ In&nbsp;[9]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[9]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
 
 
-<div class="output_latex output_subarea output_pyout">
+<div class="output_latex output_subarea output_execute_result">
 $$\frac{x + 1}{x -1}$$
 </div>
 
@@ -2049,18 +2080,16 @@ $$\frac{x + 1}{x -1}$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="calculus">Calculus</h1>
+<h1 id="Calculus">Calculus<a class="anchor-link" href="#Calculus">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[10]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">limit</span><span class="p">,</span> <span class="n">sin</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">limit</span><span class="p">,</span> <span class="n">sin</span>
 <span class="n">limit</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">10</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">oo</span><span class="p">)</span></pre></div>
 
 </div>
@@ -2071,11 +2100,10 @@ In&nbsp;[10]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[10]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
 
 
-<div class="output_latex output_subarea output_pyout">
+<div class="output_latex output_subarea output_execute_result">
 $$2$$
 </div>
 
@@ -2087,12 +2115,10 @@ $$2$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[11]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span></pre></div>
+<div class=" highlight hl-ipython3"><pre><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
@@ -2102,11 +2128,10 @@ In&nbsp;[11]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[11]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
 
 
-<div class="output_latex output_subarea output_pyout">
+<div class="output_latex output_subarea output_execute_result">
 $$x - \frac{1}{6} x^{3} + \frac{1}{120} x^{5} - \frac{1}{5040} x^{7} + \frac{1}{362880} x^{9} + \mathcal{O}\left(x^{10}\right)$$
 </div>
 
@@ -2118,12 +2143,10 @@ $$x - \frac{1}{6} x^{3} + \frac{1}{120} x^{5} - \frac{1}{5040} x^{7} + \frac{1}{
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[12]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">summation</span><span class="p">,</span> <span class="n">factorial</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">summation</span><span class="p">,</span> <span class="n">factorial</span>
 <span class="n">summation</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">factorial</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">oo</span><span class="p">))</span></pre></div>
 
 </div>
@@ -2134,11 +2157,10 @@ In&nbsp;[12]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[12]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
 
 
-<div class="output_latex output_subarea output_pyout">
+<div class="output_latex output_subarea output_execute_result">
 $$e$$
 </div>
 
@@ -2153,18 +2175,16 @@ $$e$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="diff">diff</h3>
+<h3 id="diff">diff<a class="anchor-link" href="#diff">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[13]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">diff</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">diff</span>
 <span class="n">diff</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">)</span></pre></div>
 
 </div>
@@ -2175,11 +2195,10 @@ In&nbsp;[13]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[13]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
 
 
-<div class="output_latex output_subarea output_pyout">
+<div class="output_latex output_subarea output_execute_result">
 $$\cos{\left (x \right )}$$
 </div>
 
@@ -2191,12 +2210,10 @@ $$\cos{\left (x \right )}$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[14]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">diff</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></pre></div>
+<div class=" highlight hl-ipython3"><pre><span class="n">diff</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></pre></div>
 
 </div>
 </div>
@@ -2206,11 +2223,10 @@ In&nbsp;[14]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[14]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
 
 
-<div class="output_latex output_subarea output_pyout">
+<div class="output_latex output_subarea output_execute_result">
 $$- \sin{\left (x \right )}$$
 </div>
 
@@ -2225,18 +2241,16 @@ $$- \sin{\left (x \right )}$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="integration">integration</h3>
+<h3 id="integration">integration<a class="anchor-link" href="#integration">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[15]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">integrate</span><span class="p">,</span> <span class="n">erf</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">integrate</span><span class="p">,</span> <span class="n">erf</span>
 <span class="n">integrate</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></pre></div>
 
 </div>
@@ -2247,11 +2261,10 @@ In&nbsp;[15]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[15]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
 
 
-<div class="output_latex output_subarea output_pyout">
+<div class="output_latex output_subarea output_execute_result">
 $$x^{6}$$
 </div>
 
@@ -2263,12 +2276,10 @@ $$x^{6}$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[16]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="n">integrate</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span></pre></div>
+<div class=" highlight hl-ipython3"><pre><span class="n">integrate</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span></pre></div>
 
 </div>
 </div>
@@ -2278,11 +2289,10 @@ In&nbsp;[16]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[16]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
 
 
-<div class="output_latex output_subarea output_pyout">
+<div class="output_latex output_subarea output_execute_result">
 $$1$$
 </div>
 
@@ -2297,18 +2307,16 @@ $$1$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="functions">functions</h1>
+<h1 id="functions">functions<a class="anchor-link" href="#functions">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[17]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Function</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">Function</span>
 <span class="n">f</span><span class="o">=</span><span class="n">Function</span><span class="p">(</span><span class="s">&#39;f&#39;</span><span class="p">)</span>
 <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></pre></div>
 
@@ -2320,11 +2328,10 @@ In&nbsp;[17]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[17]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
 
 
-<div class="output_latex output_subarea output_pyout">
+<div class="output_latex output_subarea output_execute_result">
 $$\frac{\partial^{2}}{\partial^{2} x}  \operatorname{f}{\left (x \right )}$$
 </div>
 
@@ -2336,12 +2343,10 @@ $$\frac{\partial^{2}}{\partial^{2} x}  \operatorname{f}{\left (x \right )}$$
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[18]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">solve</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">solve</span>
 <span class="n">solve</span><span class="p">([</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">6</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">15</span><span class="p">],</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span></pre></div>
 
 </div>
@@ -2352,13 +2357,11 @@ In&nbsp;[18]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[18]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-{x: -3, y: 1}</pre>
+<div class="output_text output_subarea output_execute_result">
+<pre>{x: -3, y: 1}</pre>
 </div>
 
 </div>
@@ -2372,18 +2375,16 @@ In&nbsp;[18]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="linear-algebra">Linear Algebra</h1>
+<h1 id="Linear-Algebra">Linear Algebra<a class="anchor-link" href="#Linear-Algebra">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[19]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Matrix</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">Matrix</span>
 <span class="n">Matrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span></pre></div>
 
 </div>
@@ -2394,11 +2395,10 @@ In&nbsp;[19]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[19]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[19]:</div>
 
 
-<div class="output_latex output_subarea output_pyout">
+<div class="output_latex output_subarea output_execute_result">
 $$\left[\begin{smallmatrix}1 & 0\\0 & 1\end{smallmatrix}\right]$$
 </div>
 
@@ -2413,18 +2413,16 @@ $$\left[\begin{smallmatrix}1 & 0\\0 & 1\end{smallmatrix}\right]$$
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="pattern-matching">Pattern matching</h1>
+<h1 id="Pattern-matching">Pattern matching<a class="anchor-link" href="#Pattern-matching">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[20]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">Wild</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">Wild</span>
 <span class="n">p</span> <span class="o">=</span> <span class="n">Wild</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">)</span>
 <span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">p</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></pre></div>
 
@@ -2436,13 +2434,11 @@ In&nbsp;[20]:
 <div class="output">
 
 
-<div class="output_area"><div class="prompt output_prompt">
-    Out[20]:</div>
+<div class="output_area"><div class="prompt output_prompt">Out[20]:</div>
 
 
-<div class="output_text output_subarea output_pyout">
-<pre>
-{p: 5}</pre>
+<div class="output_text output_subarea output_execute_result">
+<pre>{p: 5}</pre>
 </div>
 
 </div>
@@ -2456,18 +2452,16 @@ In&nbsp;[20]:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="pretty-printing">Pretty printing</h1>
+<h1 id="Pretty-printing">Pretty printing<a class="anchor-link" href="#Pretty-printing">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[21]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">pprint</span><span class="p">,</span> <span class="n">Integral</span>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">pprint</span><span class="p">,</span> <span class="n">Integral</span>
 <span class="n">pprint</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></pre></div>
 
 </div>
@@ -2480,12 +2474,10 @@ In&nbsp;[21]:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-⌠      
+<pre>⌠      
 ⎮  2   
 ⎮ x  dx
-⌡      
-</pre>
+⌡      </pre>
 </div>
 </div>
 
@@ -2495,13 +2487,11 @@ In&nbsp;[21]:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[22]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy.printing.python</span> <span class="kn">import</span> <span class="n">python</span>
-<span class="k">print</span> <span class="n">python</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></pre></div>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy.printing.python</span> <span class="k">import</span> <span class="n">python</span>
+<span class="nb">print</span> <span class="n">python</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></pre></div>
 
 </div>
 </div>
@@ -2513,10 +2503,8 @@ In&nbsp;[22]:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-x = Symbol(&apos;x&apos;)
-e = Integral(x**2, x)
-</pre>
+<pre>x = Symbol(&apos;x&apos;)
+e = Integral(x**2, x)</pre>
 </div>
 </div>
 
@@ -2526,13 +2514,11 @@ e = Integral(x**2, x)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">
-In&nbsp;[23]:
-</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="n">latex</span>
-<span class="k">print</span> <span class="n">latex</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></pre></div>
+<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">latex</span>
+<span class="nb">print</span> <span class="n">latex</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></pre></div>
 
 </div>
 </div>
@@ -2544,9 +2530,7 @@ In&nbsp;[23]:
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-\int x^{2}\, dx
-</pre>
+<pre>\int x^{2}\, dx</pre>
 </div>
 </div>
 
@@ -2662,47 +2646,6 @@ type ::=  &quot;b&quot; | &quot;c&quot; | &quot;d&quot; | &quot;e&quot; | &quot;
 <p>type：二进制，字符，十进制，科学计数，科学计数大写，定点，定点(NAN, INF)，
 <em>标准格式（太长）</em>，标准格式大写，<em>数字</em>，八进制，十六进制，十六进制大写，百分比。
 不写的话整数十进制，浮点数差不多是标准格式。</p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Average Running Time of Quicksort]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="https://scturtle.me//2013/1109-quicksort/"/>
-    <updated>2013-11-09T20:00:00+08:00</updated>
-    <id>https://scturtle.me//2013/1109-quicksort/</id>
-    <content type="html"><![CDATA[
-<p>From an interesting <a href="http://aofa.cs.princeton.edu/lectures/lectures13/AA01-AofA.pdf">slide</a>.</p>
-<p>We denote <mathjax>$C_N$</mathjax> as the <em>expected</em> number of comparisons used by sorting an array of length <mathjax>$N$</mathjax>.
-The recursive formula is like this:
-<mathjax>$$C_N = (N+1) + \sum_{1\leq k \leq N} \frac 1N (C_{k-1}+C_{N-k})$$</mathjax></p>
-<p>which <mathjax>$N+1$</mathjax> is the comparisons needed for partitioning, 
-and then plus <mathjax>$N$</mathjax> ways of partitioning with equal probability.
-Also we have <mathjax>$C_0 = 0$</mathjax>. </p>
-<p>Noticing the symmetric parttern in the sum part, we get:
-<mathjax>$$C_N = (N+1) + \frac 2N \sum_{1\leq k \leq N} C_{k-1}$$</mathjax>
-then
-<mathjax>$$NC_N = N(N+1) + 2 \sum_{1\leq k \leq N} C_{k-1}$$</mathjax></p>
-<p>Time to high school math. First, we write down same formula for N-1:
-<mathjax>$$(N-1)C_{N-1} = (N-1)N + 2 \sum_{1\leq k \leq N-1} C_{k-1}$$</mathjax></p>
-<p>Then we subtract the above two equations to get:
-<mathjax>$$NC_N - (N-1)C_{N-1} = 2N + 2C_{N-1}$$</mathjax>
-<mathjax>$$NC_N = (N+1)C_{N-1} + 2N$$</mathjax></p>
-<p>Key and tricky step, divide both side by <mathjax>$N(N+1)$</mathjax>:
-<mathjax>$$\frac{C_N}{N+1} = \frac{C_{N-1}}{N} + \frac{2}{N+1}$$</mathjax></p>
-<p>Expand the right part to the end of the world:
-<mathjax>$$\begin{split}
-\frac{C_N}{N+1} &amp;= \frac{C_{N-1}}{N} + \frac 2{N+1} \\
-&amp;= \frac{C_{N-2}}{N-1} + \frac 2N + \frac 2{N+1} \\
-&amp;= C_0 + \frac 22 + \frac 23 + \dots + \frac 2N + \frac 2{N+1}
-\end{split}$$</mathjax></p>
-<p>Ignore small items:
-<mathjax>$$c_N \sim 2N \sum_{1 \leq k \leq N} \frac 1k - 2N$$</mathjax></p>
-<p>Finally, use the magic <a href="http://en.wikipedia.org/wiki/Euler%E2%80%93Mascheroni_constant"><code>Euler constant</code></a> <mathjax>$\gamma$</mathjax>:
-<mathjax>$$\begin{split}
-c_N &amp;\sim 2N (\int_1^\infty \frac 1x \mathrm{d} x + \gamma) - 2N \\
-&amp;=2N \ln N - 2(1-\gamma)N
-\end{split}$$</mathjax></p>
-<p>It's <mathjax>$O(N \log N)$</mathjax>.</p>
 ]]> </content>
   </entry>
 </feed>
