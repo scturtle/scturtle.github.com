@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Yoneda Lemma Explained in Haskell | ScTurtle&#39;s Pool</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/pygments.css" type="text/css">
+    <link href="/atom.xml" rel="alternate" title="ScTurtle&#39;s Pool" type="application/atom+xml">
+  </head>
+  <body>
+    <div class=container>
+      <div class=header>
+        <a class=site-name href='/'>ScTurtle&#39;s Pool</a>
+        <nav class=navigation>
+          <a href='/'>blog</a>
+          <a href='/archive.html'>archive</a>
+          <a href='/tags/'>tags</a>
+          <a href='/about/'>about</a>
+        </nav>
+      </div>
+      <div class=body>
+
+
+<article>
+<h1 class=title>Yoneda Lemma Explained in Haskell</h1>
+<p class=info>
+Jun 16, 2015
+<a href='/tags/haskell.html'>#haskell</a>
+</p>
+<blockquote>
+<p>When you need something to go faster, hit it with the Yoneda lemma.
+Still isn't fast enough? Use it again.
+—— <a href="https://twitter.com/kmett/status/546533863636627456">Edward Kmett</a></p>
+</blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Yoneda_lemma">Yoneda lemma</a>
+may be the first understanding challenge in category theory.
+For an arbitrary functor <mathjax>$F$</mathjax> from a category <mathjax>$C$</mathjax> to the category <mathjax>$Set$</mathjax>,
+Yoneda lemma says:
+for any object <mathjax>$A$</mathjax> of <mathjax>$C$</mathjax>, the natural transformations from
+the <a href="http://ncatlab.org/nlab/show/hom-functor">hom-functor</a> <mathjax>$h_A$</mathjax> to <mathjax>$F$</mathjax>
+are in one-to-one correspondence with the elements in <mathjax>$F(A)$</mathjax>.
+That's is,</p>
+<p><mathjax>$$ \mathrm{Nat}(h_A,F) \cong F(A). $$</mathjax></p>
+<p>Doesn't it hurt your brain? The proof is even more tedious.
+In another way, however, it just states that every object
+can be determined by how other objects map into it.
+The interesting thing is, once translated into Haskell,
+the Yoneda lemma becomes more readable and understandable.</p>
+<p>In Haskell the category <mathjax>$C$</mathjax> and <mathjax>$Set$</mathjax> are both <mathjax>$Hask$</mathjax>,
+the category of all types in Haskell.
+And a natural transformation is just a polynomial function which,
+in this case, from functor <code>(-&gt;) a</code> to functor <code>f</code>.
+So in Haskell we can write Yoneda lemma as</p>
+<div class="codehilite"><pre>(forall b. (a -&gt; b) -&gt; f b) ~ f a
+</pre></div>
+
+
+<p>which means an isomorphism between a polynomial function and a type.
+This can be interpreted in the following way: for a fixed type <code>a</code> and a functor <code>f</code>,
+if there is a polynomial function <code>g</code> that knows how to convert any <code>a -&gt; b</code> into <code>f b</code>,
+then this <code>g</code> is just something holding a <code>f a</code>
+(and remembering to <code>fmap</code> any <code>a -&gt; b</code> on it), and vice versa.</p>
+<p>To prove this isomorphism, we need to show that for the following two conversion functions:</p>
+<div class="codehilite"><pre><span class="nf">fw</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Functor</span> <span class="n">f</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">forall</span> <span class="n">b</span> <span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">a</span>
+<span class="nf">fw</span> <span class="n">f</span> <span class="ow">=</span> <span class="n">f</span> <span class="n">id</span>
+
+<span class="nf">bw</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Functor</span> <span class="n">f</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="n">f</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">forall</span> <span class="n">b</span> <span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">b</span><span class="p">)</span>
+<span class="nf">bw</span> <span class="n">x</span> <span class="n">f</span> <span class="ow">=</span> <span class="n">fmap</span> <span class="n">f</span> <span class="n">x</span>
+</pre></div>
+
+
+<p>the following two statements are both true:</p>
+<div class="codehilite"><pre>fw . bw = id
+bw . fw = id
+</pre></div>
+
+
+<p>The first one is easy:</p>
+<div class="codehilite"><pre>(fw . bw) fa
+= fw (bw fa)
+= (bw fa) id
+= bw fa id
+= fmap id fa
+= fa
+</pre></div>
+
+
+<p>and there are two steps notable in the second proof:</p>
+<div class="codehilite"><pre>bw (fw g) a2b
+= fmap a2b (g id)
+= g (fmap a2b id) (*)
+= g (a2b . id)    (**)
+= g a2b
+</pre></div>
+
+
+<p>In <code>(*)</code> we swap <code>g</code> and <code>fmap a2b</code> when apply them to <code>id</code> in sequence.
+This is because the <code>forall</code> in the polynomial function <code>g</code>
+makes it a natural transformation from functor <code>(-&gt; a)</code> to functor <code>f</code>
+and ensure that the following diagram commute:</p>
+<div class="codehilite"><pre>                  g
+      (a -&gt; b) --------&gt; f b
+         ^                ^
+         |                |
+fmap a2b |                | fmap a2b
+         |                |
+         |                |
+      (a -&gt; a) --------&gt; f a
+                  g
+</pre></div>
+
+
+<p>Commutation means the both ways from bottom left to top right are the same.
+So we can swap <code>g</code> and <code>fmap a2b</code>. Also notice that the bottom left is just <code>id</code>.
+The <code>(**)</code> step is an application of the <code>fmap</code> definition of functor <code>(-&gt; a)</code>,
+which is just function composition <code>(.)</code>. QED.</p>
+</article>
+<div id="show_disqus"><a onclick="load_disqus();return false;" href="##">Show comments</a></div>
+<div id="disqus_thread"></div>
+
+
+      </div>
+      <div class=footer>
+        <p><a href='https://github.com/scturtle/turtleblog'>turtleblog</a> &copy;
+        <script>document.write(new Date().getFullYear());</script> scturtle
+        <p> <a href="mailto:scturtle@gmail.com">mail</a>,
+        <a href="https://twitter.com/scturtle">twitter</a>,
+        <a href="https://github.com/scturtle">github</a>,
+        <a href='/atom.xml' rel=alternate title="Recent Blogs | ScTurtle&#39;s Pool">feed</a>
+      </div>
+    </div>
+
+<script type="text/javascript">
+  function load_disqus() {
+    var disqus_shortname = 'scturtlespool';
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    document.getElementById('show_disqus').style.display='none';
+  };
+</script>
+
+<script type="text/javascript" 
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"> </script>
+<script type="text/x-mathjax-config"> 
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ["\\(","\\)"]],
+    processEscapes: true
+  },
+}); </script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33410961-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+  </body>
+</html>

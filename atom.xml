@@ -4,9 +4,105 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="https://scturtle.me//atom.xml" rel="self"/>
   <link href="https://scturtle.me/"/>
-  <updated>2015-03-14T00:57:49.767089+08:00</updated>
+  <updated>2015-06-16T19:20:16.283585+08:00</updated>
   <id>https://scturtle.me//</id>
   
+  <entry>
+    <title type="html"><![CDATA[Yoneda Lemma Explained in Haskell]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="https://scturtle.me//2015/0616-yoneda/"/>
+    <updated>2015-06-16T18:00:00+08:00</updated>
+    <id>https://scturtle.me//2015/0616-yoneda/</id>
+    <content type="html"><![CDATA[
+<blockquote>
+<p>When you need something to go faster, hit it with the Yoneda lemma.
+Still isn't fast enough? Use it again.
+—— <a href="https://twitter.com/kmett/status/546533863636627456">Edward Kmett</a></p>
+</blockquote>
+<p><a href="https://en.wikipedia.org/wiki/Yoneda_lemma">Yoneda lemma</a>
+may be the first understanding challenge in category theory.
+For an arbitrary functor <mathjax>$F$</mathjax> from a category <mathjax>$C$</mathjax> to the category <mathjax>$Set$</mathjax>,
+Yoneda lemma says:
+for any object <mathjax>$A$</mathjax> of <mathjax>$C$</mathjax>, the natural transformations from
+the <a href="http://ncatlab.org/nlab/show/hom-functor">hom-functor</a> <mathjax>$h_A$</mathjax> to <mathjax>$F$</mathjax>
+are in one-to-one correspondence with the elements in <mathjax>$F(A)$</mathjax>.
+That's is,</p>
+<p><mathjax>$$ \mathrm{Nat}(h_A,F) \cong F(A). $$</mathjax></p>
+<p>Doesn't it hurt your brain? The proof is even more tedious.
+In another way, however, it just states that every object
+can be determined by how other objects map into it.
+The interesting thing is, once translated into Haskell,
+the Yoneda lemma becomes more readable and understandable.</p>
+<p>In Haskell the category <mathjax>$C$</mathjax> and <mathjax>$Set$</mathjax> are both <mathjax>$Hask$</mathjax>,
+the category of all types in Haskell.
+And a natural transformation is just a polynomial function which,
+in this case, from functor <code>(-&gt;) a</code> to functor <code>f</code>.
+So in Haskell we can write Yoneda lemma as</p>
+<div class="codehilite"><pre>(forall b. (a -&gt; b) -&gt; f b) ~ f a
+</pre></div>
+
+
+<p>which means an isomorphism between a polynomial function and a type.
+This can be interpreted in the following way: for a fixed type <code>a</code> and a functor <code>f</code>,
+if there is a polynomial function <code>g</code> that knows how to convert any <code>a -&gt; b</code> into <code>f b</code>,
+then this <code>g</code> is just something holding a <code>f a</code>
+(and remembering to <code>fmap</code> any <code>a -&gt; b</code> on it), and vice versa.</p>
+<p>To prove this isomorphism, we need to show that for the following two conversion functions:</p>
+<div class="codehilite"><pre><span class="nf">fw</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Functor</span> <span class="n">f</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="n">forall</span> <span class="n">b</span> <span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">a</span>
+<span class="nf">fw</span> <span class="n">f</span> <span class="ow">=</span> <span class="n">f</span> <span class="n">id</span>
+
+<span class="nf">bw</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Functor</span> <span class="n">f</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="n">f</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">forall</span> <span class="n">b</span> <span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">f</span> <span class="n">b</span><span class="p">)</span>
+<span class="nf">bw</span> <span class="n">x</span> <span class="n">f</span> <span class="ow">=</span> <span class="n">fmap</span> <span class="n">f</span> <span class="n">x</span>
+</pre></div>
+
+
+<p>the following two statements are both true:</p>
+<div class="codehilite"><pre>fw . bw = id
+bw . fw = id
+</pre></div>
+
+
+<p>The first one is easy:</p>
+<div class="codehilite"><pre>(fw . bw) fa
+= fw (bw fa)
+= (bw fa) id
+= bw fa id
+= fmap id fa
+= fa
+</pre></div>
+
+
+<p>and there are two steps notable in the second proof:</p>
+<div class="codehilite"><pre>bw (fw g) a2b
+= fmap a2b (g id)
+= g (fmap a2b id) (*)
+= g (a2b . id)    (**)
+= g a2b
+</pre></div>
+
+
+<p>In <code>(*)</code> we swap <code>g</code> and <code>fmap a2b</code> when apply them to <code>id</code> in sequence.
+This is because the <code>forall</code> in the polynomial function <code>g</code>
+makes it a natural transformation from functor <code>(-&gt; a)</code> to functor <code>f</code>
+and ensure that the following diagram commute:</p>
+<div class="codehilite"><pre>                  g
+      (a -&gt; b) --------&gt; f b
+         ^                ^
+         |                |
+fmap a2b |                | fmap a2b
+         |                |
+         |                |
+      (a -&gt; a) --------&gt; f a
+                  g
+</pre></div>
+
+
+<p>Commutation means the both ways from bottom left to top right are the same.
+So we can swap <code>g</code> and <code>fmap a2b</code>. Also notice that the bottom left is just <code>id</code>.
+The <code>(**)</code> step is an application of the <code>fmap</code> definition of functor <code>(-&gt; a)</code>,
+which is just function composition <code>(.)</code>. QED.</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[字符串搜索的 Horspool 算法]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -158,11 +254,11 @@ abcba<font color=green>b</font>ababab
 <p>第二种脑洞打开的话也不是完全没有道理……</p>
 <div class="codehilite"><pre><span class="kn">Lemma</span> <span class="n">today_is_sunday</span> <span class="o">:</span>
   <span class="k">forall</span> <span class="n">today</span> <span class="n">real_today</span><span class="o">,</span>
-  <span class="c">(* (实际今天的)昨天 = (想象中今天)的明天 *)</span>
+  <span class="c">(* (实际的今天的)昨天 = (想象中今天的)明天 *)</span>
     <span class="n">prev</span> <span class="n">real_today</span> <span class="o">=</span> <span class="n">next</span> <span class="n">today</span> <span class="o">-&gt;</span>
   <span class="c">(* (想象中的)今天 = 星期五 *)</span>
     <span class="n">today</span> <span class="o">=</span> <span class="n">friday</span> <span class="o">-&gt;</span>
-  <span class="c">(* 那么，(实际的)今天 = 星期三 *)</span>
+  <span class="c">(* 那么，(实际的)今天 = 星期日 *)</span>
     <span class="n">real_today</span> <span class="o">=</span> <span class="n">sunday</span><span class="o">.</span>
 
 <span class="kn">Proof</span><span class="o">.</span>
@@ -2600,52 +2696,6 @@ Following tests are processed on a machine with 24 cores.</p>
 <span class="c"># user    0m45.791s</span>
 <span class="c"># sys     0m1.409s</span>
 </pre></div>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Python 字符串格式化详参]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="https://scturtle.me//2013/1219-string-format-python/"/>
-    <updated>2013-12-19T18:00:00+08:00</updated>
-    <id>https://scturtle.me//2013/1219-string-format-python/</id>
-    <content type="html"><![CDATA[
-<p><a href="http://docs.python.org/dev/library/string.html#formatspec">来源docs</a></p>
-<p><code>{}</code> 包裹的是替换域，<code>{{</code> 和 <code>}}</code> 可用来 escape。</p>
-<p>语法</p>
-<div class="codehilite"><pre>替换域 ::=  &quot;{&quot; [域名] [&quot;!&quot; 转换] [&quot;:&quot; 格式] &quot;}&quot;
-域名   ::=  参数名 (&quot;.&quot; 属性名 | &quot;[&quot; 索引 &quot;]&quot;)*
-参数名 ::=  [关键字 | 数字]
-属性名 ::=  关键字
-索引   ::=  数字 | 索引字符串
-索引   ::=  &lt;任何字符除了 &quot;]&quot;&gt; +
-转换   ::=  &quot;r&quot; | &quot;s&quot; | &quot;a&quot;
-格式   ::=  &lt;如下介绍&gt;
-</pre></div>
-
-
-<p>参数名要么是关键字（keyword=“...”）要么是数字（标识第几个参数，3.1中默认可忽略）。
-参数名后可加 <code>.属性名</code>（<code>getattr()</code>）或 <code>[索引]</code>（<code>__getitem__()</code>）。</p>
-<p>转换域进行格式化之前的强制类型转换（而不是默认的<code>__format__()</code>）。<code>!s</code> 调用 <code>str()</code>，<code>!r</code> 调用 <code>repr()</code>，<code>!a</code> 调用 <code>ascii()</code>。</p>
-<p>格式域控制字段宽度，对齐，填充，小数精度等。依据是每种类型自己定义的<code>微语言</code>。格式域可嵌套但只能包含域名。大多数内置类型支持默认的微语言：</p>
-<div class="codehilite"><pre>格式 ::=  [[fill]align][sign][#][0][width][,][.precision][type]
-fill     ::=  &lt;填充字符除了 &#39;{&#39; or &#39;}&#39;&gt;
-align ::=  &quot;&lt;&quot; | &quot;&gt;&quot; | &quot;=&quot; | &quot;^&quot;
-sign  ::=  &quot;+&quot; | &quot;-&quot; | &quot; &quot;
-width ::=  integer
-precision ::=  integer
-type ::=  &quot;b&quot; | &quot;c&quot; | &quot;d&quot; | &quot;e&quot; | &quot;E&quot; | &quot;f&quot; | &quot;F&quot; | &quot;g&quot; | &quot;G&quot; | &quot;n&quot; | &quot;o&quot; | &quot;s&quot; | &quot;x&quot; | &quot;X&quot; | &quot;%&quot;
-</pre></div>
-
-
-<p>align：左对齐，右对齐，填充符号和数字间，居中。</p>
-<p>sign：正数前+负数前-，正数前无负数前-，正数前空格负数前-。</p>
-<p>#：整数、浮点数、复数和 Decimal 使用<code>替代格式</code>。比如整数在用十六进制输出时添加<code>0x</code>前缀。</p>
-<p>width：前导<code>0</code>则相当于<code>fill='0' &amp; align='='</code>。</p>
-<p>,：数字自动添加千分号。</p>
-<p>precision：和<code>type = "f" | "F" | "g" | "G"</code>控制浮点精度，或表示最大域空间。</p>
-<p>type：二进制，字符，十进制，科学计数，科学计数大写，定点，定点(NAN, INF)，
-<em>标准格式（太长）</em>，标准格式大写，<em>数字</em>，八进制，十六进制，十六进制大写，百分比。
-不写的话整数十进制，浮点数差不多是标准格式。</p>
 ]]> </content>
   </entry>
 </feed>

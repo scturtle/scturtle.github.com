@@ -94,11 +94,11 @@ Jan 30, 2015
 <p>第二种脑洞打开的话也不是完全没有道理……</p>
 <div class="codehilite"><pre><span class="kn">Lemma</span> <span class="n">today_is_sunday</span> <span class="o">:</span>
   <span class="k">forall</span> <span class="n">today</span> <span class="n">real_today</span><span class="o">,</span>
-  <span class="c">(* (实际今天的)昨天 = (想象中今天)的明天 *)</span>
+  <span class="c">(* (实际的今天的)昨天 = (想象中今天的)明天 *)</span>
     <span class="n">prev</span> <span class="n">real_today</span> <span class="o">=</span> <span class="n">next</span> <span class="n">today</span> <span class="o">-&gt;</span>
   <span class="c">(* (想象中的)今天 = 星期五 *)</span>
     <span class="n">today</span> <span class="o">=</span> <span class="n">friday</span> <span class="o">-&gt;</span>
-  <span class="c">(* 那么，(实际的)今天 = 星期三 *)</span>
+  <span class="c">(* 那么，(实际的)今天 = 星期日 *)</span>
     <span class="n">real_today</span> <span class="o">=</span> <span class="n">sunday</span><span class="o">.</span>
 
 <span class="kn">Proof</span><span class="o">.</span>
