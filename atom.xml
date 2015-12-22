@@ -4,9 +4,48 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="https://scturtle.me//atom.xml" rel="self"/>
   <link href="https://scturtle.me/"/>
-  <updated>2015-06-16T19:20:16.283585+08:00</updated>
+  <updated>2015-12-22T23:08:07.940514+08:00</updated>
   <id>https://scturtle.me//</id>
   
+  <entry>
+    <title type="html"><![CDATA[PFPL 读书笔记和闲言碎语]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="https://scturtle.me//2015/1222-pfpl/"/>
+    <updated>2015-12-22T23:00:00+08:00</updated>
+    <id>https://scturtle.me//2015/1222-pfpl/</id>
+    <content type="html"><![CDATA[
+<p><a href="http://www.cs.cmu.edu/~rwh/plbook/1sted-revised.pdf">Practical Foundations for Programming Languages</a> 是一本介绍编程语言理论（PLT, programming language theory）和类型论（type theory）的书。
+和另一本传说中的书 <a href="https://www.cis.upenn.edu/~bcpierce/tapl/">TAPL</a> 相比年代更新内容也更广泛，并 不拘于一门编程语言而是通篇数学阐释，更简洁当然也更难懂一些。
+作者的大名不能更响，不管是第一版还是修订中的第二版都在网上放出 pdf 实属业界良心。</p>
+<p>呃说起来 PLT 范围很广，从 Lisp/Scheme 的各种奇技淫巧，到 Haskell 从范畴论借来的各种花哨术语，再到不知何年何月才足够实用的 dependent type，摆脱不了的基础便是各种类型系统（type system）和背后的类型论了。
+不过就像 PLT 其实没啥用处一样，看了这本书也并不会对写代码有什么帮助。
+但是这本书会把各种语言的各种特性纳入一个统一的框架（类型论）中，告诉你哪些真能提升语言的表达能力，哪些特性是扯淡的，哪些看起来很绚丽的其实是另一些特性的组合。
+了解这些呢有助于避免被某些新出语言的广告词所欺骗，也可以在永无停歇的语言互黑大战获得高屋建瓴一针见血的能力。</p>
+<p>因为章节很碎（18部分，49章）,下面试图总结性地写一写，算是给自己的笔记，和近来多无所事事的交代。</p>
+<p>Preface 有一句很有意思的话，感觉开了地图炮啊233：</p>
+<blockquote>
+<p>If language design and programming methodology are to advance from a trade-craft to a rigorous discipline, it is essential that we first get the definitions right.</p>
+</blockquote>
+<p>第一部分叫做 Judgments and Rules。基本上是各种常用的定义、符号和推导形式。呃其实就是证明论（proof theory）里那堆东西拿过来又叨叨了一遍。话说 proof theory、type theory 和 category theory 这三者虽然分别来自逻辑学、计算机和数学，但是现在互相打通（<a href="https://en.wikipedia.org/wiki/Cartesian_closed_category">CCC</a>, <a href="https://en.wikipedia.org/wiki/Curry–Howard_correspondence">Curry–Howard correspondence</a>）之后来看，不得不说计算机还真是一门科学。作者本人也曾在讲座中 troll 过：</p>
+<blockquote>
+<p>Math itself is just a corner of computer science. Computer science is the queen of sciences. —— Robert Harper</p>
+</blockquote>
+<p>第二部分叫做 Statics and Dynamics。讲的是语言区分为静态部分和动态部分。
+静态部分指语法和类型规则，语言在执行静态检查时会进行类型推断和检查，这时便可以剔除一些显而易见的类型错误。
+动态规则指运行时如何从表达式一步一步运行得到值。
+一个语言的类型系统既包括静态部分也包括动态部分，一个类型系统是否安全（type safety）也包括两个部分：preservation 和 progress。
+前者要给你们看到，我静态分析这个表达式是这个类型，你动态运行每一步也是这个类型（没有特技）。
+后者则是说，我静态检查通过了，你动态运行不会还没得到值就因为类型不符进行不下去了。
+不过后者并不能排除除以零这种类型正确的运行时错误。
+说起来静态部分做的工作越多，动态时出错的可能性也就更少，这也是为什么需要越来越高级的 type system 的原因。
+不过到了 dependent type 这个地步，静态部分都不一定能停机了，还得程序员自己来证明并嵌入代码中，真的会有实用的一天么？……
+最后这里还引用了一句著名广告词233：</p>
+<blockquote>
+<p>well-typed programs do not go wrong. —— Robin Milner</p>
+</blockquote>
+<p>(待续……)</p>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[Yoneda Lemma Explained in Haskell]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -2635,67 +2674,6 @@ e = Integral(x**2, x)</pre>
 
 </div>
 </div>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Parallel in Python]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="https://scturtle.me//2014/0111-parallel-in-python/"/>
-    <updated>2014-01-11T10:00:00+08:00</updated>
-    <id>https://scturtle.me//2014/0111-parallel-in-python/</id>
-    <content type="html"><![CDATA[
-<p>Multithreading and multiprocessing can be very easy in python ! <br />
-Following tests are processed on a machine with 24 cores.</p>
-<p>The original program:</p>
-<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
-<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">factorial</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">%</span><span class="mi">1000</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">6000</span><span class="p">))</span> <span class="o">%</span> <span class="mi">1000</span>
-
-<span class="c"># $ time pypy test.py</span>
-<span class="c"># 314</span>
-<span class="c"># </span>
-<span class="c"># real    0m18.202s</span>
-<span class="c"># user    0m18.099s</span>
-<span class="c"># sys     0m0.057s</span>
-</pre></div>
-
-
-<p>With <a href="http://docs.python.org/2/library/multiprocessing.html"><code>multiprocessing</code></a>
-:</p>
-<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
-<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span>
-<span class="c"># from multiprocessing.dummy import Pool  # but using threads</span>
-
-<span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
-<span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">pool</span><span class="o">.</span><span class="n">imap_unordered</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">%</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">6000</span><span class="p">)))</span> <span class="o">%</span> <span class="mi">1000</span>
-
-<span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
-
-<span class="c"># $ time pypy test2.py</span>
-<span class="c"># 314</span>
-<span class="c"># </span>
-<span class="c"># real    0m5.545s</span>
-<span class="c"># user    0m41.953s</span>
-<span class="c"># sys     0m0.986s</span>
-</pre></div>
-
-
-<p>With <a href="http://docs.python.org/3.4/library/concurrent.futures.html"><code>concurrent.futures</code></a> (<a href="https://pypi.python.org/pypi/futures">Backport in 2.7</a>):</p>
-<div class="codehilite"><pre><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">factorial</span>
-<span class="kn">import</span> <span class="nn">futures</span>  <span class="c"># &lt;= 2.7</span>
-<span class="c"># from concurrent import futures  # &gt;= 3.2</span>
-
-<span class="c"># with futures.ThreadPoolExecutor() as executor:</span>
-<span class="k">with</span> <span class="n">futures</span><span class="o">.</span><span class="n">ProcessPoolExecutor</span><span class="p">()</span> <span class="k">as</span> <span class="n">executor</span><span class="p">:</span>
-    <span class="k">print</span> <span class="nb">sum</span><span class="p">(</span><span class="n">executor</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">%</span><span class="mi">1000</span><span class="p">,</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">6000</span><span class="p">)))</span> <span class="o">%</span> <span class="mi">1000</span>
-
-<span class="c"># $ time pypy test3.py</span>
-<span class="c"># 314</span>
-<span class="c"># </span>
-<span class="c"># real    0m6.804s</span>
-<span class="c"># user    0m45.791s</span>
-<span class="c"># sys     0m1.409s</span>
-</pre></div>
 ]]> </content>
   </entry>
 </feed>
