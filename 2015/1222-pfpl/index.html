@@ -32,6 +32,7 @@ Dec 22, 2015
 </p>
 <p><a href="http://www.cs.cmu.edu/~rwh/plbook/1sted-revised.pdf">Practical Foundations for Programming Languages</a> 是一本介绍编程语言理论（PLT, programming language theory）和类型论（type theory）的书。
 和另一本传说中的书 <a href="https://www.cis.upenn.edu/~bcpierce/tapl/">TAPL</a> 相比年代更新内容也更广泛，并 不拘于一门编程语言而是通篇数学阐释，更简洁当然也更难懂一些。
+此外，在介绍的各种类型系统（type system）时，作者特意标出哪些规则是 call by name 那些是 call by value 的，很好地避免了单一一门语言对 strict 还是 lazy 的偏颇。
 作者的大名不能更响，不管是第一版还是修订中的第二版都在网上放出 pdf 实属业界良心。</p>
 <p>呃说起来 PLT 范围很广，从 Lisp/Scheme 的各种奇技淫巧，到 Haskell 从范畴论借来的各种花哨术语，再到不知何年何月才足够实用的 dependent type，摆脱不了的基础便是各种类型系统（type system）和背后的类型论了。
 不过就像 PLT 其实没啥用处一样，看了这本书也并不会对写代码有什么帮助。
@@ -59,6 +60,22 @@ Dec 22, 2015
 <blockquote>
 <p>well-typed programs do not go wrong. —— Robin Milner</p>
 </blockquote>
+<p>第三部分叫做 Total Functions，引入了函数的定义和 system T。
+在第二部分第四章介绍类型系统的时候，曾引入本书的的第一个类型系统 <code>language E</code>, 包括简单的数字、字符串、几个运算函数和 let 绑定。
+这里先扩展 <code>E</code> 为 <code>ED</code> 添加了简单的函数定义和函数应用。
+进而，引入 <mathjax>$\lambda$</mathjax> function 并加入函数类型作为一等公民，实现了高阶函数（higher-order function），扩展 <code>E</code> 为 <code>EF</code>。
+实现 <mathjax>$\lambda$</mathjax> function 的时候，会有作用域的问题，解释时使用替换（substitution）没问题但是没嵌套作用域（nesting scoping）的 mapping environment 会有问题。
+这也是为什么实际中实现 <mathjax>$\lambda$</mathjax> function 需要闭包（closure）的原因。</p>
+<p>System T 又叫做 Gödel's T，只包括包括上面的高阶函数和Peano 数（<code>Z, S(Z), S(S(Z))</code>……）表示的自然数和原始递归（primitive recursion），是异常简单同时也非常重要的一个类型系统。
+原始递归是建立在像剥洋葱一样层层剥离 Peano 数基础上的递归，如果参数是 Z 也就是 0 的话就返回，如果是 S(e) 就对 e 继续递归。相当于每次递归的时候参数减一，所以是一定会停机的。
+这说明 T 里面只能定义 total function，也就是像纯粹的数学函数一样，对定义域的每个输入都一定会返回值，而不会像 partial function 一样在某些定义域上未定义或者在计算中陷入了死循环。
+（换句话说，system T 里的递归是自带 termination proof 的。）</p>
+<p>咋一看这货根本不行啊，连一个最简单的死循环函数都写不出来啊。
+文中用了的 Gödel's encoding 和对角线法（diagonalization）那套用来证明不完备的方法，来证明 T 中确实有无法定义的函数，比如一个自身的解释器，所以说 T 并不是图灵完备的。
+可以说 system T 虽然抛弃了 universality 但是获得了 totality。
+咋一看图灵完备都做不到有个毛用，但是 totality 在形式证明（formal proof）中却是必要的，因为一个不停机的证明什么也说明不了。
+而且在 dependent type system 中，类型可能会依赖于值，所以 totality 对于类型检查能否停机也是至关重要的。
+这也是 Coq、Idris 和 Agda 这类 <a href="http://www.wikiwand.com/en/Total_functional_programming">total functional programming</a> 的基础。</p>
 <p>(待续……)</p>
 </article>
 <div id="show_disqus"><a onclick="load_disqus();return false;" href="##">Show comments</a></div>
