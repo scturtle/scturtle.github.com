@@ -76,6 +76,39 @@ Dec 22, 2015
 咋一看图灵完备都做不到有个毛用，但是 totality 在形式证明（formal proof）中却是必要的，因为一个不停机的证明什么也说明不了。
 而且在 dependent type system 中，类型可能会依赖于值，所以 totality 对于类型检查能否停机也是至关重要的。
 这也是 Coq、Idris 和 Agda 这类 <a href="http://www.wikiwand.com/en/Total_functional_programming">total functional programming</a> 的基础。</p>
+<p>第四部分叫做 Finite Data Types。介绍了 product type 和 sum type 两种组合已有类型得到新类型的最基本的方法。
+Product type 类比于常见的元祖（tuple）。比如（Int, String）这个类型的值的个数 = Int 的值得个数 <mathjax>$\times$</mathjax> String 的值的个数。
+那么乘法的单位元 <mathjax>$\mathfrak{1}$</mathjax> 是什么呢？是空元祖类型也叫做 Unit，它的特点就是只有一个值 <code>()</code>。
+Product type 有一个有趣的应用是可以用来实现像 odd 和 even 这种互相交叉定义的递归函数（primitive mutual recursion）。说白了就是递归时用元祖来同时计算所有函数啦。</p>
+<blockquote>
+<p>Sums codify heterogeneity.</p>
+</blockquote>
+<p>Sum type 则对应着类型“和”。比如 Haskell 里面的 <code>data Bool = True | False</code>，如果把 <code>True</code> 和 <code>False</code> 分别看做只有一个值的类型，那么 <code>Bool</code> 的值的个数就是 1+1=2。
+另一个常见的 sum type 是 <code>data Maybe a = Nothing | Just a</code>（很多语言里面的 <code>option</code>），值的个数是类型 a 的值的个数加一。
+“和”的单位元 <mathjax>$\mathfrak{0}$</mathjax> 是类型 Void，其特点是……没有值，所以“加”什么还是什么。
+这里的 Void 和 C/C++ 里面的 void 是不同的，后者其实是前面提到的 Unit，而前者没有任何值所以既不能被当做参数也不能被当做返回值（正常情况下……）。
+<!-- “null pointer fallacy” 不再赘述。 --></p>
+<p>第五部分是 Types and Propositions。说的是 constructive logic（构造性逻辑，又叫 <a href="https://en.wikipedia.org/wiki/Intuitionistic_logic">intuitionistic logic</a>，直觉主义逻辑）和 <a href="https://en.wikipedia.org/wiki/Classical_logic">classical logic</a>（经典逻辑）之间的恩怨纠葛。
+经典逻辑是我们熟悉的形式逻辑，包括命题为真，为假，和 <mathjax>$\top$</mathjax> (truth), <mathjax>$\bot$</mathjax> (falsity), <mathjax>$\vee$</mathjax> (or), <mathjax>$\wedge$</mathjax> (and), <mathjax>$\subset$</mathjax> (imply)。
+经典逻辑中任一命题要么为真要么为假，没有中间状态，叫做排中律（LEM, <a href="https://en.wikipedia.org/wiki/Law_of_excluded_middle">law of the excluded middle</a>），表示为 <mathjax>$P \vee \neg P\ true$</mathjax>。</p>
+<blockquote>
+<p>Constructive logic codiﬁes the principles of mathematical reasoning as it is actually practiced.</p>
+</blockquote>
+<p>构造性逻辑则拿掉了排中律，命题为真必须给出证明，为假则必须给出反驳，两者都必须构建在一个又一个的证明或者反驳之上。
+比如，虽然我们知道要么 <mathjax>$P = NP$</mathjax> 要么 <mathjax>$P \neq NP$</mathjax>，但是我们目前既不能给出前者的证明也给不出后者的证明（来反驳前者），所以不能用这两个证明中的任意一个来构建一个 <mathjax>$\vee$</mathjax>。
+这样的好处是，构造性逻辑能更好地反映现实中的数学推理，现实中总是充满了各种未解决的问题，像 <mathjax>$P \stackrel{?}{=} NP$</mathjax> 这种目前还只有上帝才知道，还是留给他老人家来用吧。</p>
+<blockquote>
+<p>There is no guarantee of success! Life is hard, but we muddle through somehow.</p>
+</blockquote>
+<p>另一方面，证明的构造性和计算机程序有着极其相似的结构，一个实际的表达式对于一个特定的类型来说就像一个证明对于命题一样重要。
+这种逻辑和编程中其妙的统一性叫做“propositions as type”。具体表现为：<mathjax>$\top$</mathjax> 和 Unit，<mathjax>$\bot$</mathjax> 和 Void，<mathjax>$\wedge$</mathjax> 和 product，<mathjax>$\vee$</mathjax> 和 sum，<mathjax>$\subset$</mathjax> 和 <mathjax>$\lambda$</mathjax> 分别是一一对应的。
+一个命题对应一个类型，一个证明对应一个程序，又叫做 <a href="https://en.wikipedia.org/wiki/Curry–Howard_correspondence">Curry-Howard correspondence</a>。</p>
+<p>看似从经典逻辑中拿掉了不切实际的排中律，可以建立起逻辑和计算机之间深刻的联系，却必须以牺牲表达能力为代价，实际上并不是！
+可以证明的是构造性逻辑 <em>不拒绝</em> 排中律。在需要的时候可以将特定命题的排中律拿来做假设用，所以经典逻辑完全可以在构造性逻辑中表达，只是不能随便开上帝模式了。
+Mind blown! 后面还会继续出现这种 less is more 的栗子。</p>
+<blockquote>
+<p>In programming language terms adding a “feature” does not necessarily strengthen (improve the expressive power) of your language; on the contrary, it may weaken it.</p>
+</blockquote>
 <p>(待续……)</p>
 </article>
 <div id="show_disqus"><a onclick="load_disqus();return false;" href="##">Show comments</a></div>
