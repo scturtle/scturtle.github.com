@@ -4,7 +4,7 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="https://scturtle.me//atom.xml" rel="self"/>
   <link href="https://scturtle.me/"/>
-  <updated>2015-12-25T17:44:14.375438+08:00</updated>
+  <updated>2015-12-26T18:29:36.088488+08:00</updated>
   <id>https://scturtle.me//</id>
   
   <entry>
@@ -15,9 +15,9 @@
     <id>https://scturtle.me//2015/1222-pfpl/</id>
     <content type="html"><![CDATA[
 <p><a href="http://www.cs.cmu.edu/~rwh/plbook/1sted-revised.pdf">Practical Foundations for Programming Languages</a> 是一本介绍编程语言理论（PLT, programming language theory）和类型论（type theory）的书。
-和另一本传说中的书 <a href="https://www.cis.upenn.edu/~bcpierce/tapl/">TAPL</a> 相比年代更新内容也更广泛，并 不拘于一门编程语言而是通篇数学阐释，更简洁当然也更难懂一些。
-此外，在介绍的各种类型系统（type system）时，作者特意标出哪些规则是 call by name 那些是 call by value 的，很好地避免了单一一门语言对 strict 还是 lazy 的偏颇。
-作者的大名不能更响，不管是第一版还是修订中的第二版都在网上放出 pdf 实属业界良心。</p>
+和另一本传说中的书 <a href="https://www.cis.upenn.edu/~bcpierce/tapl/">TAPL</a> 相比，更新内容也更广，不拘于一门编程语言，通篇的数学更简洁虽然也更难懂一些。
+此外，在介绍的各种类型系统（type system）时，书里特意标出哪些规则是 call by name 那些是 call by value 的，很好地避免了单一一门语言对及早（eager）还是惰性求值的偏颇。
+作者的大名也是不能更响，不管是第一版还是修订中的第二版都在网上放出 pdf 实属业界良心。</p>
 <p>呃说起来 PLT 范围很广，从 Lisp/Scheme 的各种奇技淫巧，到 Haskell 从范畴论借来的各种花哨术语，再到不知何年何月才足够实用的 dependent type，摆脱不了的基础便是各种类型系统（type system）和背后的类型论了。
 不过就像 PLT 其实没啥用处一样，看了这本书也并不会对写代码有什么帮助。
 但是这本书会把各种语言的各种特性纳入一个统一的框架（类型论）中，告诉你哪些真能提升语言的表达能力，哪些特性是扯淡的，哪些看起来很绚丽的其实是另一些特性的组合。
@@ -84,14 +84,37 @@ Product type 有一个有趣的应用是可以用来实现像 odd 和 even 这�
 <blockquote>
 <p>There is no guarantee of success! Life is hard, but we muddle through somehow.</p>
 </blockquote>
-<p>另一方面，证明的构造性和计算机程序有着极其相似的结构，一个实际的表达式对于一个特定的类型来说就像一个证明对于命题一样重要。
-这种逻辑和编程中其妙的统一性叫做“propositions as type”。具体表现为：<mathjax>$\top$</mathjax> 和 Unit，<mathjax>$\bot$</mathjax> 和 Void，<mathjax>$\wedge$</mathjax> 和 product，<mathjax>$\vee$</mathjax> 和 sum，<mathjax>$\subset$</mathjax> 和 <mathjax>$\lambda$</mathjax> 分别是一一对应的。
+<p>另一方面，证明的构造性和计算机程序有着极其相似的结构，一个表达式对于一个特定的类型来说就像一个证明对于命题一样重要。
+这种逻辑和程序奇妙的统一性叫做“propositions as type”。具体表现为：<mathjax>$\top$</mathjax> 和 Unit，<mathjax>$\bot$</mathjax> 和 Void，<mathjax>$\wedge$</mathjax> 和 product，<mathjax>$\vee$</mathjax> 和 sum，<mathjax>$\subset$</mathjax> 和 <mathjax>$\lambda$</mathjax> 分别是一一对应的。
 一个命题对应一个类型，一个证明对应一个程序，又叫做 <a href="https://en.wikipedia.org/wiki/Curry–Howard_correspondence">Curry-Howard correspondence</a>。</p>
 <p>看似从经典逻辑中拿掉了不切实际的排中律，可以建立起逻辑和计算机之间深刻的联系，却必须以牺牲表达能力为代价，实际上并不是！
-可以证明的是构造性逻辑 <em>不拒绝</em> 排中律。在需要的时候可以将特定命题的排中律拿来做假设用，所以经典逻辑完全可以在构造性逻辑中表达，只是不能随便开上帝模式了。
+可以证明的是构造性逻辑 <em>不拒绝</em> 排中律。在需要的时候可以将特定命题的排中律拿来当假设用，所以经典逻辑完全可以在构造性逻辑中表达，只是不能随便开上帝模式了。
 Mind blown! 后面还会继续出现这种 less is more 的栗子。</p>
 <blockquote>
 <p>In programming language terms adding a “feature” does not necessarily strengthen (improve the expressive power) of your language; on the contrary, it may weaken it.</p>
+</blockquote>
+<p>第六部分为 Infinite Data Types。
+Generic programming 这章简单引入了带类型变量的类型 <mathjax>$t.\tau$</mathjax>。
+其中 <mathjax>$\tau$</mathjax> 是由 <mathjax>$t$</mathjax> 和 void/unit/product/sum 组合的类型。
+值得注意的是在扩展 <mathjax>$\tau$</mathjax> 到函数时（<mathjax>$t.\ \tau_1 \rightarrow \tau_2$</mathjax>），需要保证 positivity 也就是 t 不能出现在定义域的位置（<mathjax>$\tau_1$</mathjax>）。
+其实这说的就是 functor 和 fmap 啊，引入这几个抽象概念是为了方便随后定义两种递归类型。</p>
+<p>从名字就可以看出 Inductive types 和 coinductive types 是两个互为 dual 的概念。
+前者定义在引进规则（introduction forms）上的，呃，就是定义在“怎么定义”上……
+以其为参数的递归函数的一般形式（catamorphism）是先递归再替换。
+举例来说 Peano 数，每一个值要么是零要么是另一个值的后继。而参数是 Peano 的递归函数先在前驱上递归计算，再计算当前数上的值。
+而 coindoctive types 定义在消除规则（elimination forms）上，嗯……算是“怎么来用”上……
+以其为参数的的递归函数的一般形式（anamorphism）也相反，是先替换再递归。
+通常拿来举的例子是一个无限的数据流（stream），比如斐波那契数列，每一项都是前两项的和，必须先计算完数列前面的值才能得到后面的值的数列。
+如果说 inductive types 的函数更像传统意义上的递归函数（recursor）的话，那么 coinduvtive types 的函数则更像是根据指定规则的一个产生器（generator）。</p>
+<p>这是两种最典型的递归形式（recursion scheme），区分它们的必要性在于，他们是同一个类型等式（type equations）的两个极端解（类型）。
+例如上面提到过的 Peano number 和 stream 显然都是 <mathjax>$x = 1 \times x$</mathjax> 的形式，却又不同并互为 dual。
+理论上来说 inductive types 是类型等式的最小解（smallest/least/most restrictive），而 coinductive types 是最大解（largest/greatest/most permissive）。
+另一种对称性在于，前者虽然有无限个值，但是每一个值都是在有限步内构造的；而后者则构造了一个无限的序列，在有限步内析构会得到有限个值。
+假若不加区分的将一个前者的函数应用在后者上就死循环了，所以强调 totality 的 Idris、Agda 等语言中显示地区分这两种概念。
+从两者函数行为的区别上也可以看出，支持惰性求值才能支持先替换后递归，这也是为什么 Haskell 里面能这么简单实现无限序列的缘故。
+逼逼了这么多不过下面这句话我到现在还不是很理解……</p>
+<blockquote>
+<p>Inductive types are initial algebras and coinductive types are ﬁnal coalgebras for the functor given by a (polynomial or positive) type operator.</p>
 </blockquote>
 <p>(待续……)</p>
 ]]> </content>
