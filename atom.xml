@@ -4,7 +4,7 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="https://scturtle.me//atom.xml" rel="self"/>
   <link href="https://scturtle.me/"/>
-  <updated>2015-12-26T18:29:36.088488+08:00</updated>
+  <updated>2015-12-28T21:10:08.153433+08:00</updated>
   <id>https://scturtle.me//</id>
   
   <entry>
@@ -50,8 +50,8 @@
 进而，引入 <mathjax>$\lambda$</mathjax> function 并加入函数类型作为一等公民，实现了高阶函数（higher-order function），扩展 <code>E</code> 为 <code>EF</code>。
 实现 <mathjax>$\lambda$</mathjax> function 的时候，会有作用域的问题，解释时使用替换（substitution）没问题但是没嵌套作用域（nesting scoping）的 mapping environment 会有问题。
 这也是为什么实际中实现 <mathjax>$\lambda$</mathjax> function 需要闭包（closure）的原因。</p>
-<p>System T 又叫做 Gödel's T，只包括包括上面的高阶函数和Peano 数（<code>Z, S(Z), S(S(Z))</code>……）表示的自然数和原始递归（primitive recursion），是异常简单同时也非常重要的一个类型系统。
-原始递归是建立在像剥洋葱一样层层剥离 Peano 数基础上的递归，如果参数是 Z 也就是 0 的话就返回，如果是 S(e) 就对 e 继续递归。相当于每次递归的时候参数减一，所以是一定会停机的。
+<p>System T 又叫做 Gödel's T，只包括包括上面的高阶函数和皮亚诺（Peano）数（<code>Z, S(Z), S(S(Z))</code>……）表示的自然数和原始递归（primitive recursion），是异常简单同时也非常重要的一个类型系统。
+原始递归是建立在像剥洋葱一样层层剥离皮亚诺数基础上的递归，如果参数是 Z 也就是 0 的话就返回，如果是 S(e) 就对 e 继续递归。相当于每次递归的时候参数减一，所以是一定会停机的。
 这说明 T 里面只能定义 total function，也就是像纯粹的数学函数一样，对定义域的每个输入都一定会返回值，而不会像 partial function 一样在某些定义域上未定义或者在计算中陷入了死循环。
 （换句话说，system T 里的递归是自带 termination proof 的。）</p>
 <p>咋一看这货根本不行啊，连一个最简单的死循环函数都写不出来啊。
@@ -101,21 +101,58 @@ Generic programming 这章简单引入了带类型变量的类型 <mathjax>$t.\t
 <p>从名字就可以看出 Inductive types 和 coinductive types 是两个互为 dual 的概念。
 前者定义在引进规则（introduction forms）上的，呃，就是定义在“怎么定义”上……
 以其为参数的递归函数的一般形式（catamorphism）是先递归再替换。
-举例来说 Peano 数，每一个值要么是零要么是另一个值的后继。而参数是 Peano 的递归函数先在前驱上递归计算，再计算当前数上的值。
+举例来说皮亚诺数，每一个值要么是零要么是另一个值的后继。而参数是皮亚诺数的递归函数先在前驱上递归计算，再计算当前数上的值。
 而 coindoctive types 定义在消除规则（elimination forms）上，嗯……算是“怎么来用”上……
 以其为参数的的递归函数的一般形式（anamorphism）也相反，是先替换再递归。
 通常拿来举的例子是一个无限的数据流（stream），比如斐波那契数列，每一项都是前两项的和，必须先计算完数列前面的值才能得到后面的值的数列。
 如果说 inductive types 的函数更像传统意义上的递归函数（recursor）的话，那么 coinduvtive types 的函数则更像是根据指定规则的一个产生器（generator）。</p>
 <p>这是两种最典型的递归形式（recursion scheme），区分它们的必要性在于，他们是同一个类型等式（type equations）的两个极端解（类型）。
-例如上面提到过的 Peano number 和 stream 显然都是 <mathjax>$x = 1 \times x$</mathjax> 的形式，却又不同并互为 dual。
+例如上面提到过的皮亚诺数和 stream 显然都是 <mathjax>$x = 1 \times x$</mathjax> 的形式，却又不同并互为 dual。
 理论上来说 inductive types 是类型等式的最小解（smallest/least/most restrictive），而 coinductive types 是最大解（largest/greatest/most permissive）。
 另一种对称性在于，前者虽然有无限个值，但是每一个值都是在有限步内构造的；而后者则构造了一个无限的序列，在有限步内析构会得到有限个值。
 假若不加区分的将一个前者的函数应用在后者上就死循环了，所以强调 totality 的 Idris、Agda 等语言中显示地区分这两种概念。
 从两者函数行为的区别上也可以看出，支持惰性求值才能支持先替换后递归，这也是为什么 Haskell 里面能这么简单实现无限序列的缘故。
-逼逼了这么多不过下面这句话我到现在还不是很理解……</p>
+（逼逼了这么多跟懂的似的不过下面这句话我到现在还不是很理解……）</p>
 <blockquote>
 <p>Inductive types are initial algebras and coinductive types are ﬁnal coalgebras for the functor given by a (polynomial or positive) type operator.</p>
 </blockquote>
+<p>第七部分叫做 Variable Types。
+首先在 T 的基础上，引入了前一部分提到的类型变量和多态，得到 language F，也常常叫做 system F。
+总的来说 system F 就是 <em>polymorphic</em> typed lambda-calculus。
+多态（polymorphism）相比 OOP 里面那个含义更像 C++ 的模板系统，把类型无关的相似行为抽象出来，避免冗余代码。
+比如 <code>id :: forall a. a -&gt; a</code>，不管输入是啥类型，给啥返回啥就好了。
+多态大大地扩展了语言的表达能力，可以证明，前面提到过的 products/sums/inductive/coinductive types 都可以用多态函数来表示，这种表示法通常叫做 <a href="https://en.wikipedia.org/wiki/Church_encoding">Church encoding</a>，是丘奇为了证明他的<mathjax>$\lambda$</mathjax>演算的计算能力发明的。
+例如自然数可以表示成 <mathjax>$\forall t.t \rightarrow (t \rightarrow t) \rightarrow t$</mathjax>，叫做<a href="https://zh.wikipedia.org/zh-hans/%E9%82%B1%E5%A5%87%E6%95%B0">丘奇数</a>。
+不过多态的表达能力太过强大，已被证明，没有类型注释的 system F 的类型检查是 undecidable 的问题。
+但是如果稍稍限制 <code>forall</code> 出现的位置，得到一个弱一点的 <a href="https://en.wikipedia.org/wiki/Hindley%E2%80%93Milner_type_system">"Hindley–Milner"</a> 类型系统，甚至有高效的类型推断算法，是为 PLT 的经典算法之一。</p>
+<p>注意到在 T 中自然数必须用皮亚诺表示法“硬编码”，这说明，F 至少和 T 的表达能力是一样的。
+可以证明的是，虽然 T 的 evaluation function 不能在自身中实现，但是可以在 F 中实现，这说明 F 的表达能力是比 T 高的。
+还可以证明 F 是强规范化的（strongly normalizing），也就是像 T 一样 terminating 的，所以 F 的 evaluation function 也不能用自身写出。
+我们可以扩充 F 得到一个可以实现 F 的更强的语言，还可以进一步扩充这个语言得到更强一点的语言，但是只要是这些更强的语言都还是 terminating 的就还是不能实现自举（呃好像被最新的这篇 <a href="http://compilers.cs.ucla.edu/popl16/">paper</a> 打了脸，也就是说自举并不需要完备？）。
+可以看出，虽然图灵完备的语言是相通的，图灵不完备的却有着表达能力阶层。</p>
+<p>多态类型看似有着级大的自由度，实际上却很大程度上限制了其实现，这种特性叫做 parametricity，个人认为算是 PLT 里面最有意思的东西之一。
+比如 <code>int -&gt; int</code> 这个函数可以有无数种实现，加一减一阶乘等等等等，但是一旦把类型抽象出来得到 <code>forall a. a -&gt; a</code>，要求其对所有类型 <code>a</code> 都适用，便只有 identity function <code>id</code> 这一种实现了。
+这个函数签名可以读作“无论给一个什么东西（<code>a</code>），都得返回一个和这个东西 <em>所有性质</em>（of <code>a</code>）完全相同的东西”，所以只有直接返回一条路。
+再一个例子是 <code>forall a. a -&gt; a -&gt; a</code>，给两个相同类型的参数返回相同类型的结果，可以证明的是只有返回第一个或者第二个两种实现。
+看似极大自由 <code>forall</code> 却限制得连用 <code>if</code> 做个选择都不行。
+更复杂的多态类型其性质的推导也更加复杂，本书倒数第二章详述了其后的理论，这里的<a href="http://www.well-typed.com/blog/2015/05/parametricity/">两篇实用的文章</a>比较容易入门。可以说，parametricity 才是类型系统确保程序正确性的根基：</p>
+<blockquote>
+<p>Parametricity narrows the space of well-typed programs sufﬁciently that the opportunities for programmer error are reduced to almost nothing.</p>
+</blockquote>
+<p>前面列举的类型中大量使用了 <code>forall</code>，如果将 polymorphic types 看成 universal types 的话，那么接下来的一章介绍的 existential types 算是其 dual 的概念了。
+用文中常用的句型来说：Existential types <em>codify</em> data abstraction.
+比如队列这个抽象类型可以有各种具体实现类型，每一种实现都可以看做队列的一种具体化的存在，可以拿来直接用。
+实际上就是把实现和接口一块“打了个包”，要求的是接口的类型，用的时候实际上拿具体实现的类型和表达式做替换。
+<!-- 值得注意的是 data abstraction 的打包和替换都是在编译阶段完成的，没有运行时消耗。 -->
+看似 existential types 是 universal types 的 dual，其实 existential types 是完全可以用 universal types 来定义的！
+这一章扩展了 F 得到 FE，并没有实际增加表达能力。</p>
+<p>Type 也可以有 type，叫做 kind，前面提过的各种类型的 kind 可以看做 <code>*</code>，那么 type constructor 就是类型之上的函数，通过类型来构造新的类型，它的 kind 就是 <code>* -&gt; *</code>。
+例如 <code>Maybe</code> 和 <code>[]</code>(list) 的 kind 是 <code>* -&gt; *</code> ，因为他们都需要指定一个元素类型，而 <code>Either</code> 的 kind 是 <code>* -&gt; * -&gt; *</code>。
+接下来的一章扩展 F 加入 universal/existential quantifier 和 kind 得到 <mathjax>$F_\omega$</mathjax>。
+因为 type constructor 涉及类型层面上的 <mathjax>$\lambda$</mathjax>-abstract 和 application，所以需要定义 definitional equality 来简化类型（类似 <mathjax>$\beta$</mathjax>-reduction）。
+在 <mathjax>$F_\omega$</mathjax> 的基础上，加上类型层面的存在量词就是 <mathjax>$FE_\omega$</mathjax>，不过不知道这东西有啥用……
+<mathjax>$F_\omega$</mathjax> 的表达能力很强大，是各种现代编译器的基础，人称 “the workhorse of modern compilers”，Haskell 的 type class、Ocaml 的 module system 甚至 GADT 都可以用它表示出来。
+但是实际中也得加很多限制才能得到高效实用的算法。</p>
 <p>(待续……)</p>
 ]]> </content>
   </entry>
