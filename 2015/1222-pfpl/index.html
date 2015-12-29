@@ -169,6 +169,24 @@ Generic programming 这章简单引入了带类型变量的类型 <mathjax>$t.\t
 在 <mathjax>$F_\omega$</mathjax> 的基础上，加上类型层面的存在量词就是 <mathjax>$FE_\omega$</mathjax>，不过不知道这东西有啥用……
 <mathjax>$F_\omega$</mathjax> 的表达能力很强大，是各种现代编译器的基础，人称 “the workhorse of modern compilers”，Haskell 的 type class、Ocaml 的 module system 甚至 GADT 都可以用它表示出来。
 但是实际中也得加很多限制才能得到高效实用的算法。</p>
+<p>第八部分是 Partiality and Recursive Types。
+第十九章介绍了 system PCF，最简单的图灵完备的类型系统，人称 “the E. coli of programming languages”。
+System PCF 的表达能力来自 general recursion 和 partiality。
+比如阶乘函数可以看做 fact(0)= 1 和 fact(n+1) = (n+1) * fact(n) 这两个等式的解 fact :: Nat -&gt; Nat，这个解可以通过不动点来求得。
+假设我们已经有 fact 这个解了，那么我们可以写这么一个辅助函数：
+f(fact) = <mathjax>$\lambda$</mathjax> n -&gt; if n == 0 then 1 else n * fact(n-1)。
+显然等式 fact = f(fact) 成立，假设我们有一个求函数不动点的函数 fix，那么 fact = fix(f)。
+为何不动点就是我们要的解呢？
+因为 PCF 里面的函数是 partial 的，允许函数在有的输入上未定义（发散/不终止），所以我们可以先试着传给 f 一个非常垃圾的解，比如一个在所有输入上都不终止的函数 <mathjax>$\phi$</mathjax>。
+神奇的事情发生了！<mathjax>$\phi'$</mathjax> = f(<mathjax>$\phi$</mathjax>) 在 0 这个 base case 上不依赖于 <mathjax>$\phi$</mathjax> 返回了结果 1，虽然在其他输入上还是发散了。
+按照不动点的含义，我们再把 <mathjax>$\phi'$</mathjax> 喂给 f 得到 <mathjax>$\phi''$</mathjax> = f(<mathjax>$\phi'$</mathjax>) = f(f(<mathjax>$\phi$</mathjax>))。
+神奇的事情再次发生了！因为 <mathjax>$\phi'$</mathjax> 在 0 上有了定义，现在 <mathjax>$\phi''$</mathjax> 在 1 上也有了定义。
+因为 base case 的存在，我们就像求不动点一样不断把更好地解传给 f，就可以不断逼近一个我们想要的 total function。
+实际中 fix 函数的实现也是异曲同工。</p>
+<p>可以证明的是 PCF 可实现所有 <a href="https://en.wikipedia.org/wiki/%CE%9C-recursive_function">partial recursive functions</a>（主要是可以实现 minimization/<mathjax>$\mu$</mathjax> operation），而且 PCF 自身的 evaluator 也可以用 partial recursive functions 来表示，可见 PCF 是自举的。
+由<a href="https://en.wikipedia.org/wiki/Computable_function#Definition">等价性</a>可知 PCF 是和图灵机/lambda calculus 等价的。
+前面提过 T 中程序的终止的证明是“编码”进代码和类型检查中的，可想而知而有了 partial functions 抛弃了 totality 之后，写能通过类型检查的程序也更简单了。
+甚至有一个定理 <a href="https://en.wikipedia.org/wiki/Blum%27s_speedup_theorem">Blum Size Theorem</a> 指出，总存在一个函数在任何 total 的语言中的最短实现是 PCF 中的最短实现的 <em>任意多倍</em>。</p>
 <p>(待续……)</p>
 </article>
 <div id="show_disqus"><a onclick="load_disqus();return false;" href="##">Show comments</a></div>
