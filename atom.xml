@@ -4,7 +4,7 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="https://scturtle.me//atom.xml" rel="self"/>
   <link href="https://scturtle.me/"/>
-  <updated>2015-12-29T22:49:30.287442+08:00</updated>
+  <updated>2015-12-30T21:19:24.621677+08:00</updated>
   <id>https://scturtle.me//</id>
   
   <entry>
@@ -94,10 +94,10 @@ Mind blown! 后面还会继续出现这种 less is more 的栗子。</p>
 <p>In programming language terms adding a “feature” does not necessarily strengthen (improve the expressive power) of your language; on the contrary, it may weaken it.</p>
 </blockquote>
 <p>第六部分为 Infinite Data Types。
-Generic programming 这章简单引入了带类型变量的类型 <mathjax>$t.\tau$</mathjax>。
+Generic programming 这章简单引入了带类型变量的 类型 <mathjax>$t.\tau$</mathjax>，叫做 polymorphic type operator。
 其中 <mathjax>$\tau$</mathjax> 是由 <mathjax>$t$</mathjax> 和 void/unit/product/sum 组合的类型。
-值得注意的是在扩展 <mathjax>$\tau$</mathjax> 到函数时（<mathjax>$t.\ \tau_1 \rightarrow \tau_2$</mathjax>），需要保证 positivity 也就是 t 不能出现在定义域的位置（<mathjax>$\tau_1$</mathjax>）。
-其实这说的就是 functor 和 fmap 啊，引入这几个抽象概念是为了方便随后定义两种递归类型。</p>
+值得注意的是在扩展 <mathjax>$\tau$</mathjax> 到函数时（<mathjax>$t.\ \tau_1 \rightarrow \tau_2$</mathjax>），需要保证 positivity 也就是 t 不能出现在定义域的位置（<mathjax>$\tau_1$</mathjax>），这种扩展和限制叫做 positive type operators。
+其实这说的也就是 functor 和 fmap，引入这几个抽象概念是为了方便随后定义两种递归类型。</p>
 <p>从名字就可以看出 Inductive types 和 coinductive types 是两个互为 dual 的概念。
 前者定义在引进规则（introduction forms）上的，呃，就是定义在“怎么定义”上……
 以其为参数的递归函数的一般形式（catamorphism）是先递归再替换。
@@ -106,11 +106,11 @@ Generic programming 这章简单引入了带类型变量的类型 <mathjax>$t.\t
 以其为参数的的递归函数的一般形式（anamorphism）也相反，是先替换再递归。
 通常拿来举的例子是一个无限的数据流（stream），比如斐波那契数列，每一项都是前两项的和，必须先计算完数列前面的值才能得到后面的值的数列。
 如果说 inductive types 的函数更像传统意义上的递归函数（recursor）的话，那么 coinduvtive types 的函数则更像是根据指定规则的一个产生器（generator）。</p>
-<p>这是两种最典型的递归形式（recursion scheme），区分它们的必要性在于，他们是同一个类型等式（type equations）的两个极端解（类型）。
-例如上面提到过的皮亚诺数和 stream 显然都是 <mathjax>$x = 1 \times x$</mathjax> 的形式，却又不同并互为 dual。
+<p>这是两种最典型的递归形式（recursion scheme），区分它们的必要性在于，他们是同一个（关于 positive type operator 的）类型等式（type equations）的两个极端解（类型）。
+例如 <mathjax>$x = 1 \times x$</mathjax> 的 inductive/coinductive type 解分别是上面提到过的皮亚诺数和 infinity。
 理论上来说 inductive types 是类型等式的最小解（smallest/least/most restrictive），而 coinductive types 是最大解（largest/greatest/most permissive）。
 另一种对称性在于，前者虽然有无限个值，但是每一个值都是在有限步内构造的；而后者则构造了一个无限的序列，在有限步内析构会得到有限个值。
-假若不加区分的将一个前者的函数应用在后者上就死循环了，所以强调 totality 的 Idris、Agda 等语言中显示地区分这两种概念。
+从刚才的例子还可以看出，假若不加区分的将一个前者的函数应用在后者上，就引发了死循环，所以强调 totality 的 Idris、Agda 等语言中显式地区分这两种概念。
 从两者函数行为的区别上也可以看出，支持惰性求值才能支持先替换后递归，这也是为什么 Haskell 里面能这么简单实现无限序列的缘故。
 （逼逼了这么多跟懂的似的不过下面这句话我到现在还不是很理解……）</p>
 <blockquote>
@@ -154,7 +154,7 @@ Generic programming 这章简单引入了带类型变量的类型 <mathjax>$t.\t
 <mathjax>$F_\omega$</mathjax> 的表达能力很强大，是各种现代编译器的基础，人称 “the workhorse of modern compilers”，Haskell 的 type class、Ocaml 的 module system 甚至 GADT 都可以用它表示出来。
 但是实际中也得加很多限制才能得到高效实用的算法。</p>
 <p>第八部分是 Partiality and Recursive Types。
-第十九章介绍了 system PCF，最简单的图灵完备的类型系统，人称 “the E. coli of programming languages”。
+第十九章介绍了 <a href="https://en.wikipedia.org/wiki/Programming_Computable_Functions">system PCF</a>，最简单的图灵完备的类型系统，人称 “the E. coli of programming languages”。
 System PCF 的表达能力来自 general recursion 和 partiality。
 比如阶乘函数可以看做 fact(0)= 1 和 fact(n+1) = (n+1) * fact(n) 这两个等式的解 fact :: Nat -&gt; Nat，这个解可以通过不动点来求得。
 假设我们已经有 fact 这个解了，那么我们可以写这么一个辅助函数：
@@ -171,6 +171,13 @@ f(fact) = <mathjax>$\lambda$</mathjax> n -&gt; if n == 0 then 1 else n * fact(n-
 由<a href="https://en.wikipedia.org/wiki/Computable_function#Definition">等价性</a>可知 PCF 是和图灵机/lambda calculus 等价的。
 前面提过 T 中程序的终止的证明是“编码”进代码和类型检查中的，可想而知而有了 partial functions 抛弃了 totality 之后，写能通过类型检查的程序也更简单了。
 甚至有一个定理 <a href="https://en.wikipedia.org/wiki/Blum%27s_speedup_theorem">Blum Size Theorem</a> 指出，总存在一个函数在任何 total 的语言中的最短实现是 PCF 中的最短实现的 <em>任意多倍</em>。</p>
+<p>下一章介绍了递归类型（recursive types），扩展 PCF 得到 FPC（这两名字为什么这么像？）。
+我们熟悉的 list 啊 tree 啊这些都是典型的递归类型。
+递归类型和前述的 inductive/coinductive types 定义几乎相同，只是拿掉了 positivity 限制。
+前面提过 inductive/coinductive types 可以看做是 positive 的类型等式的解，那么递归类型则是拿掉了 positivity 限制的类型等式的解。
+但是去掉了限制后解不一定存在，所以递归类型算是一种不动点近似解，也是唯一解，前述的 inductive/coinductive 之分体现在对递归类型的及早/惰性求值上。
+这里十分不解的是作者说用很大的篇幅说及早求值比惰性求值表达能力要高，因为前者能表示用函数来表示后者，而后者不能表示前者？谨慎持异议……
+此外，前述的通用递归（general recursion）可以用递归类型表示出来，因为两者都是靠的自指（self-reference），所以扩充语言表达能力的不是语言特性，最终还是类型。</p>
 <p>(待续……)</p>
 ]]> </content>
   </entry>
