@@ -1,0 +1,177 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Exploring Writing foldl Using foldr | ScTurtle&#39;s Pool</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" href="/static/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/pygments.css" type="text/css">
+    <link href="/atom.xml" rel="alternate" title="ScTurtle&#39;s Pool" type="application/atom+xml">
+  </head>
+  <body>
+    <div class=container>
+      <div class=header>
+        <a class=site-name href='/'>ScTurtle&#39;s Pool</a>
+        <nav class=navigation>
+          <a href='/'>blog</a>
+          <a href='/archive.html'>archive</a>
+          <a href='/tags/'>tags</a>
+          <a href='/about/'>about</a>
+        </nav>
+      </div>
+      <div class=body>
+
+
+<article>
+<h1 class=title>Exploring Writing foldl Using foldr</h1>
+<p class=info>
+Jan 27, 2016
+<a href='/tags/haskell.html'>#haskell</a>
+</p>
+<p>It is widely known that left folding can be implemented in right folding.
+But the implementation is not so obvious. Let's try writing one from scratch.
+First we need these two extensions of GHC to make life better.</p>
+<div class="codehilite"><pre><span class="cm">{-# LANGUAGE ScopedTypeVariables, PartialTypeSignatures #-}</span>
+</pre></div>
+
+
+<p>Let's just forget the original implementations in <code>Prelude</code>
+and try to write them by hand:</p>
+<div class="codehilite"><pre><span class="kr">import</span> <span class="nn">Prelude</span> <span class="k">hiding</span> <span class="p">(</span><span class="nf">foldr</span><span class="p">,</span> <span class="nf">foldl</span><span class="p">)</span>
+
+<span class="nf">foldr</span> <span class="ow">::</span> <span class="p">(</span><span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldr</span> <span class="kr">_</span> <span class="n">r</span> <span class="kt">[]</span> <span class="ow">=</span> <span class="n">r</span>
+<span class="nf">foldr</span> <span class="n">f</span> <span class="n">r</span> <span class="p">(</span><span class="n">x</span><span class="kt">:</span><span class="n">xs</span><span class="p">)</span> <span class="ow">=</span> <span class="n">f</span> <span class="n">x</span> <span class="p">(</span><span class="n">foldr</span> <span class="n">f</span> <span class="n">r</span> <span class="n">xs</span><span class="p">)</span>
+
+<span class="nf">foldl</span> <span class="ow">::</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">r</span> <span class="kt">[]</span> <span class="ow">=</span> <span class="n">r</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">a</span> <span class="p">(</span><span class="n">x</span><span class="kt">:</span><span class="n">xs</span><span class="p">)</span> <span class="ow">=</span> <span class="n">foldl</span> <span class="n">f</span> <span class="p">(</span><span class="n">f</span> <span class="n">a</span> <span class="n">x</span><span class="p">)</span> <span class="n">xs</span>
+</pre></div>
+
+
+<p>If we want to write <code>foldl</code> using <code>foldr</code>, that defination should be looks like this:</p>
+<div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span> <span class="n">foldr</span> <span class="n">undefined</span> <span class="n">undefined</span> <span class="n">undefined</span>
+</pre></div>
+
+
+<p>The only thing we can be sure is that we will still be working on list <code>bs</code>.
+So let's refine the above one using this observation:</p>
+<div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
+  <span class="kr">let</span> <span class="n">fold</span> <span class="ow">::</span> <span class="kr">_</span> <span class="ow">-&gt;</span> <span class="kr">_</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kr">_</span>
+      <span class="n">fold</span> <span class="ow">=</span> <span class="n">foldr</span>
+  <span class="kr">in</span>  <span class="n">fold</span> <span class="n">undefined</span> <span class="n">undefined</span> <span class="n">bs</span>
+</pre></div>
+
+
+<p>Let's think about a small example. According to our original implantation,
+<code>foldl f i [b1, b2]</code> should be expanded into <code>f (f i b1) b2</code>
+but the form in <code>foldr g j [b1, b2]</code> is <code>g b1 (b g2 j)</code>.
+The most important step is to make the definition of <code>g</code> and <code>j</code> clear.
+Function <code>g</code> should have type like <code>b -&gt; r -&gt; r</code> and
+if the first parameter is <code>b1</code>, the second parameter should be able to use
+<code>f i b1</code> to re-build the original <code>foldl</code> expansion.
+That sounds like a continuation <code>a -&gt; r</code> instead of just <code>r</code>. Let's try this idea:</p>
+<div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
+  <span class="kr">let</span> <span class="n">fold</span> <span class="ow">::</span> <span class="p">(</span><span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">))</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span>
+      <span class="n">fold</span> <span class="ow">=</span> <span class="n">foldr</span>
+      <span class="n">g</span> <span class="ow">::</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span>
+      <span class="n">g</span> <span class="n">b1</span> <span class="n">cont</span> <span class="ow">=</span> <span class="n">cont</span> <span class="p">(</span><span class="n">f</span> <span class="n">i</span> <span class="n">b1</span><span class="p">)</span>
+  <span class="kr">in</span>  <span class="n">fold</span> <span class="n">g</span> <span class="n">undefined</span> <span class="n">bs</span>
+</pre></div>
+
+
+<p>Bad thing happened.
+We got two type errors because now <code>g</code> and <code>fold</code> are of type ending with <code>(a -&gt; r)</code>.
+Let's look into them one by one.
+For <code>g</code> we are using a <code>b</code> to turn a continuation into another continuation
+so <code>g</code> actually need a extra parameter <code>a</code>.
+<code>fold</code> return a continuation and need a initial value <code>a</code> to get the final result.
+Let's refine the signature and definition:</p>
+<div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
+  <span class="kr">let</span> <span class="n">fold</span> <span class="ow">::</span> <span class="p">(</span><span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">))</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span>
+      <span class="n">fold</span> <span class="ow">=</span> <span class="n">foldr</span>
+      <span class="n">g</span> <span class="ow">::</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span>
+      <span class="n">g</span> <span class="n">b1</span> <span class="n">cont</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">cont</span> <span class="p">(</span><span class="n">f</span> <span class="n">i</span> <span class="n">b1</span><span class="p">)</span>
+  <span class="kr">in</span>  <span class="n">fold</span> <span class="n">g</span> <span class="n">undefined</span> <span class="n">bs</span> <span class="n">undefined</span>
+</pre></div>
+
+
+<p>Now our compiler warned us that <code>a</code> is not used.
+According to its type, the only place to use it is where <code>i</code> is.
+That makes sense because we are using the future result in our computation.
+But where <code>i</code> should go? The only place seems to using it to complete our <code>fold</code>.
+(I think this is the only tricky part and hope to find better thoughts on this in the future.)
+Let's refine again:</p>
+<div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
+  <span class="kr">let</span> <span class="n">fold</span> <span class="ow">::</span> <span class="p">(</span><span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">))</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span>
+      <span class="n">fold</span> <span class="ow">=</span> <span class="n">foldr</span>
+      <span class="n">g</span> <span class="ow">::</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span>
+      <span class="n">g</span> <span class="n">b1</span> <span class="n">cont</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">cont</span> <span class="p">(</span><span class="n">f</span> <span class="n">a</span> <span class="n">b1</span><span class="p">)</span>
+  <span class="kr">in</span>  <span class="n">fold</span> <span class="n">g</span> <span class="n">undefined</span> <span class="n">bs</span> <span class="n">i</span>
+</pre></div>
+
+
+<p>Nearly done and only one <code>undefined</code> is left.
+Notice that the final result is of type <code>r</code> but our target type is <code>a</code>.
+That means <code>r</code> is just <code>a</code>.
+So the only left <code>undefined</code> is of type <code>forall a. a -&gt; a</code>
+and its only implantation is <code>id</code> according to parametricity.
+This also fits our experience in finishing a continuation with <code>\a -&gt; a</code>.
+Our final version is:</p>
+<div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
+  <span class="kr">let</span> <span class="n">g</span> <span class="n">b1</span> <span class="n">cont</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">cont</span> <span class="p">(</span><span class="n">f</span> <span class="n">a</span> <span class="n">b1</span><span class="p">)</span>
+  <span class="kr">in</span>  <span class="n">foldr</span> <span class="n">g</span> <span class="n">id</span> <span class="n">bs</span> <span class="n">i</span>
+</pre></div>
+
+
+<p>It works!</p>
+<div class="codehilite"><pre><span class="nf">λ</span><span class="o">&gt;</span> <span class="n">foldl</span> <span class="p">(</span><span class="nf">\</span><span class="n">r</span> <span class="n">x</span> <span class="ow">-&gt;</span> <span class="n">r</span> <span class="o">++</span> <span class="p">[</span><span class="n">x</span><span class="p">])</span> <span class="p">[</span><span class="mi">0</span> <span class="ow">::</span> <span class="kt">Int</span><span class="p">]</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="mi">10</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+</article>
+<div id="show_disqus"><a onclick="load_disqus();return false;" href="##">Show comments</a></div>
+<div id="disqus_thread"></div>
+
+
+      </div>
+      <div class=footer>
+        <p><a href='https://github.com/scturtle/turtleblog'>turtleblog</a> &copy;
+        <script>document.write(new Date().getFullYear());</script> scturtle
+        <p> <a href="mailto:scturtle@gmail.com">mail</a>,
+        <a href="https://twitter.com/scturtle">twitter</a>,
+        <a href="https://github.com/scturtle">github</a>,
+        <a href='/atom.xml' rel=alternate title="Recent Blogs | ScTurtle&#39;s Pool">feed</a>
+      </div>
+    </div>
+
+<script type="text/javascript">
+  function load_disqus() {
+    var disqus_shortname = 'scturtlespool';
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    document.getElementById('show_disqus').style.display='none';
+  };
+</script>
+
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-33410961-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+  </body>
+</html>

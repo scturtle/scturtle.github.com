@@ -4,9 +4,124 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="https://scturtle.me//atom.xml" rel="self"/>
   <link href="https://scturtle.me/"/>
-  <updated>2015-12-30T21:19:24.621677+08:00</updated>
+  <updated>2016-01-27T13:31:45.738392+08:00</updated>
   <id>https://scturtle.me//</id>
   
+  <entry>
+    <title type="html"><![CDATA[Exploring Writing foldl Using foldr]]></title>
+    <author> <name><![CDATA[scturtle]]></name> </author>
+    <link href="https://scturtle.me//2016/0127-foldl/"/>
+    <updated>2016-01-27T12:00:00+08:00</updated>
+    <id>https://scturtle.me//2016/0127-foldl/</id>
+    <content type="html"><![CDATA[
+<p>It is widely known that left folding can be implemented in right folding.
+But the implementation is not so obvious. Let's try writing one from scratch.
+First we need these two extensions of GHC to make life better.</p>
+<div class="codehilite"><pre><span class="cm">{-# LANGUAGE ScopedTypeVariables, PartialTypeSignatures #-}</span>
+</pre></div>
+
+
+<p>Let's just forget the original implementations in <code>Prelude</code>
+and try to write them by hand:</p>
+<div class="codehilite"><pre><span class="kr">import</span> <span class="nn">Prelude</span> <span class="k">hiding</span> <span class="p">(</span><span class="nf">foldr</span><span class="p">,</span> <span class="nf">foldl</span><span class="p">)</span>
+
+<span class="nf">foldr</span> <span class="ow">::</span> <span class="p">(</span><span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldr</span> <span class="kr">_</span> <span class="n">r</span> <span class="kt">[]</span> <span class="ow">=</span> <span class="n">r</span>
+<span class="nf">foldr</span> <span class="n">f</span> <span class="n">r</span> <span class="p">(</span><span class="n">x</span><span class="kt">:</span><span class="n">xs</span><span class="p">)</span> <span class="ow">=</span> <span class="n">f</span> <span class="n">x</span> <span class="p">(</span><span class="n">foldr</span> <span class="n">f</span> <span class="n">r</span> <span class="n">xs</span><span class="p">)</span>
+
+<span class="nf">foldl</span> <span class="ow">::</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">r</span> <span class="kt">[]</span> <span class="ow">=</span> <span class="n">r</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">a</span> <span class="p">(</span><span class="n">x</span><span class="kt">:</span><span class="n">xs</span><span class="p">)</span> <span class="ow">=</span> <span class="n">foldl</span> <span class="n">f</span> <span class="p">(</span><span class="n">f</span> <span class="n">a</span> <span class="n">x</span><span class="p">)</span> <span class="n">xs</span>
+</pre></div>
+
+
+<p>If we want to write <code>foldl</code> using <code>foldr</code>, that defination should be looks like this:</p>
+<div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span> <span class="n">foldr</span> <span class="n">undefined</span> <span class="n">undefined</span> <span class="n">undefined</span>
+</pre></div>
+
+
+<p>The only thing we can be sure is that we will still be working on list <code>bs</code>.
+So let's refine the above one using this observation:</p>
+<div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
+  <span class="kr">let</span> <span class="n">fold</span> <span class="ow">::</span> <span class="kr">_</span> <span class="ow">-&gt;</span> <span class="kr">_</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kr">_</span>
+      <span class="n">fold</span> <span class="ow">=</span> <span class="n">foldr</span>
+  <span class="kr">in</span>  <span class="n">fold</span> <span class="n">undefined</span> <span class="n">undefined</span> <span class="n">bs</span>
+</pre></div>
+
+
+<p>Let's think about a small example. According to our original implantation,
+<code>foldl f i [b1, b2]</code> should be expanded into <code>f (f i b1) b2</code>
+but the form in <code>foldr g j [b1, b2]</code> is <code>g b1 (b g2 j)</code>.
+The most important step is to make the definition of <code>g</code> and <code>j</code> clear.
+Function <code>g</code> should have type like <code>b -&gt; r -&gt; r</code> and
+if the first parameter is <code>b1</code>, the second parameter should be able to use
+<code>f i b1</code> to re-build the original <code>foldl</code> expansion.
+That sounds like a continuation <code>a -&gt; r</code> instead of just <code>r</code>. Let's try this idea:</p>
+<div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
+  <span class="kr">let</span> <span class="n">fold</span> <span class="ow">::</span> <span class="p">(</span><span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">))</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span>
+      <span class="n">fold</span> <span class="ow">=</span> <span class="n">foldr</span>
+      <span class="n">g</span> <span class="ow">::</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span>
+      <span class="n">g</span> <span class="n">b1</span> <span class="n">cont</span> <span class="ow">=</span> <span class="n">cont</span> <span class="p">(</span><span class="n">f</span> <span class="n">i</span> <span class="n">b1</span><span class="p">)</span>
+  <span class="kr">in</span>  <span class="n">fold</span> <span class="n">g</span> <span class="n">undefined</span> <span class="n">bs</span>
+</pre></div>
+
+
+<p>Bad thing happened.
+We got two type errors because now <code>g</code> and <code>fold</code> are of type ending with <code>(a -&gt; r)</code>.
+Let's look into them one by one.
+For <code>g</code> we are using a <code>b</code> to turn a continuation into another continuation
+so <code>g</code> actually need a extra parameter <code>a</code>.
+<code>fold</code> return a continuation and need a initial value <code>a</code> to get the final result.
+Let's refine the signature and definition:</p>
+<div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
+  <span class="kr">let</span> <span class="n">fold</span> <span class="ow">::</span> <span class="p">(</span><span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">))</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span>
+      <span class="n">fold</span> <span class="ow">=</span> <span class="n">foldr</span>
+      <span class="n">g</span> <span class="ow">::</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span>
+      <span class="n">g</span> <span class="n">b1</span> <span class="n">cont</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">cont</span> <span class="p">(</span><span class="n">f</span> <span class="n">i</span> <span class="n">b1</span><span class="p">)</span>
+  <span class="kr">in</span>  <span class="n">fold</span> <span class="n">g</span> <span class="n">undefined</span> <span class="n">bs</span> <span class="n">undefined</span>
+</pre></div>
+
+
+<p>Now our compiler warned us that <code>a</code> is not used.
+According to its type, the only place to use it is where <code>i</code> is.
+That makes sense because we are using the future result in our computation.
+But where <code>i</code> should go? The only place seems to using it to complete our <code>fold</code>.
+(I think this is the only tricky part and hope to find better thoughts on this in the future.)
+Let's refine again:</p>
+<div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
+  <span class="kr">let</span> <span class="n">fold</span> <span class="ow">::</span> <span class="p">(</span><span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">))</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span>
+      <span class="n">fold</span> <span class="ow">=</span> <span class="n">foldr</span>
+      <span class="n">g</span> <span class="ow">::</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span>
+      <span class="n">g</span> <span class="n">b1</span> <span class="n">cont</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">cont</span> <span class="p">(</span><span class="n">f</span> <span class="n">a</span> <span class="n">b1</span><span class="p">)</span>
+  <span class="kr">in</span>  <span class="n">fold</span> <span class="n">g</span> <span class="n">undefined</span> <span class="n">bs</span> <span class="n">i</span>
+</pre></div>
+
+
+<p>Nearly done and only one <code>undefined</code> is left.
+Notice that the final result is of type <code>r</code> but our target type is <code>a</code>.
+That means <code>r</code> is just <code>a</code>.
+So the only left <code>undefined</code> is of type <code>forall a. a -&gt; a</code>
+and its only implantation is <code>id</code> according to parametricity.
+This also fits our experience in finishing a continuation with <code>\a -&gt; a</code>.
+Our final version is:</p>
+<div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
+<span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
+  <span class="kr">let</span> <span class="n">g</span> <span class="n">b1</span> <span class="n">cont</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">cont</span> <span class="p">(</span><span class="n">f</span> <span class="n">a</span> <span class="n">b1</span><span class="p">)</span>
+  <span class="kr">in</span>  <span class="n">foldr</span> <span class="n">g</span> <span class="n">id</span> <span class="n">bs</span> <span class="n">i</span>
+</pre></div>
+
+
+<p>It works!</p>
+<div class="codehilite"><pre><span class="nf">λ</span><span class="o">&gt;</span> <span class="n">foldl</span> <span class="p">(</span><span class="nf">\</span><span class="n">r</span> <span class="n">x</span> <span class="ow">-&gt;</span> <span class="n">r</span> <span class="o">++</span> <span class="p">[</span><span class="n">x</span><span class="p">])</span> <span class="p">[</span><span class="mi">0</span> <span class="ow">::</span> <span class="kt">Int</span><span class="p">]</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="mi">10</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">10</span><span class="p">]</span>
+</pre></div>
+]]> </content>
+  </entry>
   <entry>
     <title type="html"><![CDATA[PFPL 读书笔记和闲言碎语]]></title>
     <author> <name><![CDATA[scturtle]]></name> </author>
@@ -2055,760 +2170,6 @@ Register them:</p>
 <p>The picture in the head of this blog is generated through 10,000 generations within sevaral hours.  <br />
 The full source code is <a href="https://gist.github.com/scturtle/11035675">here</a>.
 Feel free to play with it.</p>
-]]> </content>
-  </entry>
-  <entry>
-    <title type="html"><![CDATA[Test IPython Notebook]]></title>
-    <author> <name><![CDATA[scturtle]]></name> </author>
-    <link href="https://scturtle.me//2014/0211-test-ipynb/"/>
-    <updated>2014-02-11T17:00:00+08:00</updated>
-    <id>https://scturtle.me//2014/0211-test-ipynb/</id>
-    <content type="html"><![CDATA[
-<div class="ipynb">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="o">%</span><span class="k">pylab</span> inline
-<span class="o">%</span><span class="k">load_ext</span> sympy.interactive.ipythonprinting
-<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>
-Welcome to pylab, a matplotlib-based Python environment [backend: module://IPython.zmq.pylab.backend_inline].
-For more information, type &apos;help(pylab)&apos;.</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="calculator">calculator<a class="anchor-link" href="#calculator">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">Rational</span>
-<span class="n">a</span> <span class="o">=</span> <span class="n">Rational</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">E</span><span class="p">,</span> <span class="n">oo</span></pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>symbols</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">Symbol</span><span class="p">,</span> <span class="n">symbols</span><span class="p">,</span> <span class="n">var</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">Symbol</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
-<span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="s">&#39;x,y,z&#39;</span><span class="p">)</span></pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>many symbols such as <code>alpha,beta,delta,gamma,mu,lambda,phi,sigma,theta</code> are in</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy.abc</span> <span class="k">import</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span></pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>expression operations</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">expand</span><span class="p">()</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[5]:</div>
-
-
-<div class="output_latex output_subarea output_execute_result">
-$$x^{2} + 2 x y + y^{2}$$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="n">y</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[6]:</div>
-
-
-<div class="output_latex output_subarea output_execute_result">
-$$\left(y + 1\right)^{2}$$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>complex number</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">I</span>
-<span class="n">I</span><span class="o">*</span><span class="n">I</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[7]:</div>
-
-
-<div class="output_latex output_subarea output_execute_result">
-$$-1$$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Algebra">Algebra<a class="anchor-link" href="#Algebra">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>partial fraction decomposition and together back</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">apart</span><span class="p">,</span> <span class="n">together</span>
-<span class="n">apart</span><span class="p">((</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="n">x</span><span class="p">)</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[8]:</div>
-
-
-<div class="output_latex output_subarea output_execute_result">
-$$1 + \frac{2}{x -1}$$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="n">together</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[9]:</div>
-
-
-<div class="output_latex output_subarea output_execute_result">
-$$\frac{x + 1}{x -1}$$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Calculus">Calculus<a class="anchor-link" href="#Calculus">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">limit</span><span class="p">,</span> <span class="n">sin</span>
-<span class="n">limit</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">10</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">oo</span><span class="p">)</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[10]:</div>
-
-
-<div class="output_latex output_subarea output_execute_result">
-$$2$$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
-
-
-<div class="output_latex output_subarea output_execute_result">
-$$x - \frac{1}{6} x^{3} + \frac{1}{120} x^{5} - \frac{1}{5040} x^{7} + \frac{1}{362880} x^{9} + \mathcal{O}\left(x^{10}\right)$$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">summation</span><span class="p">,</span> <span class="n">factorial</span>
-<span class="n">summation</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">factorial</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">oo</span><span class="p">))</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[12]:</div>
-
-
-<div class="output_latex output_subarea output_execute_result">
-$$e$$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="diff">diff<a class="anchor-link" href="#diff">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">diff</span>
-<span class="n">diff</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">)</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[13]:</div>
-
-
-<div class="output_latex output_subarea output_execute_result">
-$$\cos{\left (x \right )}$$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="n">diff</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[14]:</div>
-
-
-<div class="output_latex output_subarea output_execute_result">
-$$- \sin{\left (x \right )}$$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="integration">integration<a class="anchor-link" href="#integration">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">integrate</span><span class="p">,</span> <span class="n">erf</span>
-<span class="n">integrate</span><span class="p">(</span><span class="mi">6</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[15]:</div>
-
-
-<div class="output_latex output_subarea output_execute_result">
-$$x^{6}$$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="n">integrate</span><span class="p">(</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">))</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[16]:</div>
-
-
-<div class="output_latex output_subarea output_execute_result">
-$$1$$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="functions">functions<a class="anchor-link" href="#functions">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">Function</span>
-<span class="n">f</span><span class="o">=</span><span class="n">Function</span><span class="p">(</span><span class="s">&#39;f&#39;</span><span class="p">)</span>
-<span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[17]:</div>
-
-
-<div class="output_latex output_subarea output_execute_result">
-$$\frac{\partial^{2}}{\partial^{2} x}  \operatorname{f}{\left (x \right )}$$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">solve</span>
-<span class="n">solve</span><span class="p">([</span><span class="n">x</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="mi">6</span><span class="o">*</span><span class="n">y</span> <span class="o">-</span> <span class="mi">15</span><span class="p">],</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[18]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{x: -3, y: 1}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Linear-Algebra">Linear Algebra<a class="anchor-link" href="#Linear-Algebra">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">Matrix</span>
-<span class="n">Matrix</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[19]:</div>
-
-
-<div class="output_latex output_subarea output_execute_result">
-$$\left[\begin{smallmatrix}1 & 0\\0 & 1\end{smallmatrix}\right]$$
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Pattern-matching">Pattern matching<a class="anchor-link" href="#Pattern-matching">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">Wild</span>
-<span class="n">p</span> <span class="o">=</span> <span class="n">Wild</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">)</span>
-<span class="p">(</span><span class="mi">5</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">p</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt output_prompt">Out[20]:</div>
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{p: 5}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Pretty-printing">Pretty printing<a class="anchor-link" href="#Pretty-printing">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[21]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">pprint</span><span class="p">,</span> <span class="n">Integral</span>
-<span class="n">pprint</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>⌠      
-⎮  2   
-⎮ x  dx
-⌡      </pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[22]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy.printing.python</span> <span class="k">import</span> <span class="n">python</span>
-<span class="nb">print</span> <span class="n">python</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>x = Symbol(&apos;x&apos;)
-e = Integral(x**2, x)</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[23]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span class="kn">from</span> <span class="nn">sympy</span> <span class="k">import</span> <span class="n">latex</span>
-<span class="nb">print</span> <span class="n">latex</span><span class="p">(</span><span class="n">Integral</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span></pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area"><div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>\int x^{2}\, dx</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-</div>
 ]]> </content>
   </entry>
 </feed>
