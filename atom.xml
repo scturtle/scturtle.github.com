@@ -4,7 +4,7 @@
   <title><![CDATA[ScTurtle's Pool]]></title>
   <link href="https://scturtle.me//atom.xml" rel="self"/>
   <link href="https://scturtle.me/"/>
-  <updated>2016-01-27T13:31:45.738392+08:00</updated>
+  <updated>2016-01-31T14:10:04.078017+08:00</updated>
   <id>https://scturtle.me//</id>
   
   <entry>
@@ -14,15 +14,15 @@
     <updated>2016-01-27T12:00:00+08:00</updated>
     <id>https://scturtle.me//2016/0127-foldl/</id>
     <content type="html"><![CDATA[
-<p>It is widely known that left folding can be implemented in right folding.
+<p>It is widely known that left folding can be implemented by right folding.
 But the implementation is not so obvious. Let's try writing one from scratch.
-First we need these two extensions of GHC to make life better.</p>
+First, we need these two extensions of GHC to make life better.</p>
 <div class="codehilite"><pre><span class="cm">{-# LANGUAGE ScopedTypeVariables, PartialTypeSignatures #-}</span>
 </pre></div>
 
 
-<p>Let's just forget the original implementations in <code>Prelude</code>
-and try to write them by hand:</p>
+<p>Let's just ignore the original implementations in <code>Prelude</code>
+and try writing them by hand:</p>
 <div class="codehilite"><pre><span class="kr">import</span> <span class="nn">Prelude</span> <span class="k">hiding</span> <span class="p">(</span><span class="nf">foldr</span><span class="p">,</span> <span class="nf">foldl</span><span class="p">)</span>
 
 <span class="nf">foldr</span> <span class="ow">::</span> <span class="p">(</span><span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
@@ -35,14 +35,15 @@ and try to write them by hand:</p>
 </pre></div>
 
 
-<p>If we want to write <code>foldl</code> using <code>foldr</code>, that defination should be looks like this:</p>
+<p>If we want to write <code>foldl</code> using <code>foldr</code>,
+that defination should looks like this:</p>
 <div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
 <span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span> <span class="n">foldr</span> <span class="n">undefined</span> <span class="n">undefined</span> <span class="n">undefined</span>
 </pre></div>
 
 
 <p>The only thing we can be sure is that we will still be working on list <code>bs</code>.
-So let's refine the above one using this observation:</p>
+So let's refine the above one with this observation:</p>
 <div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
 <span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
   <span class="kr">let</span> <span class="n">fold</span> <span class="ow">::</span> <span class="kr">_</span> <span class="ow">-&gt;</span> <span class="kr">_</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kr">_</span>
@@ -54,11 +55,12 @@ So let's refine the above one using this observation:</p>
 <p>Let's think about a small example. According to our original implantation,
 <code>foldl f i [b1, b2]</code> should be expanded into <code>f (f i b1) b2</code>
 but the form in <code>foldr g j [b1, b2]</code> is <code>g b1 (b g2 j)</code>.
-The most important step is to make the definition of <code>g</code> and <code>j</code> clear.
-Function <code>g</code> should have type like <code>b -&gt; r -&gt; r</code> and
-if the first parameter is <code>b1</code>, the second parameter should be able to use
-<code>f i b1</code> to re-build the original <code>foldl</code> expansion.
-That sounds like a continuation <code>a -&gt; r</code> instead of just <code>r</code>. Let's try this idea:</p>
+The most important step is the definition of <code>g</code> and <code>j</code>. 
+The function <code>g</code> should have type looks like <code>b -&gt; r -&gt; r</code> and
+if the first parameter is <code>b1</code>, the second parameter (<code>r</code>) should
+be able to use <code>f i b1</code> in itself to re-build the original <code>foldl</code> expansion.
+That sounds like a continuation <code>a -&gt; r</code> instead of just <code>r</code>.
+Let's try this idea:</p>
 <div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
 <span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
   <span class="kr">let</span> <span class="n">fold</span> <span class="ow">::</span> <span class="p">(</span><span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">))</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span>
@@ -69,12 +71,12 @@ That sounds like a continuation <code>a -&gt; r</code> instead of just <code>r</
 </pre></div>
 
 
-<p>Bad thing happened.
-We got two type errors because now <code>g</code> and <code>fold</code> are of type ending with <code>(a -&gt; r)</code>.
+<p>Bad thing happens.
+We get two type errors because now <code>g</code> and <code>fold</code> are of type ending with <code>(a -&gt; r)</code>.
 Let's look into them one by one.
-For <code>g</code> we are using a <code>b</code> to turn a continuation into another continuation
-so <code>g</code> actually need a extra parameter <code>a</code>.
-<code>fold</code> return a continuation and need a initial value <code>a</code> to get the final result.
+For <code>g</code>, we are using a <code>b</code> to turn a continuation into another continuation.
+So <code>g</code> actually need a extra parameter <code>a</code>.
+And <code>fold</code> return a continuation and need an initial value <code>a</code> to get the final result.
 Let's refine the signature and definition:</p>
 <div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
 <span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
@@ -86,12 +88,12 @@ Let's refine the signature and definition:</p>
 </pre></div>
 
 
-<p>Now our compiler warned us that <code>a</code> is not used.
+<p>Now our compiler warns us that <code>a</code> is not used.
 According to its type, the only place to use it is where <code>i</code> is.
-That makes sense because we are using the future result in our computation.
+This makes sense because we are using the future result in our computation.
 But where <code>i</code> should go? The only place seems to using it to complete our <code>fold</code>.
 (I think this is the only tricky part and hope to find better thoughts on this in the future.)
-Let's refine again:</p>
+Let's refine it again:</p>
 <div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
 <span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
   <span class="kr">let</span> <span class="n">fold</span> <span class="ow">::</span> <span class="p">(</span><span class="n">b</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">))</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">r</span><span class="p">)</span>
@@ -102,12 +104,12 @@ Let's refine again:</p>
 </pre></div>
 
 
-<p>Nearly done and only one <code>undefined</code> is left.
+<p>We are almost done and only one <code>undefined</code> is left.
 Notice that the final result is of type <code>r</code> but our target type is <code>a</code>.
-That means <code>r</code> is just <code>a</code>.
+That just means <code>r</code> is <code>a</code>.
 So the only left <code>undefined</code> is of type <code>forall a. a -&gt; a</code>
 and its only implantation is <code>id</code> according to parametricity.
-This also fits our experience in finishing a continuation with <code>\a -&gt; a</code>.
+This also fits our experience with continuation by finishing it with <code>\a -&gt; a</code>.
 Our final version is:</p>
 <div class="codehilite"><pre><span class="nf">foldl</span> <span class="ow">::</span> <span class="n">forall</span> <span class="n">a</span> <span class="n">b</span><span class="o">.</span> <span class="p">(</span><span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">b</span> <span class="ow">-&gt;</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="n">a</span>
 <span class="nf">foldl</span> <span class="n">f</span> <span class="n">i</span> <span class="n">bs</span> <span class="ow">=</span>
